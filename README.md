@@ -13,6 +13,10 @@ npm test        # тесты движка
 npm run build   # статика в dist/
 ```
 
+## Сайт
+
+Каждый пуш в `main` собирается и выкладывается на GitHub Pages: https://mr-erick.github.io/chitalishe/
+
 ## Управление
 
 | Действие | Телефон | ПК |
