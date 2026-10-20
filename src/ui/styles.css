@@ -109,7 +109,7 @@ button:disabled { opacity: 0.5; }
 }
 .frame::before { top: 0; }
 .frame::after { bottom: 0; }
-.tick { position: absolute; left: calc(var(--anchor) + 0.3em); width: 2px; height: 14px; background: var(--line); font-size: clamp(34px, 10vw, 56px); }
+.tick { position: absolute; left: calc(var(--anchor) + 0.3em * var(--fit, 1)); width: 2px; height: 14px; background: var(--line); font-size: clamp(34px, 10vw, 56px); }
 .tick.top { top: 0; }
 .tick.bottom { bottom: 0; }
 .word {
@@ -120,8 +120,16 @@ button:disabled { opacity: 0.5; }
   line-height: 2.2em;
   white-space: nowrap;
 }
-.word .before { position: absolute; right: calc(100% - var(--anchor)); }
-.word .after { position: absolute; left: var(--anchor); }
+.word .before, .word .after {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  line-height: 1.2;
+  /* Уменьшается для длинных слов, см. Reader.tsx. */
+  font-size: calc(1em * var(--fit, 1));
+}
+.word .before { right: calc(100% - var(--anchor)); }
+.word .after { left: var(--anchor); }
 .word .pivot { color: var(--pivot); }
 .speed { text-align: center; margin: 0; color: var(--muted); font-size: 20px; font-style: italic; }
 
