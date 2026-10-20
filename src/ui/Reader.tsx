@@ -7,6 +7,7 @@ import { percent } from "./format";
 import { IconArrowLeft, IconBookmark, IconNext, IconPause, IconPlay, IconPrev, IconSliders } from "./icons";
 import { PIVOT_COLORS, type Settings } from "./settings";
 import { useReader } from "./useReader";
+import { useKeepAwake } from "./useKeepAwake";
 
 const SWIPE_PX = 40;
 /** Отступ от края экрана для длинных слов, px. */
@@ -41,6 +42,8 @@ export function Reader({ book, startIndex, settings, onExit, onOpenSettings, onA
     initialWpm: bookWpm(saved, settings.wpm),
     onChapterPause: (ch) => setChapterDone(ch - 1),
   });
+
+  useKeepAwake(r.playing);
 
   const chapter = chapterAt(chapters, r.index);
   const pct = percent(r.index, tokens.length);
