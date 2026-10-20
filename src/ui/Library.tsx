@@ -1,5 +1,5 @@
 import { useMemo, useState } from "react";
-import { type BookMeta, getProgress } from "../books/store";
+import { type BookMeta, bookWpm, getProgress } from "../books/store";
 import { formatDuration, percent } from "./format";
 import { IconArrowRight, IconPlus, IconSearch } from "./icons";
 import { Plaque, SectionTitle } from "./TabBar";
@@ -24,7 +24,7 @@ export function Library({ books, wpm, onOpen, onContinue, onAdd }: Props) {
     const withProgress = books.map((b) => {
       const p = getProgress(b.id);
       const pct = p ? percent(p.index, b.words) : 0;
-      return { book: b, pct, index: p?.index ?? 0, openedAt: p?.openedAt ?? 0, wpm: p?.wpm ?? wpm };
+      return { book: b, pct, index: p?.index ?? 0, openedAt: p?.openedAt ?? 0, wpm: bookWpm(p, wpm) };
     });
     const q = query?.trim().toLowerCase();
     const filtered = q
@@ -95,14 +95,14 @@ export function Library({ books, wpm, onOpen, onContinue, onAdd }: Props) {
 
       {rows.length > 0 && (
         <ul className="card-list">
-          {rows.map(({ book, pct, index, wpm: bookWpm }) => (
+          {rows.map(({ book, pct, index, wpm: speed }) => (
             <li key={book.id}>
               <button onClick={() => onOpen(book.id)}>
                 <Plaque title={book.title} />
                 <span className="row-text">
                   <span className="row-title">{book.title}</span>
                   <span className="row-sub">
-                    {[book.author, FORMAT_LABEL[book.format], pct >= 100 ? "прочитано" : formatDuration(book.words - index, bookWpm)]
+                    {[book.author, FORMAT_LABEL[book.format], pct >= 100 ? "прочитано" : formatDuration(book.words - index, speed)]
                       .filter(Boolean)
                       .join(" · ")}
                   </span>

@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import { chapterAt, tokenizeBook } from "../engine/chapters";
 import { splitAtOrp } from "../engine/orp";
-import { type BookRecord, type Bookmark, getBookmarks, getProgress, saveBookmarks, saveProgress } from "../books/store";
+import { type BookRecord, type Bookmark, bookWpm, getBookmarks, getProgress, saveBookmarks, saveProgress } from "../books/store";
 import { haptic } from "../telegram";
 import { percent } from "./format";
 import { IconArrowLeft, IconBookmark, IconNext, IconPause, IconPlay, IconPrev, IconSliders } from "./icons";
@@ -38,7 +38,7 @@ export function Reader({ book, startIndex, settings, onExit, onOpenSettings, onA
     chapters,
     settings,
     initialIndex: Math.min(startIndex ?? saved?.index ?? 0, tokens.length - 1),
-    initialWpm: saved?.wpm ?? settings.wpm,
+    initialWpm: bookWpm(saved, settings.wpm),
     onChapterPause: (ch) => setChapterDone(ch - 1),
   });
 
@@ -47,7 +47,7 @@ export function Reader({ book, startIndex, settings, onExit, onOpenSettings, onA
   const atChapterStart = chapters[chapter]?.start === r.index;
 
   // ---- сохранение места и скорости ----
-  const save = useCallback(() => saveProgress(book.id, { index: r.index, wpm: r.wpm }), [book.id, r.index, r.wpm]);
+  const save = useCallback(() => saveProgress(book.id, { index: r.index, wpm: r.wpm, wpmBase: settings.wpm }), [book.id, r.index, r.wpm, settings.wpm]);
   const saveRef = useRef(save);
   saveRef.current = save;
   useEffect(() => {

@@ -1,5 +1,5 @@
 import { unzipSync } from "fflate";
-import { type ChapterText, splitChapters, splitIntoParts } from "../engine/chapters";
+import { type ChapterText, prettifyTitle, splitChapters, splitIntoParts } from "../engine/chapters";
 
 export type BookFormat = "TXT" | "DOCX" | "DOC" | "TEXT";
 
@@ -85,7 +85,7 @@ export function parseDocx(bytes: Uint8Array, fileName: string): ParsedBook {
     const style = p.getElementsByTagNameNS(W, "pStyle")[0]?.getAttributeNS(W, "val") ?? "";
     if (isHeadingStyle(style) && text.length < 120) {
       flush();
-      title = text;
+      title = prettifyTitle(text);
       headings++;
     } else {
       body.push(text);

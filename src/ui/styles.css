@@ -127,6 +127,7 @@ button:disabled { opacity: 0.5; cursor: default; }
 .tabbar button.on svg { color: var(--lime); }
 
 .topnav { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+.topnav-actions { display: flex; gap: 8px; }
 .menu { background: var(--card); border: 1px solid var(--line); border-radius: 16px; padding: 12px; display: flex; flex-direction: column; gap: 8px; }
 .menu p { margin: 0; }
 .book-title { font-family: var(--display); font-weight: 800; font-size: 34px; line-height: 1.05; text-transform: uppercase; margin: 6px 0 0; overflow-wrap: anywhere; }

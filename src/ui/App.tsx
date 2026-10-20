@@ -95,6 +95,7 @@ export function App() {
         initialTab={view.tab}
         onBack={back}
         onRead={(start) => setView({ name: "reader", id: record.id, start })}
+        onSettings={() => setView({ name: "settings", from: { name: "book", id: record.id, tab: view.tab } })}
         onDelete={async () => {
           await removeBook(record.id);
           setRecord(null);

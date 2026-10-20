@@ -1,8 +1,8 @@
 import { useState } from "react";
-import { type BookRecord, type Bookmark, getBookmarks, getProgress, saveBookmarks } from "../books/store";
+import { type BookRecord, type Bookmark, bookWpm, getBookmarks, getProgress, saveBookmarks } from "../books/store";
 import { tokenizeBook } from "../engine/chapters";
 import { formatDuration, formatNumber, percent } from "./format";
-import { IconArrowLeft, IconArrowRight, IconMore, IconPlay } from "./icons";
+import { IconArrowLeft, IconArrowRight, IconMore, IconPlay, IconSliders } from "./icons";
 
 interface Props {
   book: BookRecord;
@@ -11,9 +11,10 @@ interface Props {
   onBack: () => void;
   onRead: (index?: number) => void;
   onDelete: () => void;
+  onSettings: () => void;
 }
 
-export function BookScreen({ book, wpm, initialTab, onBack, onRead, onDelete }: Props) {
+export function BookScreen({ book, wpm, initialTab, onBack, onRead, onDelete, onSettings }: Props) {
   const [tab, setTab] = useState<"toc" | "bookmarks">(initialTab ?? "toc");
   const [bookmarks, setBookmarks] = useState<Bookmark[]>(() => getBookmarks(book.id));
   const [menu, setMenu] = useState(false);
@@ -23,7 +24,7 @@ export function BookScreen({ book, wpm, initialTab, onBack, onRead, onDelete }: 
   const { tokens, chapters } = tokenizeBook(book.chapters);
   const progress = getProgress(book.id);
   const index = progress?.index ?? 0;
-  const bookWpm = progress?.wpm ?? wpm;
+  const speed = bookWpm(progress, wpm);
   const pct = percent(index, tokens.length);
   const current = chapters.findIndex((c) => index >= c.start && index <= c.end);
 
@@ -39,11 +40,16 @@ export function BookScreen({ book, wpm, initialTab, onBack, onRead, onDelete }: 
           <IconArrowLeft />
         </button>
         <span className="mono-label">
-          [{book.format === "TEXT" ? "ТЕКСТ" : book.format} · {chapters.length} гл. · {formatNumber(tokens.length)} слов]
+          [{chapters.length} гл. · {formatNumber(tokens.length)} слов]
         </span>
-        <button className="icon-btn" onClick={() => setMenu(!menu)} aria-label="Ещё">
-          <IconMore />
-        </button>
+        <span className="topnav-actions">
+          <button className="icon-btn" onClick={onSettings} aria-label="Настройки">
+            <IconSliders />
+          </button>
+          <button className="icon-btn" onClick={() => setMenu(!menu)} aria-label="Ещё">
+            <IconMore />
+          </button>
+        </span>
       </header>
       {menu && (
         <div className="menu">
@@ -75,7 +81,7 @@ export function BookScreen({ book, wpm, initialTab, onBack, onRead, onDelete }: 
         <span className="cc-text">
           <span className="cc-title">{index > 0 ? "Продолжить" : "Читать"}</span>
           <span className="mono-label dark">
-            гл. {current + 1} · {pct}% // {formatDuration(tokens.length - index, bookWpm)}
+            гл. {current + 1} · {pct}% // {formatDuration(tokens.length - index, speed)}
           </span>
         </span>
         <span className="round-btn">
@@ -103,7 +109,7 @@ export function BookScreen({ book, wpm, initialTab, onBack, onRead, onDelete }: 
                   <span className={`num-badge ${i === current ? "on" : ""}`}>{i + 1}</span>
                   <span className="row-text">
                     <span className="row-title">{c.title}</span>
-                    <span className="row-sub">{formatDuration(words, bookWpm)}</span>
+                    <span className="row-sub">{formatDuration(words, speed)}</span>
                   </span>
                   <span className="mono-num">{done}%</span>
                 </button>
