@@ -18,7 +18,14 @@ export interface Progress {
   index: number;
   /** Последняя скорость в этой книге. */
   wpm?: number;
+  /** Скорость из настроек в момент сохранения: если её потом поменяли, берём новую. */
+  wpmBase?: number;
   openedAt: number;
+}
+
+/** Скорость книги: своя, пока в настройках не выбрали другую. */
+export function bookWpm(progress: Progress | null | undefined, settingsWpm: number): number {
+  return progress?.wpm && progress.wpmBase === settingsWpm ? progress.wpm : settingsWpm;
 }
 
 export interface Bookmark {

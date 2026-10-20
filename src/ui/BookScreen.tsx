@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { type BookRecord, type Bookmark, getBookmarks, getProgress, saveBookmarks } from "../books/store";
+import { type BookRecord, type Bookmark, bookWpm, getBookmarks, getProgress, saveBookmarks } from "../books/store";
 import { tokenizeBook } from "../engine/chapters";
 import { formatDuration, formatNumber, percent } from "./format";
 import { IconArrowLeft, IconArrowRight, IconMore, IconPlay, IconSliders } from "./icons";
@@ -24,7 +24,7 @@ export function BookScreen({ book, wpm, initialTab, onBack, onRead, onDelete, on
   const { tokens, chapters } = tokenizeBook(book.chapters);
   const progress = getProgress(book.id);
   const index = progress?.index ?? 0;
-  const bookWpm = progress?.wpm ?? wpm;
+  const speed = bookWpm(progress, wpm);
   const pct = percent(index, tokens.length);
   const current = chapters.findIndex((c) => index >= c.start && index <= c.end);
 
@@ -81,7 +81,7 @@ export function BookScreen({ book, wpm, initialTab, onBack, onRead, onDelete, on
         <span className="cc-text">
           <span className="cc-title">{index > 0 ? "Продолжить" : "Читать"}</span>
           <span className="mono-label dark">
-            гл. {current + 1} · {pct}% // {formatDuration(tokens.length - index, bookWpm)}
+            гл. {current + 1} · {pct}% // {formatDuration(tokens.length - index, speed)}
           </span>
         </span>
         <span className="round-btn">
@@ -109,7 +109,7 @@ export function BookScreen({ book, wpm, initialTab, onBack, onRead, onDelete, on
                   <span className={`num-badge ${i === current ? "on" : ""}`}>{i + 1}</span>
                   <span className="row-text">
                     <span className="row-title">{c.title}</span>
-                    <span className="row-sub">{formatDuration(words, bookWpm)}</span>
+                    <span className="row-sub">{formatDuration(words, speed)}</span>
                   </span>
                   <span className="mono-num">{done}%</span>
                 </button>
