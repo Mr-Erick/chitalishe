@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import type { Token } from "../engine/tokenize";
 import { splitAtOrp } from "../engine/orp";
 import { haptic, tg } from "../telegram";
@@ -6,6 +6,8 @@ import { defaultSettings, type ReaderSettings, useReader } from "./useReader";
 
 const SPEED_STEP = 25;
 const SWIPE_PX = 40;
+/** Отступ от края экрана для длинных слов, px. */
+const EDGE_PX = 8;
 
 interface Props {
   tokens: Token[];
@@ -17,6 +19,7 @@ export function Reader({ tokens, onExit }: Props) {
   const [showSettings, setShowSettings] = useState(false);
   const r = useReader(tokens, settings);
   const start = useRef<{ x: number; y: number } | null>(null);
+  const wordRef = useRef<HTMLDivElement>(null);
 
   const [before, pivot, after] = splitAtOrp(tokens[r.index]?.text ?? "");
   const progress = tokens.length > 1 ? r.index / (tokens.length - 1) : 1;
@@ -27,6 +30,28 @@ export function Reader({ tokens, onExit }: Props) {
     r.setWpm(r.wpm + delta);
     haptic.tick();
   };
+
+  // Длинное слово не должно вылезать за край: уменьшаем шрифт ровно настолько, чтобы обе половины
+  // слова поместились по свою сторону от опорной точки. Сама точка остаётся на месте.
+  const word = tokens[r.index]?.text ?? "";
+  useLayoutEffect(() => {
+    const el = wordRef.current;
+    if (!el) return;
+    // --fit ставим на рамку, чтобы метки сверху и снизу сдвигались вместе с опорной буквой.
+    const frame = el.parentElement!;
+    const fit = () => {
+      frame.style.setProperty("--fit", "1");
+      const box = el.getBoundingClientRect();
+      const anchorX = (el.querySelector(".after") as HTMLElement).getBoundingClientRect().left - box.left;
+      const leftW = (el.querySelector(".before") as HTMLElement).getBoundingClientRect().width;
+      const rightW = (el.querySelector(".after") as HTMLElement).getBoundingClientRect().width;
+      const scale = Math.min(1, (anchorX - EDGE_PX) / (leftW || 1), (box.width - anchorX - EDGE_PX) / (rightW || 1));
+      frame.style.setProperty("--fit", String(scale));
+    };
+    fit();
+    window.addEventListener("resize", fit);
+    return () => window.removeEventListener("resize", fit);
+  }, [word]);
 
   // Кнопка «Назад» в Telegram и клавиатура на ПК.
   useEffect(() => {
@@ -113,7 +138,7 @@ export function Reader({ tokens, onExit }: Props) {
         </p>
         <div className="frame">
           <div className="tick top" />
-          <div className="word">
+          <div className="word" ref={wordRef}>
             <span className="before">{before}</span>
             <span className="after">
               <span className="pivot">{pivot}</span>
