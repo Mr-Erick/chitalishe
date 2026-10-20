@@ -1,78 +1,183 @@
-import { useEffect, useLayoutEffect, useRef, useState } from "react";
-import type { Token } from "../engine/tokenize";
+import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
+import { chapterAt, tokenizeBook } from "../engine/chapters";
 import { splitAtOrp } from "../engine/orp";
-import { haptic, tg } from "../telegram";
-import { defaultSettings, type ReaderSettings, useReader } from "./useReader";
+import { type BookRecord, type Bookmark, getBookmarks, getProgress, saveBookmarks, saveProgress } from "../books/store";
+import { haptic } from "../telegram";
+import { percent } from "./format";
+import { IconArrowLeft, IconBookmark, IconNext, IconPause, IconPlay, IconPrev, IconSliders } from "./icons";
+import { PIVOT_COLORS, type Settings } from "./settings";
+import { useReader } from "./useReader";
 
-const SPEED_STEP = 25;
 const SWIPE_PX = 40;
 /** Отступ от края экрана для длинных слов, px. */
 const EDGE_PX = 8;
+const LONG_PRESS_MS = 500;
+const AUTOSAVE_MS = 10_000;
 
 interface Props {
-  tokens: Token[];
+  book: BookRecord;
+  startIndex?: number;
+  settings: Settings;
   onExit: () => void;
+  onOpenSettings: () => void;
+  onAllBookmarks: () => void;
 }
 
-export function Reader({ tokens, onExit }: Props) {
-  const [settings, setSettings] = useState<ReaderSettings>(defaultSettings);
-  const [showSettings, setShowSettings] = useState(false);
-  const r = useReader(tokens, settings);
-  const start = useRef<{ x: number; y: number } | null>(null);
-  const wordRef = useRef<HTMLDivElement>(null);
+type SheetState = { mode: "added"; bookmark: Bookmark } | { mode: "list" } | null;
 
-  const [before, pivot, after] = splitAtOrp(tokens[r.index]?.text ?? "");
-  const progress = tokens.length > 1 ? r.index / (tokens.length - 1) : 1;
-  const left = tokens.length - r.index;
-  const minutesLeft = Math.max(1, Math.round(left / r.wpm));
+export function Reader({ book, startIndex, settings, onExit, onOpenSettings, onAllBookmarks }: Props) {
+  const { tokens, chapters } = useMemo(() => tokenizeBook(book.chapters), [book]);
+  const saved = useMemo(() => getProgress(book.id), [book.id]);
+  const [bookmarks, setBookmarks] = useState<Bookmark[]>(() => getBookmarks(book.id));
+  const [sheet, setSheet] = useState<SheetState>(null);
+  const [chapterDone, setChapterDone] = useState<number | null>(null);
+  const vibrate = settings.haptics ? haptic : { tap: () => {}, tick: () => {} };
 
-  const changeSpeed = (delta: number) => {
-    r.setWpm(r.wpm + delta);
-    haptic.tick();
+  const r = useReader({
+    tokens,
+    chapters,
+    settings,
+    initialIndex: Math.min(startIndex ?? saved?.index ?? 0, tokens.length - 1),
+    initialWpm: saved?.wpm ?? settings.wpm,
+    onChapterPause: (ch) => setChapterDone(ch - 1),
+  });
+
+  const chapter = chapterAt(chapters, r.index);
+  const pct = percent(r.index, tokens.length);
+  const atChapterStart = chapters[chapter]?.start === r.index;
+
+  // ---- сохранение места и скорости ----
+  const save = useCallback(() => saveProgress(book.id, { index: r.index, wpm: r.wpm }), [book.id, r.index, r.wpm]);
+  const saveRef = useRef(save);
+  saveRef.current = save;
+  useEffect(() => {
+    if (!r.playing) saveRef.current();
+  }, [r.playing]);
+  useEffect(() => {
+    const timer = setInterval(() => saveRef.current(), AUTOSAVE_MS);
+    const onHide = () => document.hidden && saveRef.current();
+    document.addEventListener("visibilitychange", onHide);
+    return () => {
+      clearInterval(timer);
+      document.removeEventListener("visibilitychange", onHide);
+      saveRef.current();
+    };
+  }, []);
+
+  const exit = () => {
+    r.pause();
+    save();
+    onExit();
   };
 
-  // Длинное слово не должно вылезать за край: уменьшаем шрифт ровно настолько, чтобы обе половины
-  // слова поместились по свою сторону от опорной точки. Сама точка остаётся на месте.
+  // ---- длинные слова ----
   const word = tokens[r.index]?.text ?? "";
+  const [before, pivot, after] = splitAtOrp(word);
+  const wordRef = useRef<HTMLDivElement>(null);
   useLayoutEffect(() => {
     const el = wordRef.current;
     if (!el) return;
+    // Уменьшаем шрифт ровно настолько, чтобы обе половины слова поместились по свою сторону от опорной точки.
     // --fit ставим на рамку, чтобы метки сверху и снизу сдвигались вместе с опорной буквой.
     const frame = el.parentElement!;
     const fit = () => {
       frame.style.setProperty("--fit", "1");
       const box = el.getBoundingClientRect();
-      const anchorX = (el.querySelector(".after") as HTMLElement).getBoundingClientRect().left - box.left;
+      const afterEl = el.querySelector(".after") as HTMLElement;
+      const anchorX = afterEl.getBoundingClientRect().left - box.left;
       const leftW = (el.querySelector(".before") as HTMLElement).getBoundingClientRect().width;
-      const rightW = (el.querySelector(".after") as HTMLElement).getBoundingClientRect().width;
+      const rightW = afterEl.getBoundingClientRect().width;
       const scale = Math.min(1, (anchorX - EDGE_PX) / (leftW || 1), (box.width - anchorX - EDGE_PX) / (rightW || 1));
       frame.style.setProperty("--fit", String(scale));
     };
     fit();
     window.addEventListener("resize", fit);
     return () => window.removeEventListener("resize", fit);
-  }, [word]);
+  }, [word, settings.fontSize, settings.serif]);
 
-  // Кнопка «Назад» в Telegram и клавиатура на ПК.
-  useEffect(() => {
-    const back = tg()?.BackButton;
-    back?.show();
-    back?.onClick(onExit);
-    return () => {
-      back?.offClick(onExit);
-      back?.hide();
+  // ---- закладки ----
+  const sentenceBounds = (i: number) => {
+    const from = tokens[i]?.sentenceStart ?? 0;
+    let to = from;
+    while (to + 1 < tokens.length && tokens[to + 1].sentenceStart === from) to++;
+    return [from, to] as const;
+  };
+
+  const updateBookmarks = (list: Bookmark[]) => {
+    setBookmarks(list);
+    saveBookmarks(book.id, list);
+  };
+
+  const addBookmark = () => {
+    r.pause();
+    const existing = bookmarks.find((b) => b.index === r.index);
+    if (existing) return setSheet({ mode: "added", bookmark: existing });
+    const [from, to] = sentenceBounds(r.index);
+    const start = Math.max(from, r.index - 12);
+    const end = Math.min(to, r.index + 12);
+    const fragment =
+      (start > from ? "…" : "") +
+      tokens
+        .slice(start, end + 1)
+        .map((t) => t.text)
+        .join(" ") +
+      (end < to ? "…" : "");
+    const bookmark: Bookmark = {
+      id: `${Date.now()}`,
+      index: r.index,
+      chapter,
+      percent: pct,
+      fragment,
+      note: "",
+      createdAt: Date.now(),
     };
-  }, [onExit]);
+    updateBookmarks([...bookmarks, bookmark]);
+    vibrate.tap();
+    setSheet({ mode: "added", bookmark });
+  };
+
+  const pressTimer = useRef<number>();
+  const longPressed = useRef(false);
+  const bookmarkHere = bookmarks.some((b) => b.index === r.index);
+
+  // ---- жесты и клавиши ----
+  const changeSpeed = (delta: number) => {
+    r.setWpm(r.wpm + delta);
+    vibrate.tick();
+  };
+
+  const start = useRef<{ x: number; y: number } | null>(null);
+  const onPointerDown = (e: React.PointerEvent) => {
+    start.current = { x: e.clientX, y: e.clientY };
+  };
+  const onPointerUp = (e: React.PointerEvent) => {
+    if (!start.current) return;
+    const dx = e.clientX - start.current.x;
+    const dy = e.clientY - start.current.y;
+    start.current = null;
+    if (Math.abs(dx) > SWIPE_PX && Math.abs(dx) > Math.abs(dy)) {
+      dx < 0 ? r.nextSentence() : r.prevSentence();
+      vibrate.tick();
+    } else if (Math.abs(dy) > SWIPE_PX) {
+      changeSpeed(dy < 0 ? settings.step : -settings.step);
+    } else {
+      setChapterDone(null);
+      r.toggle();
+      vibrate.tap();
+    }
+  };
 
   useEffect(() => {
+    if (sheet) return;
     const onKey = (e: KeyboardEvent) => {
       const actions: Record<string, () => void> = {
         " ": r.toggle,
         ArrowLeft: r.prevSentence,
         ArrowRight: r.nextSentence,
-        ArrowUp: () => changeSpeed(SPEED_STEP),
-        ArrowDown: () => changeSpeed(-SPEED_STEP),
-        Escape: onExit,
+        ArrowUp: () => changeSpeed(settings.step),
+        ArrowDown: () => changeSpeed(-settings.step),
+        b: addBookmark,
+        Escape: exit,
       };
       const action = actions[e.key];
       if (action) {
@@ -84,57 +189,76 @@ export function Reader({ tokens, onExit }: Props) {
     return () => window.removeEventListener("keydown", onKey);
   });
 
-  const onPointerDown = (e: React.PointerEvent) => {
-    start.current = { x: e.clientX, y: e.clientY };
-  };
-  const onPointerUp = (e: React.PointerEvent) => {
-    if (!start.current) return;
-    const dx = e.clientX - start.current.x;
-    const dy = e.clientY - start.current.y;
-    start.current = null;
-    if (Math.abs(dx) > SWIPE_PX && Math.abs(dx) > Math.abs(dy)) {
-      dx < 0 ? r.nextSentence() : r.prevSentence();
-      haptic.tick();
-    } else if (Math.abs(dy) > SWIPE_PX) {
-      changeSpeed(dy < 0 ? SPEED_STEP : -SPEED_STEP);
-    } else {
-      r.toggle();
-      haptic.tap();
-    }
-  };
-
-  // Контекст на паузе: текущее предложение целиком, текущее слово подсвечено.
-  const sentenceFrom = tokens[r.index]?.sentenceStart ?? 0;
-  let sentenceTo = sentenceFrom;
-  while (sentenceTo + 1 < tokens.length && tokens[sentenceTo + 1].sentenceStart === sentenceFrom) sentenceTo++;
+  const [from, to] = sentenceBounds(r.index);
+  const style = {
+    "--pivot": PIVOT_COLORS[settings.pivot],
+    "--word-size": `${settings.fontSize}px`,
+  } as React.CSSProperties;
 
   return (
-    <main className={`reader ${r.playing ? "is-playing" : ""}`}>
+    <main className={`reader bg-${settings.bg} ${settings.serif ? "serif" : "sans"} ${r.playing ? "is-playing" : ""}`} style={style}>
       <header className="topbar">
-        <button className="ghost" onClick={onExit} aria-label="Назад">
-          ←
+        <button className="ghost" onClick={exit} aria-label="Назад">
+          <IconArrowLeft />
         </button>
-        <span>{Math.round(progress * 100)}% · ~{minutesLeft} мин</span>
-        <button className="ghost" onClick={() => setShowSettings((v) => !v)} aria-label="Настройки">
-          ⚙︎
-        </button>
+        <span>
+          {chapters[chapter]?.title ?? ""} · {pct}%
+        </span>
+        <span className="topbar-right">
+          <button
+            className="ghost"
+            aria-label="Закладка"
+            onPointerDown={() => {
+              longPressed.current = false;
+              pressTimer.current = window.setTimeout(() => {
+                longPressed.current = true;
+                r.pause();
+                setSheet({ mode: "list" });
+              }, LONG_PRESS_MS);
+            }}
+            onPointerUp={() => clearTimeout(pressTimer.current)}
+            onPointerLeave={() => clearTimeout(pressTimer.current)}
+            onClick={() => !longPressed.current && addBookmark()}
+          >
+            <IconBookmark filled={bookmarkHere} />
+          </button>
+          <button
+            className="ghost"
+            aria-label="Настройки"
+            onClick={() => {
+              r.pause();
+              save();
+              onOpenSettings();
+            }}
+          >
+            <IconSliders />
+          </button>
+        </span>
       </header>
 
       <section className="stage" onPointerDown={onPointerDown} onPointerUp={onPointerUp}>
         <p className="context">
-          {!r.playing &&
-            tokens.slice(sentenceFrom, sentenceTo + 1).map((t, i) => (
+          {chapterDone !== null ? (
+            <span className="chapter-banner">
+              {chapters[chapterDone]?.title} прочитана. Тап — следующая глава.
+            </span>
+          ) : atChapterStart && chapters.length > 1 ? (
+            <span className="chapter-banner">{chapters[chapter].title}</span>
+          ) : (
+            !r.playing &&
+            tokens.slice(from, to + 1).map((t, i) => (
               <span
-                key={sentenceFrom + i}
-                className={sentenceFrom + i === r.index ? "current" : undefined}
+                key={from + i}
+                className={from + i === r.index ? "current" : undefined}
                 onPointerUp={(e) => {
                   e.stopPropagation();
-                  r.goTo(sentenceFrom + i);
+                  r.goTo(from + i);
                 }}
               >
                 {t.text}{" "}
               </span>
-            ))}
+            ))
+          )}
         </p>
         <div className="frame">
           <div className="tick top" />
@@ -149,6 +273,7 @@ export function Reader({ tokens, onExit }: Props) {
         </div>
         <p className="speed">
           {r.wpm} слов/мин{settings.mode === "ramp" ? " · разгон" : ""}
+          {!r.playing ? " · пауза" : ""}
         </p>
         <p className="hint gesture-hint">Тап — старт · свайп ←→ предложение · ↑↓ скорость</p>
       </section>
@@ -161,67 +286,137 @@ export function Reader({ tokens, onExit }: Props) {
           max={tokens.length - 1}
           value={r.index}
           onChange={(e) => r.goTo(Number(e.target.value))}
-          aria-label="Позиция в тексте"
+          aria-label="Позиция в книге"
         />
         <div className="buttons">
-          <button onClick={() => changeSpeed(-SPEED_STEP)}>−25</button>
+          <button onClick={() => changeSpeed(-settings.step)}>−{settings.step}</button>
           <button onClick={r.prevSentence} aria-label="Предыдущее предложение">
-            ⏮
+            <IconPrev />
           </button>
-          <button className="primary round" onClick={r.toggle} aria-label={r.playing ? "Пауза" : "Читать"}>
-            {r.playing ? "⏸" : "▶"}
+          <button className="round" onClick={r.toggle} aria-label={r.playing ? "Пауза" : "Читать"}>
+            {r.playing ? <IconPause /> : <IconPlay />}
           </button>
           <button onClick={r.nextSentence} aria-label="Следующее предложение">
-            ⏭
+            <IconNext />
           </button>
-          <button onClick={() => changeSpeed(SPEED_STEP)}>+25</button>
+          <button onClick={() => changeSpeed(settings.step)}>+{settings.step}</button>
         </div>
       </footer>
 
-      {showSettings && (
-        <div className="sheet" role="dialog" aria-label="Настройки">
-          <h2>Скорость</h2>
-          <div className="segmented">
-            <button
-              className={settings.mode === "constant" ? "active" : ""}
-              onClick={() => setSettings({ ...settings, mode: "constant" })}
-            >
-              Постоянная
-            </button>
-            <button
-              className={settings.mode === "ramp" ? "active" : ""}
-              onClick={() => setSettings({ ...settings, mode: "ramp" })}
-            >
-              Разгон
-            </button>
-          </div>
-          {settings.mode === "ramp" && (
-            <label>
-              Потолок: {settings.maxWpm} слов/мин
-              <input
-                type="range"
-                min={200}
-                max={1000}
-                step={25}
-                value={settings.maxWpm}
-                onChange={(e) => setSettings({ ...settings, maxWpm: Number(e.target.value) })}
-              />
-              <small>+{settings.rampStep} слов/мин каждые {settings.rampEveryMs / 60000} мин чтения</small>
-            </label>
-          )}
-          <label className="check">
-            <input
-              type="checkbox"
-              checked={!settings.strict}
-              onChange={(e) => setSettings({ ...settings, strict: !e.target.checked })}
-            />
-            Задерживаться на знаках препинания и длинных словах
-          </label>
-          <button className="primary" onClick={() => setShowSettings(false)}>
-            Готово
-          </button>
-        </div>
+      {sheet && (
+        <BookmarkSheet
+          sheet={sheet}
+          bookmarks={bookmarks}
+          chapters={chapters.map((c) => c.title)}
+          currentWord={word}
+          onUpdate={updateBookmarks}
+          onClose={(resume) => {
+            setSheet(null);
+            if (resume) r.play();
+          }}
+          onJump={(i) => {
+            setSheet(null);
+            r.goTo(i);
+          }}
+          onAll={() => {
+            setSheet(null);
+            save();
+            onAllBookmarks();
+          }}
+        />
       )}
     </main>
+  );
+}
+
+interface SheetProps {
+  sheet: NonNullable<SheetState>;
+  bookmarks: Bookmark[];
+  chapters: string[];
+  currentWord: string;
+  onUpdate: (list: Bookmark[]) => void;
+  onClose: (resume: boolean) => void;
+  onJump: (index: number) => void;
+  onAll: () => void;
+}
+
+function BookmarkSheet({ sheet, bookmarks, chapters, currentWord, onUpdate, onClose, onJump, onAll }: SheetProps) {
+  const [note, setNote] = useState(sheet.mode === "added" ? sheet.bookmark.note : "");
+  const others = sheet.mode === "added" ? bookmarks.filter((b) => b.id !== sheet.bookmark.id) : bookmarks;
+
+  const finish = (resume: boolean) => {
+    if (sheet.mode === "added")
+      onUpdate(bookmarks.map((b) => (b.id === sheet.bookmark.id ? { ...b, note: note.trim() } : b)));
+    onClose(resume);
+  };
+
+  // Фрагмент с выделенным текущим словом.
+  const fragment = (text: string) => {
+    const i = text.indexOf(currentWord);
+    if (i < 0) return text;
+    return (
+      <>
+        {text.slice(0, i)}
+        <b>{currentWord}</b>
+        {text.slice(i + currentWord.length)}
+      </>
+    );
+  };
+
+  return (
+    <div className="backdrop" onClick={() => finish(false)}>
+      <div className="sheet reader-sheet" onClick={(e) => e.stopPropagation()} role="dialog" aria-label="Закладки">
+        <div className="grip" />
+        {sheet.mode === "added" && (
+          <>
+            <div className="sheet-head">
+              <h2>Закладка поставлена</h2>
+              <button
+                className="link danger"
+                onClick={() => {
+                  onUpdate(bookmarks.filter((b) => b.id !== sheet.bookmark.id));
+                  onClose(false);
+                }}
+              >
+                Убрать
+              </button>
+            </div>
+            <p className="fragment">«{fragment(sheet.bookmark.fragment)}»</p>
+            <label className="field">
+              Заметка, если нужна
+              <input value={note} onChange={(e) => setNote(e.target.value)} placeholder="Например: обсудить в клубе" />
+            </label>
+            <button className="btn dark wide" onClick={() => finish(true)}>
+              Готово, читать дальше
+            </button>
+          </>
+        )}
+        <div className="sheet-head small">
+          <h3>Закладки этой книги · {bookmarks.length}</h3>
+          <button className="link" onClick={onAll}>
+            Все
+          </button>
+        </div>
+        {others.length ? (
+          <ul className="bm-list">
+            {others.slice(0, 6).map((b) => (
+              <li key={b.id}>
+                <button onClick={() => onJump(b.index)}>
+                  <IconBookmark filled />
+                  <span>
+                    <small>
+                      {chapters[b.chapter] ?? `Глава ${b.chapter + 1}`} · {b.percent}%{b.note ? " · есть заметка" : ""}
+                    </small>
+                    {b.fragment}
+                  </span>
+                </button>
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <p className="muted">{sheet.mode === "list" ? "Закладок пока нет." : "Других закладок пока нет."}</p>
+        )}
+      </div>
+    </div>
   );
 }
