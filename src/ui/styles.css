@@ -8,7 +8,7 @@
   --pivot: #d0312d;
   --line: color-mix(in srgb, var(--muted) 45%, transparent);
   /* Точка, где стоит опорная буква: чуть левее центра. */
-  --anchor: 42%;
+  --anchor: 30%;
 }
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
