@@ -1,50 +1,44 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import type { Token } from "../engine/tokenize";
 import { nextSentenceStart, prevSentenceStart } from "../engine/tokenize";
+import type { Chapter } from "../engine/chapters";
 import { delayMs, rampFactor } from "../engine/timing";
-
-export type SpeedMode = "constant" | "ramp";
-
-export interface ReaderSettings {
-  wpm: number;
-  mode: SpeedMode;
-  /** Потолок скорости в режиме разгона. */
-  maxWpm: number;
-  /** Насколько ускоряться и как часто в режиме разгона. */
-  rampStep: number;
-  rampEveryMs: number;
-  /** Сколько слов откатить назад при продолжении после паузы. */
-  rewindWords: number;
-  strict: boolean;
-}
-
-export const defaultSettings: ReaderSettings = {
-  wpm: 250,
-  mode: "constant",
-  maxWpm: 600,
-  rampStep: 10,
-  rampEveryMs: 120_000,
-  rewindWords: 3,
-  strict: false,
-};
+import type { Settings } from "./settings";
 
 export const MIN_WPM = 100;
 export const MAX_WPM = 1500;
+/** Пауза с названием главы при переходе на новую главу. */
+export const CHAPTER_PAUSE_MS = 1500;
 const clampWpm = (wpm: number) => Math.min(MAX_WPM, Math.max(MIN_WPM, wpm));
 
-export function useReader(tokens: Token[], settings: ReaderSettings) {
-  const [index, setIndex] = useState(0);
-  const [playing, setPlaying] = useState(false);
-  const [wpm, setWpmState] = useState(settings.wpm);
+interface Options {
+  tokens: Token[];
+  chapters: Chapter[];
+  settings: Settings;
+  initialIndex: number;
+  initialWpm: number;
+  /** Чтение дошло до новой главы и встало на паузу (настройка «Конец главы: пауза»). */
+  onChapterPause?: (chapter: number) => void;
+}
 
-  const indexRef = useRef(0);
-  const wpmRef = useRef(settings.wpm);
+export function useReader({ tokens, chapters, settings, initialIndex, initialWpm, onChapterPause }: Options) {
+  const [index, setIndex] = useState(initialIndex);
+  const [playing, setPlaying] = useState(false);
+  const [wpm, setWpmState] = useState(clampWpm(initialWpm));
+
+  const indexRef = useRef(initialIndex);
+  const wpmRef = useRef(clampWpm(initialWpm));
   const nextAt = useRef(0);
   const sincePlay = useRef(0);
   const rampClock = useRef(0);
   const lastFrame = useRef(0);
   const settingsRef = useRef(settings);
   settingsRef.current = settings;
+  const onChapterPauseRef = useRef(onChapterPause);
+  onChapterPauseRef.current = onChapterPause;
+
+  const chapterStarts = useRef(new Map<number, number>());
+  chapterStarts.current = new Map(chapters.map((c, i) => [c.start, i]));
 
   const goTo = useCallback(
     (i: number) => {
@@ -61,15 +55,18 @@ export function useReader(tokens: Token[], settings: ReaderSettings) {
   }, []);
 
   const delayFor = useCallback(
-    (i: number) =>
-      delayMs(tokens[i], wpmRef.current, { strict: settingsRef.current.strict }) * rampFactor(sincePlay.current),
+    (i: number) => {
+      const base = delayMs(tokens[i], wpmRef.current, { strict: !settingsRef.current.delays }) * rampFactor(sincePlay.current);
+      return i > 0 && chapterStarts.current.has(i) ? base + CHAPTER_PAUSE_MS : base;
+    },
     [tokens],
   );
 
   const play = useCallback(() => {
     if (!tokens.length) return;
     if (indexRef.current >= tokens.length - 1) goTo(0);
-    else if (indexRef.current > 0) goTo(indexRef.current - settingsRef.current.rewindWords);
+    else if (indexRef.current > 0 && !chapterStarts.current.has(indexRef.current))
+      goTo(indexRef.current - settingsRef.current.rewindWords);
     sincePlay.current = 0;
     const now = performance.now();
     lastFrame.current = now;
@@ -100,9 +97,16 @@ export function useReader(tokens: Token[], settings: ReaderSettings) {
           setPlaying(false);
           return;
         }
-        goTo(indexRef.current + 1);
+        const next = indexRef.current + 1;
+        goTo(next);
+        const chapter = chapterStarts.current.get(next);
+        if (chapter !== undefined && s.chapterEnd === "pause") {
+          setPlaying(false);
+          onChapterPauseRef.current?.(chapter);
+          return;
+        }
         sincePlay.current++;
-        const delay = delayFor(indexRef.current);
+        const delay = delayFor(next);
         // Если вкладка «подвисла», не догоняем пачкой слов, а продолжаем с текущего момента.
         nextAt.current = now - nextAt.current > delay ? now + delay : nextAt.current + delay;
       }
@@ -130,6 +134,5 @@ export function useReader(tokens: Token[], settings: ReaderSettings) {
     setWpm,
     nextSentence: () => goTo(nextSentenceStart(tokens, indexRef.current)),
     prevSentence: () => goTo(prevSentenceStart(tokens, indexRef.current)),
-    skip: (n: number) => goTo(indexRef.current + n),
   };
 }
