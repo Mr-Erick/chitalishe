@@ -16,8 +16,18 @@ const BGS: [ReaderBg, string][] = [
   ["black", "Чёрный"],
 ];
 const STEPS = [10, 25, 50];
+const RAMP_EVERY = [1, 10, 20, 50, 100];
+const RAMP_STEPS = [1, 2, 5, 10, 25];
 const REWINDS = [0, 3, 5, 10];
 const next = <T,>(list: T[], value: T) => list[(list.indexOf(value) + 1) % list.length];
+/** «До 600 сл/мин за ~350 слов (~50 с)». */
+function rampSummary(from: number, to: number, step: number, every: number): string {
+  if (to <= from) return "Потолок не выше старта: скорость не растёт";
+  const words = Math.ceil((to - from) / step) * every;
+  const seconds = Math.round((words / ((from + to) / 2)) * 60);
+  const time = seconds < 60 ? `${Math.max(5, Math.round(seconds / 5) * 5)} с` : `${Math.round(seconds / 60)} мин`;
+  return `До ${to} сл/мин за ~${words} слов (~${time})`;
+}
 const wordsLabel = (n: number) => (n === 0 ? "нет" : `${n} ${n === 1 ? "слово" : n < 5 ? "слова" : "слов"}`);
 
 export function SettingsScreen({ settings: s, update, onBack }: Props) {
@@ -63,10 +73,23 @@ export function SettingsScreen({ settings: s, update, onBack }: Props) {
               value={s.maxWpm}
               onChange={(e) => update({ maxWpm: Number(e.target.value) })}
             />
-            <small className="mono-label">
-              +{s.rampStep} сл/мин // каждые {s.rampEveryMs / 60000} мин
-            </small>
           </label>
+        )}
+        {s.mode === "ramp" && (
+          <>
+            <span className="mono-label">Прибавлять каждые</span>
+            <div className="segmented five">
+              {RAMP_EVERY.map((n) => (
+                <button key={n} className={s.rampEveryWords === n ? "on" : ""} onClick={() => update({ rampEveryWords: n })}>
+                  {n === 1 ? "слово" : n}
+                </button>
+              ))}
+            </div>
+            <button className="row" onClick={() => update({ rampStep: next(RAMP_STEPS, s.rampStep) })}>
+              Прибавка <b>+{s.rampStep} сл/мин ›</b>
+            </button>
+            <small className="mono-label">{rampSummary(s.wpm, s.maxWpm, s.rampStep, s.rampEveryWords)}</small>
+          </>
         )}
         <button className="row" onClick={() => update({ step: next(STEPS, s.step) })}>
           Шаг свайпа и кнопок <b>{s.step} ›</b>

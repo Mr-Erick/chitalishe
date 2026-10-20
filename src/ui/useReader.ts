@@ -30,7 +30,7 @@ export function useReader({ tokens, chapters, settings, initialIndex, initialWpm
   const wpmRef = useRef(clampWpm(initialWpm));
   const nextAt = useRef(0);
   const sincePlay = useRef(0);
-  const rampClock = useRef(0);
+  const rampWords = useRef(0);
   const lastFrame = useRef(0);
   const settingsRef = useRef(settings);
   settingsRef.current = settings;
@@ -83,13 +83,6 @@ export function useReader({ tokens, chapters, settings, initialIndex, initialWpm
     let frame = 0;
     const loop = (now: number) => {
       const s = settingsRef.current;
-      if (s.mode === "ramp") {
-        rampClock.current += now - lastFrame.current;
-        if (rampClock.current >= s.rampEveryMs) {
-          rampClock.current = 0;
-          if (wpmRef.current < s.maxWpm) setWpm(Math.min(s.maxWpm, wpmRef.current + s.rampStep));
-        }
-      }
       lastFrame.current = now;
 
       if (now >= nextAt.current) {
@@ -106,6 +99,10 @@ export function useReader({ tokens, chapters, settings, initialIndex, initialWpm
           return;
         }
         sincePlay.current++;
+        if (s.mode === "ramp" && ++rampWords.current >= s.rampEveryWords) {
+          rampWords.current = 0;
+          if (wpmRef.current < s.maxWpm) setWpm(Math.min(s.maxWpm, wpmRef.current + s.rampStep));
+        }
         const delay = delayFor(next);
         // Если вкладка «подвисла», не догоняем пачкой слов, а продолжаем с текущего момента.
         nextAt.current = now - nextAt.current > delay ? now + delay : nextAt.current + delay;
