@@ -168,6 +168,7 @@ button:disabled { opacity: 0.5; cursor: default; }
   height: 46px; border-radius: 14px; background: #ecebe6; border: 1px solid var(--line);
   font-family: var(--mono); font-weight: 700; font-size: 13px; text-transform: uppercase; text-align: center;
 }
+.segmented.five { grid-template-columns: repeat(5, 1fr); }
 .segmented button.on { background: var(--ink); color: var(--lime); border-color: var(--ink); }
 .slider { display: flex; flex-direction: column; gap: 8px; padding: 8px 0; }
 .slider > span { display: flex; justify-content: space-between; }

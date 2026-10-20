@@ -12,7 +12,8 @@ export interface Settings {
   mode: SpeedMode;
   maxWpm: number;
   rampStep: number;
-  rampEveryMs: number;
+  /** Прибавлять rampStep каждые столько показанных слов (1 — плавно, с каждым словом). */
+  rampEveryWords: number;
   /** Шаг свайпа и кнопок ±. */
   step: number;
   serif: boolean;
@@ -31,7 +32,7 @@ export const defaultSettings: Settings = {
   mode: "constant",
   maxWpm: 600,
   rampStep: 10,
-  rampEveryMs: 120_000,
+  rampEveryWords: 10,
   step: 25,
   serif: true,
   fontSize: 46,
