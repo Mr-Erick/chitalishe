@@ -4,7 +4,7 @@ import { splitAtOrp } from "../engine/orp";
 import { type BookRecord, type Bookmark, bookWpm, getBookmarks, getProgress, saveBookmarks, saveProgress } from "../books/store";
 import { haptic } from "../telegram";
 import { percent } from "./format";
-import { IconArrowLeft, IconBookmark, IconNext, IconPause, IconPlay, IconPrev, IconSliders } from "./icons";
+import { IconArrowLeft, IconBook, IconBookmark, IconNext, IconPause, IconPlay, IconPrev, IconSliders } from "./icons";
 import { PIVOT_COLORS, type Settings } from "./settings";
 import { useReader } from "./useReader";
 import { useKeepAwake } from "./useKeepAwake";
@@ -22,11 +22,13 @@ interface Props {
   onExit: () => void;
   onOpenSettings: () => void;
   onAllBookmarks: () => void;
+  /** Открыть книгу текстом на этом слове. */
+  onText: (index: number) => void;
 }
 
 type SheetState = { mode: "added"; bookmark: Bookmark } | { mode: "list" } | null;
 
-export function Reader({ book, startIndex, settings, onExit, onOpenSettings, onAllBookmarks }: Props) {
+export function Reader({ book, startIndex, settings, onExit, onOpenSettings, onAllBookmarks, onText }: Props) {
   const { tokens, chapters } = useMemo(() => tokenizeBook(book.chapters), [book]);
   const saved = useMemo(() => getProgress(book.id), [book.id]);
   const [bookmarks, setBookmarks] = useState<Bookmark[]>(() => getBookmarks(book.id));
@@ -208,6 +210,17 @@ export function Reader({ book, startIndex, settings, onExit, onOpenSettings, onA
           {chapters[chapter]?.title ?? ""} · {pct}%
         </span>
         <span className="topbar-right">
+          <button
+            className="ghost"
+            aria-label="К тексту"
+            onClick={() => {
+              r.pause();
+              save();
+              onText(r.index);
+            }}
+          >
+            <IconBook />
+          </button>
           <button
             className="ghost"
             aria-label="Закладка"

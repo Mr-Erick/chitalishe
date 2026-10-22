@@ -23,6 +23,8 @@ export interface Settings {
   /** Задерживаться на знаках препинания и длинных словах. */
   delays: boolean;
   rewindWords: number;
+  /** Размер текста в предпросмотре, px. */
+  previewFontSize: number;
   chapterEnd: ChapterEnd;
   haptics: boolean;
 }
@@ -40,6 +42,7 @@ export const defaultSettings: Settings = {
   bg: "gray",
   delays: true,
   rewindWords: 3,
+  previewFontSize: 19,
   chapterEnd: "continue",
   haptics: true,
 };
