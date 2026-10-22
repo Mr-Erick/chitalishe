@@ -1,4 +1,5 @@
 import { SUPPORT_EMAIL } from "../books/catalog";
+import { openMail } from "../telegram";
 import { IconArrowLeft } from "./icons";
 import { SectionTitle } from "./TabBar";
 
@@ -32,7 +33,7 @@ export function RightsScreen({ onBack }: { onBack: () => void }) {
           Если считаете, что книга в библиотеке нарушает ваши права, напишите нам. Ответим и при необходимости уберём книгу в
           течение 24 часов.
         </p>
-        <a className="btn dark wide mono" href={`mailto:${SUPPORT_EMAIL}?subject=${encodeURIComponent("SPEEDTEXT: правообладателю")}`}>
+        <a className="btn dark wide mono" href={`mailto:${SUPPORT_EMAIL}`} onClick={(e) => { e.preventDefault(); openMail(`mailto:${SUPPORT_EMAIL}?subject=${encodeURIComponent("SPEEDTEXT: правообладателю")}`); }}>
           {SUPPORT_EMAIL}
         </a>
       </section>

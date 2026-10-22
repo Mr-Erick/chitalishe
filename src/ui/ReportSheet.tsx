@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { SUPPORT_EMAIL } from "../books/catalog";
-import { tg } from "../telegram";
+import { openMail, tg } from "../telegram";
 
 const KINDS = ["Мусор в тексте", "Пропал нужный текст", "Неправильные главы", "Книга не открывается", "Другое"];
 /** Сколько слов вокруг места чтения кладём в письмо: чтобы найти ошибку, но не пересылать книгу. */
@@ -49,7 +49,7 @@ export function ReportSheet({ context, onClose }: { context?: ReportContext; onC
     .join("\n");
   const mailto = `mailto:${SUPPORT_EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
 
-  // Если почтовое приложение не открылось (так бывает внутри Telegram), письмо можно вставить вручную.
+  // Если почтовое приложение не открылось, письмо можно вставить вручную.
   const copy = async () => {
     try {
       await navigator.clipboard.writeText(`${SUPPORT_EMAIL}\n${subject}\n\n${body}`);
@@ -81,9 +81,9 @@ export function ReportSheet({ context, onClose }: { context?: ReportContext; onC
             </span>
           </label>
         )}
-        <a className="btn dark wide" href={mailto}>
+        <button className="btn dark wide" onClick={() => openMail(mailto)}>
           Написать письмо
-        </a>
+        </button>
         <button className="btn wide" onClick={copy}>
           {copied ? "Скопировано — вставьте в письмо" : "Скопировать текст письма"}
         </button>
