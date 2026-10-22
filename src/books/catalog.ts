@@ -1,7 +1,7 @@
 // Бесплатная библиотека: только общественное достояние (автор и переводчик умерли в 1955 году или раньше).
-// Тексты подготовлены вручную и лежат статикой в public/books/, список — здесь.
 import type { ChapterText } from "../engine/chapters";
 import { addBook, type BookMeta, getBookmarks, getProgress, local, removeBook } from "./store";
+import library from "./library.json";
 
 export type Shelf = "school" | "russian" | "foreign" | "poetry";
 
@@ -22,58 +22,57 @@ export interface CatalogEntry {
   authorYears: string;
   translator?: string;
   translatorYears?: string;
-  year: number;
   shelves: Shelf[];
   words: number;
   chapters: number;
+  /** Путь к книге от корня сайта. */
   file: string;
+  bytes: number;
+  /** Откуда взят текст (страница Викитеки). */
+  source: string;
 }
 
-export const CATALOG: CatalogEntry[] = [
-  {
-    id: "kapitanskaya-dochka",
-    title: "Капитанская дочка",
-    author: "Александр Пушкин",
-    authorShort: "Пушкин",
-    authorYears: "1799–1837",
-    year: 1836,
-    shelves: ["school", "russian"],
-    words: 33710,
-    chapters: 15,
-    file: "books/kapitanskaya-dochka.json",
-  },
-  {
-    id: "evgeniy-onegin",
-    title: "Евгений Онегин",
-    author: "Александр Пушкин",
-    authorShort: "Пушкин",
-    authorYears: "1799–1837",
-    year: 1833,
-    shelves: ["school", "russian", "poetry"],
-    words: 24127,
-    chapters: 10,
-    file: "books/evgeniy-onegin.json",
-  },
-  {
-    id: "zapiski-ohotnika",
-    title: "Записки охотника",
-    author: "Иван Тургенев",
-    authorShort: "Тургенев",
-    authorYears: "1818–1883",
-    year: 1852,
-    shelves: ["school", "russian"],
-    words: 104823,
-    chapters: 25,
-    file: "books/zapiski-ohotnika.json",
-  },
-];
+type LibraryRow = Omit<CatalogEntry, "authorShort" | "shelves"> & { shelves: string[] };
+
+/** Стихи и поэмы: в списке книг полки «Стихи» нет, отмечаем здесь. */
+const POETRY = new Set([
+  "blok-dvenadtsat",
+  "esenin-anna-snegina",
+  "lermontov-mtsyri",
+  "lermontov-pesnya-pro-tsarya-ivana-vasilevicha-molodogo-opric",
+  "mayakovskiy-oblako-v-shtanakh",
+  "nekrasov-komu-na-rusi-zhit-khorosho",
+  "pushkin-evgeniy-onegin",
+  "pushkin-mednyy-vsadnik",
+  "pushkin-ruslan-i-lyudmila",
+  "pushkin-skazka-o-mertvoy-tsarevne-i-o-semi-bogatyryakh",
+  "pushkin-skazka-o-tsare-saltane",
+  "gomer-iliada",
+  "gomer-odisseya",
+]);
+
+// Список книг собирается отдельно (Викитека, чистка, проверка прав) и кладётся в library.json, тексты — в public/books/library/.
+export const CATALOG: CatalogEntry[] = (library as LibraryRow[]).map((row) => ({
+  ...row,
+  authorShort: row.author.split(" ").slice(-1)[0],
+  shelves: [...(row.shelves as Shelf[]), ...(POETRY.has(row.id) ? (["poetry"] as Shelf[]) : [])],
+  file: `books/library/${row.file}`,
+}));
+
+/** Первые три книги лежали под другими id: по старым ссылкам и у тех, кто их уже скачал, они должны находиться. */
+const OLD_IDS: Record<string, string> = {
+  "kapitanskaya-dochka": "pushkin-kapitanskaya-dochka",
+  "evgeniy-onegin": "pushkin-evgeniy-onegin",
+  "zapiski-ohotnika": "turgenev-zapiski-okhotnika",
+};
+const currentId = (id: string) => OLD_IDS[id] ?? id;
 
 /** Бот, через которого открывается приложение; ссылкой делимся на него. */
 export const BOT_USERNAME = "fastt_reader_bot";
 /** Почта для правообладателей. */
 export const SUPPORT_EMAIL = "Ektb66@bk.ru";
 
-export const catalogEntry = (id: string) => CATALOG.find((e) => e.id === id);
+export const catalogEntry = (id: string) => CATALOG.find((e) => e.id === currentId(id));
 export const shareLink = (e: CatalogEntry) => `https://t.me/${BOT_USERNAME}?startapp=book-${e.id}`;
 
 /** «book-kapitanskaya-dochka» из ссылки → книга каталога. */
@@ -84,7 +83,7 @@ export function entryFromStartParam(param: string): CatalogEntry | undefined {
 
 /** Эта книга каталога уже есть на устройстве? Ранние версии клали классику без catalogId — узнаём по названию. */
 export function localCopy(entry: CatalogEntry, books: BookMeta[]): BookMeta | undefined {
-  return books.find((b) => b.catalogId === entry.id) ?? books.find((b) => !b.catalogId && b.title === entry.title && b.author === entry.author);
+  return books.find((b) => b.catalogId && currentId(b.catalogId) === entry.id) ?? books.find((b) => !b.catalogId && b.title === entry.title && b.author === entry.author);
 }
 
 const SEEDED_KEY = "speedtext:seeded";

@@ -1,0 +1,1277 @@
+[
+ {
+  "id": "blok-dvenadtsat",
+  "title": "Двенадцать",
+  "author": "Александр Блок",
+  "authorYears": "1880–1921",
+  "shelves": [
+   "school",
+   "russian"
+  ],
+  "words": 1191,
+  "chapters": 1,
+  "file": "blok-dvenadtsat.json",
+  "bytes": 15031,
+  "source": "https://ru.wikisource.org/wiki/Двенадцать_(Блок)"
+ },
+ {
+  "id": "bunin-antonovskie-yabloki",
+  "title": "Антоновские яблоки",
+  "author": "Иван Бунин",
+  "authorYears": "1870–1953",
+  "shelves": [
+   "school",
+   "russian"
+  ],
+  "words": 4955,
+  "chapters": 1,
+  "file": "bunin-antonovskie-yabloki.json",
+  "bytes": 58934,
+  "source": "https://ru.wikisource.org/wiki/Антоновские_яблоки_(Бунин)"
+ },
+ {
+  "id": "bunin-gospodin-iz-san-frantsisko",
+  "title": "Господин из Сан-Франциско",
+  "author": "Иван Бунин",
+  "authorYears": "1870–1953",
+  "shelves": [
+   "school",
+   "russian"
+  ],
+  "words": 6580,
+  "chapters": 1,
+  "file": "bunin-gospodin-iz-san-frantsisko.json",
+  "bytes": 79296,
+  "source": "https://ru.wikisource.org/wiki/Господин_из_Сан-Франциско_(Бунин)"
+ },
+ {
+  "id": "gogol-viy",
+  "title": "Вий",
+  "author": "Николай Гоголь",
+  "authorYears": "1809–1852",
+  "shelves": [
+   "school",
+   "russian"
+  ],
+  "words": 11933,
+  "chapters": 1,
+  "file": "gogol-viy.json",
+  "bytes": 135644,
+  "source": "https://ru.wikisource.org/wiki/Вий_(Гоголь)"
+ },
+ {
+  "id": "gogol-mertvye-dushi",
+  "title": "Мёртвые души",
+  "author": "Николай Гоголь",
+  "authorYears": "1809–1852",
+  "shelves": [
+   "school",
+   "russian"
+  ],
+  "words": 116066,
+  "chapters": 18,
+  "file": "gogol-mertvye-dushi.json",
+  "bytes": 1335253,
+  "source": "https://ru.wikisource.org/wiki/Мёртвые_души_(Гоголь)"
+ },
+ {
+  "id": "gogol-nos",
+  "title": "Нос",
+  "author": "Николай Гоголь",
+  "authorYears": "1809–1852",
+  "shelves": [
+   "school",
+   "russian"
+  ],
+  "words": 7879,
+  "chapters": 3,
+  "file": "gogol-nos.json",
+  "bytes": 89938,
+  "source": "https://ru.wikisource.org/wiki/Нос_(Гоголь)"
+ },
+ {
+  "id": "gogol-noch-pered-rozhdestvom",
+  "title": "Ночь перед Рождеством",
+  "author": "Николай Гоголь",
+  "authorYears": "1809–1852",
+  "shelves": [
+   "school",
+   "russian"
+  ],
+  "words": 13638,
+  "chapters": 1,
+  "file": "gogol-noch-pered-rozhdestvom.json",
+  "bytes": 149491,
+  "source": "https://ru.wikisource.org/wiki/Ночь_перед_Рождеством_(Гоголь)"
+ },
+ {
+  "id": "gogol-revizor",
+  "title": "Ревизор",
+  "author": "Николай Гоголь",
+  "authorYears": "1809–1852",
+  "shelves": [
+   "school",
+   "russian"
+  ],
+  "words": 20037,
+  "chapters": 6,
+  "file": "gogol-revizor.json",
+  "bytes": 234085,
+  "source": "https://ru.wikisource.org/wiki/Ревизор_(Гоголь)"
+ },
+ {
+  "id": "gogol-taras-bulba",
+  "title": "Тарас Бульба",
+  "author": "Николай Гоголь",
+  "authorYears": "1809–1852",
+  "shelves": [
+   "school",
+   "russian"
+  ],
+  "words": 37572,
+  "chapters": 12,
+  "file": "gogol-taras-bulba.json",
+  "bytes": 426316,
+  "source": "https://ru.wikisource.org/wiki/Тарас_Бульба_(Гоголь)"
+ },
+ {
+  "id": "gogol-shinel",
+  "title": "Шинель",
+  "author": "Николай Гоголь",
+  "authorYears": "1809–1852",
+  "shelves": [
+   "school",
+   "russian"
+  ],
+  "words": 10023,
+  "chapters": 1,
+  "file": "gogol-shinel.json",
+  "bytes": 118635,
+  "source": "https://ru.wikisource.org/wiki/Шинель_(Гоголь)"
+ },
+ {
+  "id": "goncharov-oblomov",
+  "title": "Обломов",
+  "author": "Иван Гончаров",
+  "authorYears": "1812–1891",
+  "shelves": [
+   "school",
+   "russian"
+  ],
+  "words": 156043,
+  "chapters": 46,
+  "file": "goncharov-oblomov.json",
+  "bytes": 1684766,
+  "source": "https://ru.wikisource.org/wiki/Обломов_(Гончаров)"
+ },
+ {
+  "id": "gorkiy-detstvo",
+  "title": "Детство",
+  "author": "Максим Горький",
+  "authorYears": "1868–1936",
+  "shelves": [
+   "school",
+   "russian"
+  ],
+  "words": 56488,
+  "chapters": 13,
+  "file": "gorkiy-detstvo.json",
+  "bytes": 617095,
+  "source": "https://ru.wikisource.org/wiki/Детство_(Горький)"
+ },
+ {
+  "id": "gorkiy-na-dne",
+  "title": "На дне",
+  "author": "Максим Горький",
+  "authorYears": "1868–1936",
+  "shelves": [
+   "school",
+   "russian"
+  ],
+  "words": 17109,
+  "chapters": 5,
+  "file": "gorkiy-na-dne.json",
+  "bytes": 188166,
+  "source": "https://ru.wikisource.org/wiki/На_дне_(Горький)"
+ },
+ {
+  "id": "gorkiy-starukha-izergil",
+  "title": "Старуха Изергиль",
+  "author": "Максим Горький",
+  "authorYears": "1868–1936",
+  "shelves": [
+   "school",
+   "russian"
+  ],
+  "words": 7095,
+  "chapters": 3,
+  "file": "gorkiy-starukha-izergil.json",
+  "bytes": 72536,
+  "source": "https://ru.wikisource.org/wiki/Старуха_Изергиль_(Горький)"
+ },
+ {
+  "id": "gorkiy-chelkash",
+  "title": "Челкаш",
+  "author": "Максим Горький",
+  "authorYears": "1868–1936",
+  "shelves": [
+   "school",
+   "russian"
+  ],
+  "words": 9719,
+  "chapters": 4,
+  "file": "gorkiy-chelkash.json",
+  "bytes": 109106,
+  "source": "https://ru.wikisource.org/wiki/Челкаш_(Горький)"
+ },
+ {
+  "id": "griboedov-gore-ot-uma",
+  "title": "Горе от ума",
+  "author": "Александр Грибоедов",
+  "authorYears": "1795–1829",
+  "shelves": [
+   "school",
+   "russian"
+  ],
+  "words": 14675,
+  "chapters": 4,
+  "file": "griboedov-gore-ot-uma.json",
+  "bytes": 168737,
+  "source": "https://ru.wikisource.org/wiki/Горе_от_ума_(Грибоедов)"
+ },
+ {
+  "id": "grin-alye-parusa",
+  "title": "Алые паруса",
+  "author": "Александр Грин",
+  "authorYears": "1880–1932",
+  "shelves": [
+   "school",
+   "russian"
+  ],
+  "words": 20500,
+  "chapters": 1,
+  "file": "grin-alye-parusa.json",
+  "bytes": 242729,
+  "source": "https://ru.wikisource.org/wiki/Алые_паруса_(Грин)"
+ },
+ {
+  "id": "dostoevskiy-bednye-lyudi",
+  "title": "Бедные люди",
+  "author": "Фёдор Достоевский",
+  "authorYears": "1821–1881",
+  "shelves": [
+   "school",
+   "russian"
+  ],
+  "words": 41592,
+  "chapters": 21,
+  "file": "dostoevskiy-bednye-lyudi.json",
+  "bytes": 449590,
+  "source": "https://ru.wikisource.org/wiki/Бедные_люди_(Достоевский)"
+ },
+ {
+  "id": "dostoevskiy-belye-nochi",
+  "title": "Белые ночи",
+  "author": "Фёдор Достоевский",
+  "authorYears": "1821–1881",
+  "shelves": [
+   "school",
+   "russian"
+  ],
+  "words": 17459,
+  "chapters": 6,
+  "file": "dostoevskiy-belye-nochi.json",
+  "bytes": 184117,
+  "source": "https://ru.wikisource.org/wiki/Белые_ночи_(Достоевский)"
+ },
+ {
+  "id": "dostoevskiy-prestuplenie-i-nakazanie",
+  "title": "Преступление и наказание",
+  "author": "Фёдор Достоевский",
+  "authorYears": "1821–1881",
+  "shelves": [
+   "school",
+   "russian"
+  ],
+  "words": 175849,
+  "chapters": 41,
+  "file": "dostoevskiy-prestuplenie-i-nakazanie.json",
+  "bytes": 1951497,
+  "source": "https://ru.wikisource.org/wiki/Преступление_и_наказание_(Достоевский)"
+ },
+ {
+  "id": "esenin-anna-snegina",
+  "title": "Анна Снегина",
+  "author": "Сергей Есенин",
+  "authorYears": "1895–1925",
+  "shelves": [
+   "school",
+   "russian"
+  ],
+  "words": 3061,
+  "chapters": 1,
+  "file": "esenin-anna-snegina.json",
+  "bytes": 35538,
+  "source": "https://ru.wikisource.org/wiki/Анна_Снегина_(Есенин)"
+ },
+ {
+  "id": "karamzin-bednaya-liza",
+  "title": "Бедная Лиза",
+  "author": "Николай Карамзин",
+  "authorYears": "1766–1826",
+  "shelves": [
+   "school",
+   "russian"
+  ],
+  "words": 5268,
+  "chapters": 1,
+  "file": "karamzin-bednaya-liza.json",
+  "bytes": 57836,
+  "source": "https://ru.wikisource.org/wiki/Бедная_Лиза_(Карамзин)"
+ },
+ {
+  "id": "korolenko-v-durnom-obshchestve",
+  "title": "В дурном обществе",
+  "author": "Владимир Короленко",
+  "authorYears": "1853–1921",
+  "shelves": [
+   "school",
+   "russian"
+  ],
+  "words": 18106,
+  "chapters": 10,
+  "file": "korolenko-v-durnom-obshchestve.json",
+  "bytes": 213265,
+  "source": "https://ru.wikisource.org/wiki/В_дурном_обществе_(Короленко)"
+ },
+ {
+  "id": "kuprin-granatovyy-braslet",
+  "title": "Гранатовый браслет",
+  "author": "Александр Куприн",
+  "authorYears": "1870–1938",
+  "shelves": [
+   "school",
+   "russian"
+  ],
+  "words": 14425,
+  "chapters": 13,
+  "file": "kuprin-granatovyy-braslet.json",
+  "bytes": 167274,
+  "source": "https://ru.wikisource.org/wiki/Гранатовый_браслет_(Куприн)"
+ },
+ {
+  "id": "kuprin-olesya",
+  "title": "Олеся",
+  "author": "Александр Куприн",
+  "authorYears": "1870–1938",
+  "shelves": [
+   "school",
+   "russian"
+  ],
+  "words": 23111,
+  "chapters": 14,
+  "file": "kuprin-olesya.json",
+  "bytes": 260984,
+  "source": "https://ru.wikisource.org/wiki/Олеся_(Куприн)"
+ },
+ {
+  "id": "kuprin-chudesnyy-doktor",
+  "title": "Чудесный доктор",
+  "author": "Александр Куприн",
+  "authorYears": "1870–1938",
+  "shelves": [
+   "school",
+   "russian"
+  ],
+  "words": 2485,
+  "chapters": 1,
+  "file": "kuprin-chudesnyy-doktor.json",
+  "bytes": 30848,
+  "source": "https://ru.wikisource.org/wiki/Чудесный_доктор_(Куприн)"
+ },
+ {
+  "id": "lermontov-geroy-nashego-vremeni",
+  "title": "Герой нашего времени",
+  "author": "Михаил Лермонтов",
+  "authorYears": "1814–1841",
+  "shelves": [
+   "school",
+   "russian"
+  ],
+  "words": 43195,
+  "chapters": 7,
+  "file": "lermontov-geroy-nashego-vremeni.json",
+  "bytes": 477899,
+  "source": "https://ru.wikisource.org/wiki/Герой_нашего_времени_(Лермонтов)/СО"
+ },
+ {
+  "id": "lermontov-mtsyri",
+  "title": "Мцыри",
+  "author": "Михаил Лермонтов",
+  "authorYears": "1814–1841",
+  "shelves": [
+   "school",
+   "russian"
+  ],
+  "words": 3392,
+  "chapters": 2,
+  "file": "lermontov-mtsyri.json",
+  "bytes": 37718,
+  "source": "https://ru.wikisource.org/wiki/Мцыри_(Лермонтов)"
+ },
+ {
+  "id": "lermontov-pesnya-pro-tsarya-ivana-vasilevicha-molodogo-opric",
+  "title": "Песня про царя Ивана Васильевича, молодого опричника и удалого купца Калашникова",
+  "author": "Михаил Лермонтов",
+  "authorYears": "1814–1841",
+  "shelves": [
+   "school",
+   "russian"
+  ],
+  "words": 2497,
+  "chapters": 1,
+  "file": "lermontov-pesnya-pro-tsarya-ivana-vasilevicha-molodogo-opric.json",
+  "bytes": 31820,
+  "source": "https://ru.wikisource.org/wiki/Песня_про_царя_Ивана_Васильевича,_молодого_опричника_и_удалого_купца_Калашникова_(Лермонтов)"
+ },
+ {
+  "id": "leskov-levsha",
+  "title": "Левша",
+  "author": "Николай Лесков",
+  "authorYears": "1831–1895",
+  "shelves": [
+   "school",
+   "russian"
+  ],
+  "words": 9359,
+  "chapters": 1,
+  "file": "leskov-levsha.json",
+  "bytes": 102554,
+  "source": "https://ru.wikisource.org/wiki/Левша_(Лесков)"
+ },
+ {
+  "id": "leskov-ocharovannyy-strannik",
+  "title": "Очарованный странник",
+  "author": "Николай Лесков",
+  "authorYears": "1831–1895",
+  "shelves": [
+   "school",
+   "russian"
+  ],
+  "words": 43259,
+  "chapters": 20,
+  "file": "leskov-ocharovannyy-strannik.json",
+  "bytes": 437789,
+  "source": "https://ru.wikisource.org/wiki/Очарованный_странник_(Лесков)"
+ },
+ {
+  "id": "mayakovskiy-oblako-v-shtanakh",
+  "title": "Облако в штанах",
+  "author": "Владимир Маяковский",
+  "authorYears": "1893–1930",
+  "shelves": [
+   "school",
+   "russian"
+  ],
+  "words": 2330,
+  "chapters": 5,
+  "file": "mayakovskiy-oblako-v-shtanakh.json",
+  "bytes": 29895,
+  "source": "https://ru.wikisource.org/wiki/Облако_в_штанах_(Маяковский)"
+ },
+ {
+  "id": "nekrasov-komu-na-rusi-zhit-khorosho",
+  "title": "Кому на Руси жить хорошо",
+  "author": "Николай Некрасов",
+  "authorYears": "1821–1878",
+  "shelves": [
+   "school",
+   "russian"
+  ],
+  "words": 25139,
+  "chapters": 18,
+  "file": "nekrasov-komu-na-rusi-zhit-khorosho.json",
+  "bytes": 314782,
+  "source": "https://ru.wikisource.org/wiki/Кому_на_Руси_жить_хорошо_(Некрасов)"
+ },
+ {
+  "id": "ostrovskiy-bespridannitsa",
+  "title": "Бесприданница",
+  "author": "Александр Островский",
+  "authorYears": "1823–1886",
+  "shelves": [
+   "school",
+   "russian"
+  ],
+  "words": 17092,
+  "chapters": 4,
+  "file": "ostrovskiy-bespridannitsa.json",
+  "bytes": 198470,
+  "source": "https://ru.wikisource.org/wiki/Бесприданница_(Островский)"
+ },
+ {
+  "id": "ostrovskiy-groza",
+  "title": "Гроза",
+  "author": "Александр Островский",
+  "authorYears": "1823–1886",
+  "shelves": [
+   "school",
+   "russian"
+  ],
+  "words": 14368,
+  "chapters": 5,
+  "file": "ostrovskiy-groza.json",
+  "bytes": 152983,
+  "source": "https://ru.wikisource.org/wiki/Гроза_(Островский)"
+ },
+ {
+  "id": "pushkin-boris-godunov",
+  "title": "Борис Годунов",
+  "author": "Александр Пушкин",
+  "authorYears": "1799–1837",
+  "shelves": [
+   "school",
+   "russian"
+  ],
+  "words": 11312,
+  "chapters": 11,
+  "file": "pushkin-boris-godunov.json",
+  "bytes": 132150,
+  "source": "https://ru.wikisource.org/wiki/Борис_Годунов_(Пушкин)"
+ },
+ {
+  "id": "pushkin-dubrovskiy",
+  "title": "Дубровский",
+  "author": "Александр Пушкин",
+  "authorYears": "1799–1837",
+  "shelves": [
+   "school",
+   "russian"
+  ],
+  "words": 21267,
+  "chapters": 19,
+  "file": "pushkin-dubrovskiy.json",
+  "bytes": 249524,
+  "source": "https://ru.wikisource.org/wiki/Дубровский_(Пушкин)"
+ },
+ {
+  "id": "pushkin-evgeniy-onegin",
+  "title": "Евгений Онегин",
+  "author": "Александр Пушкин",
+  "authorYears": "1799–1837",
+  "shelves": [
+   "school",
+   "russian"
+  ],
+  "words": 24127,
+  "chapters": 10,
+  "file": "pushkin-evgeniy-onegin.json",
+  "bytes": 274054,
+  "source": "https://all-the-books.ru/books/pushkin-aleksandr-yevgeniy-onegin/"
+ },
+ {
+  "id": "pushkin-kapitanskaya-dochka",
+  "title": "Капитанская дочка",
+  "author": "Александр Пушкин",
+  "authorYears": "1799–1837",
+  "shelves": [
+   "school",
+   "russian"
+  ],
+  "words": 33710,
+  "chapters": 15,
+  "file": "pushkin-kapitanskaya-dochka.json",
+  "bytes": 385753,
+  "source": "https://all-the-books.ru/books/pushkin-aleksandr-kapitanskaya-dochka/"
+ },
+ {
+  "id": "pushkin-mednyy-vsadnik",
+  "title": "Медный всадник",
+  "author": "Александр Пушкин",
+  "authorYears": "1799–1837",
+  "shelves": [
+   "school",
+   "russian"
+  ],
+  "words": 2146,
+  "chapters": 1,
+  "file": "pushkin-mednyy-vsadnik.json",
+  "bytes": 25806,
+  "source": "https://ru.wikisource.org/wiki/Медный_всадник_(Пушкин)"
+ },
+ {
+  "id": "pushkin-pikovaya-dama",
+  "title": "Пиковая дама",
+  "author": "Александр Пушкин",
+  "authorYears": "1799–1837",
+  "shelves": [
+   "school",
+   "russian"
+  ],
+  "words": 7221,
+  "chapters": 1,
+  "file": "pushkin-pikovaya-dama.json",
+  "bytes": 84254,
+  "source": "https://ru.wikisource.org/wiki/Пиковая_дама_(Пушкин)"
+ },
+ {
+  "id": "pushkin-povesti-pokoynogo-ivana-petrovicha-belkina",
+  "title": "Повести покойного Ивана Петровича Белкина",
+  "author": "Александр Пушкин",
+  "authorYears": "1799–1837",
+  "shelves": [
+   "school",
+   "russian"
+  ],
+  "words": 19149,
+  "chapters": 7,
+  "file": "pushkin-povesti-pokoynogo-ivana-petrovicha-belkina.json",
+  "bytes": 223306,
+  "source": "https://ru.wikisource.org/wiki/Повести_покойного_Ивана_Петровича_Белкина_(Пушкин)"
+ },
+ {
+  "id": "pushkin-ruslan-i-lyudmila",
+  "title": "Руслан и Людмила",
+  "author": "Александр Пушкин",
+  "authorYears": "1799–1837",
+  "shelves": [
+   "school",
+   "russian"
+  ],
+  "words": 12013,
+  "chapters": 1,
+  "file": "pushkin-ruslan-i-lyudmila.json",
+  "bytes": 145018,
+  "source": "https://ru.wikisource.org/wiki/Руслан_и_Людмила_(Пушкин)"
+ },
+ {
+  "id": "pushkin-skazka-o-mertvoy-tsarevne-i-o-semi-bogatyryakh",
+  "title": "Сказка о мёртвой царевне и о семи богатырях",
+  "author": "Александр Пушкин",
+  "authorYears": "1799–1837",
+  "shelves": [
+   "school",
+   "russian"
+  ],
+  "words": 2244,
+  "chapters": 1,
+  "file": "pushkin-skazka-o-mertvoy-tsarevne-i-o-semi-bogatyryakh.json",
+  "bytes": 26371,
+  "source": "https://ru.wikisource.org/wiki/Сказка_о_мёртвой_царевне_и_о_семи_богатырях_(Пушкин)"
+ },
+ {
+  "id": "pushkin-skazka-o-tsare-saltane",
+  "title": "Сказка о царе Салтане",
+  "author": "Александр Пушкин",
+  "authorYears": "1799–1837",
+  "shelves": [
+   "school",
+   "russian"
+  ],
+  "words": 4028,
+  "chapters": 1,
+  "file": "pushkin-skazka-o-tsare-saltane.json",
+  "bytes": 45986,
+  "source": "https://ru.wikisource.org/wiki/Сказка_о_царе_Салтане_(Пушкин)"
+ },
+ {
+  "id": "saltykov-shchedrin-dikiy-pomeshchik",
+  "title": "Дикий помещик",
+  "author": "Михаил Салтыков-Щедрин",
+  "authorYears": "1826–1889",
+  "shelves": [
+   "school",
+   "russian"
+  ],
+  "words": 2332,
+  "chapters": 1,
+  "file": "saltykov-shchedrin-dikiy-pomeshchik.json",
+  "bytes": 26259,
+  "source": "https://ru.wikisource.org/wiki/Дикий_помещик_(Салтыков-Щедрин)"
+ },
+ {
+  "id": "saltykov-shchedrin-istoriya-odnogo-goroda",
+  "title": "История одного города",
+  "author": "Михаил Салтыков-Щедрин",
+  "authorYears": "1826–1889",
+  "shelves": [
+   "school",
+   "russian"
+  ],
+  "words": 56903,
+  "chapters": 17,
+  "file": "saltykov-shchedrin-istoriya-odnogo-goroda.json",
+  "bytes": 704650,
+  "source": "https://ru.wikisource.org/wiki/История_одного_города_(Салтыков-Щедрин)"
+ },
+ {
+  "id": "saltykov-shchedrin-povest-o-tom-kak-odin-muzhik-dvukh-genera",
+  "title": "Повесть о том, как один мужик двух генералов прокормил",
+  "author": "Михаил Салтыков-Щедрин",
+  "authorYears": "1826–1889",
+  "shelves": [
+   "school",
+   "russian"
+  ],
+  "words": 2143,
+  "chapters": 1,
+  "file": "saltykov-shchedrin-povest-o-tom-kak-odin-muzhik-dvukh-genera.json",
+  "bytes": 25549,
+  "source": "https://ru.wikisource.org/wiki/Повесть_о_том,_как_один_мужик_двух_генералов_прокормил_(Салтыков-Щедрин)"
+ },
+ {
+  "id": "saltykov-shchedrin-premudryy-piskar",
+  "title": "Премудрый пискарь",
+  "author": "Михаил Салтыков-Щедрин",
+  "authorYears": "1826–1889",
+  "shelves": [
+   "school",
+   "russian"
+  ],
+  "words": 1909,
+  "chapters": 1,
+  "file": "saltykov-shchedrin-premudryy-piskar.json",
+  "bytes": 20155,
+  "source": "https://ru.wikisource.org/wiki/Премудрый_пискарь_(Салтыков-Щедрин)"
+ },
+ {
+  "id": "tolstoy-voyna-i-mir",
+  "title": "Война и мир",
+  "author": "Лев Толстой",
+  "authorYears": "1828–1910",
+  "shelves": [
+   "school",
+   "russian"
+  ],
+  "words": 458843,
+  "chapters": 360,
+  "file": "tolstoy-voyna-i-mir.json",
+  "bytes": 5181614,
+  "source": "https://ru.wikisource.org/wiki/Война_и_мир_(Толстой)"
+ },
+ {
+  "id": "tolstoy-detstvo",
+  "title": "Детство",
+  "author": "Лев Толстой",
+  "authorYears": "1828–1910",
+  "shelves": [
+   "school",
+   "russian"
+  ],
+  "words": 31109,
+  "chapters": 29,
+  "file": "tolstoy-detstvo.json",
+  "bytes": 349117,
+  "source": "https://ru.wikisource.org/wiki/Детство_(Толстой)"
+ },
+ {
+  "id": "tolstoy-kavkazskiy-plennik",
+  "title": "Кавказский пленник",
+  "author": "Лев Толстой",
+  "authorYears": "1828–1910",
+  "shelves": [
+   "school",
+   "russian"
+  ],
+  "words": 6854,
+  "chapters": 6,
+  "file": "tolstoy-kavkazskiy-plennik.json",
+  "bytes": 75032,
+  "source": "https://ru.wikisource.org/wiki/Кавказский_пленник_(Толстой)"
+ },
+ {
+  "id": "tolstoy-posle-bala",
+  "title": "После бала",
+  "author": "Лев Толстой",
+  "authorYears": "1828–1910",
+  "shelves": [
+   "school",
+   "russian"
+  ],
+  "words": 3170,
+  "chapters": 1,
+  "file": "tolstoy-posle-bala.json",
+  "bytes": 34405,
+  "source": "https://ru.wikisource.org/wiki/После_бала_(Толстой)"
+ },
+ {
+  "id": "tolstoy-sevastopol-v-dekabre-mesyatse",
+  "title": "Севастополь в декабре месяце",
+  "author": "Лев Толстой",
+  "authorYears": "1828–1910",
+  "shelves": [
+   "school",
+   "russian"
+  ],
+  "words": 4638,
+  "chapters": 1,
+  "file": "tolstoy-sevastopol-v-dekabre-mesyatse.json",
+  "bytes": 56061,
+  "source": "https://ru.wikisource.org/wiki/Севастополь_в_декабре_месяце_(Толстой)"
+ },
+ {
+  "id": "turgenev-asya",
+  "title": "Ася",
+  "author": "Иван Тургенев",
+  "authorYears": "1818–1883",
+  "shelves": [
+   "school",
+   "russian"
+  ],
+  "words": 14430,
+  "chapters": 22,
+  "file": "turgenev-asya.json",
+  "bytes": 158208,
+  "source": "https://ru.wikisource.org/wiki/Ася_(Тургенев)"
+ },
+ {
+  "id": "turgenev-zapiski-okhotnika",
+  "title": "Записки охотника",
+  "author": "Иван Тургенев",
+  "authorYears": "1818–1883",
+  "shelves": [
+   "school",
+   "russian"
+  ],
+  "words": 104823,
+  "chapters": 25,
+  "file": "turgenev-zapiski-okhotnika.json",
+  "bytes": 1190544,
+  "source": "https://all-the-books.ru/books/turgenev-ivan-zapiski-ohotnika/"
+ },
+ {
+  "id": "turgenev-mumu",
+  "title": "Муму",
+  "author": "Иван Тургенев",
+  "authorYears": "1818–1883",
+  "shelves": [
+   "school",
+   "russian"
+  ],
+  "words": 8658,
+  "chapters": 1,
+  "file": "turgenev-mumu.json",
+  "bytes": 97515,
+  "source": "https://ru.wikisource.org/wiki/Муму_(Тургенев)"
+ },
+ {
+  "id": "turgenev-ottsy-i-deti",
+  "title": "Отцы и дети",
+  "author": "Иван Тургенев",
+  "authorYears": "1818–1883",
+  "shelves": [
+   "school",
+   "russian"
+  ],
+  "words": 57506,
+  "chapters": 28,
+  "file": "turgenev-ottsy-i-deti.json",
+  "bytes": 646946,
+  "source": "https://ru.wikisource.org/wiki/Отцы_и_дети_(Тургенев)"
+ },
+ {
+  "id": "turgenev-pervaya-lyubov",
+  "title": "Первая любовь",
+  "author": "Иван Тургенев",
+  "authorYears": "1818–1883",
+  "shelves": [
+   "school",
+   "russian"
+  ],
+  "words": 19713,
+  "chapters": 23,
+  "file": "turgenev-pervaya-lyubov.json",
+  "bytes": 214603,
+  "source": "https://ru.wikisource.org/wiki/Первая_любовь_(Тургенев)"
+ },
+ {
+  "id": "chekhov-vishnevyy-sad",
+  "title": "Вишнёвый сад",
+  "author": "Антон Чехов",
+  "authorYears": "1860–1904",
+  "shelves": [
+   "school",
+   "russian"
+  ],
+  "words": 11662,
+  "chapters": 4,
+  "file": "chekhov-vishnevyy-sad.json",
+  "bytes": 134406,
+  "source": "https://ru.wikisource.org/wiki/Вишнёвый_сад_(Чехов)"
+ },
+ {
+  "id": "chekhov-ionych",
+  "title": "Ионыч",
+  "author": "Антон Чехов",
+  "authorYears": "1860–1904",
+  "shelves": [
+   "school",
+   "russian"
+  ],
+  "words": 5564,
+  "chapters": 5,
+  "file": "chekhov-ionych.json",
+  "bytes": 61517,
+  "source": "https://ru.wikisource.org/wiki/Ионыч_(Чехов)"
+ },
+ {
+  "id": "chekhov-kashtanka",
+  "title": "Каштанка",
+  "author": "Антон Чехов",
+  "authorYears": "1860–1904",
+  "shelves": [
+   "school",
+   "russian"
+  ],
+  "words": 5962,
+  "chapters": 7,
+  "file": "chekhov-kashtanka.json",
+  "bytes": 67683,
+  "source": "https://ru.wikisource.org/wiki/Каштанка_(Чехов)"
+ },
+ {
+  "id": "chekhov-kryzhovnik",
+  "title": "Крыжовник",
+  "author": "Антон Чехов",
+  "authorYears": "1860–1904",
+  "shelves": [
+   "school",
+   "russian"
+  ],
+  "words": 3319,
+  "chapters": 1,
+  "file": "chekhov-kryzhovnik.json",
+  "bytes": 36174,
+  "source": "https://ru.wikisource.org/wiki/Крыжовник_(Чехов)"
+ },
+ {
+  "id": "chekhov-o-lyubvi",
+  "title": "О любви",
+  "author": "Антон Чехов",
+  "authorYears": "1860–1904",
+  "shelves": [
+   "school",
+   "russian"
+  ],
+  "words": 3104,
+  "chapters": 1,
+  "file": "chekhov-o-lyubvi.json",
+  "bytes": 33574,
+  "source": "https://ru.wikisource.org/wiki/О_любви_(Чехов)"
+ },
+ {
+  "id": "chekhov-tolstyy-i-tonkiy",
+  "title": "Толстый и тонкий",
+  "author": "Антон Чехов",
+  "authorYears": "1860–1904",
+  "shelves": [
+   "school",
+   "russian"
+  ],
+  "words": 540,
+  "chapters": 1,
+  "file": "chekhov-tolstyy-i-tonkiy.json",
+  "bytes": 6971,
+  "source": "https://ru.wikisource.org/wiki/Толстый_и_тонкий_(Чехов)"
+ },
+ {
+  "id": "chekhov-khameleon",
+  "title": "Хамелеон",
+  "author": "Антон Чехов",
+  "authorYears": "1860–1904",
+  "shelves": [
+   "school",
+   "russian"
+  ],
+  "words": 958,
+  "chapters": 1,
+  "file": "chekhov-khameleon.json",
+  "bytes": 11023,
+  "source": "https://ru.wikisource.org/wiki/Хамелеон_(Чехов)"
+ },
+ {
+  "id": "chekhov-chelovek-v-futlyare",
+  "title": "Человек в футляре",
+  "author": "Антон Чехов",
+  "authorYears": "1860–1904",
+  "shelves": [
+   "school",
+   "russian"
+  ],
+  "words": 4146,
+  "chapters": 1,
+  "file": "chekhov-chelovek-v-futlyare.json",
+  "bytes": 45476,
+  "source": "https://ru.wikisource.org/wiki/Человек_в_футляре_(Чехов)"
+ },
+ {
+  "id": "andersen-gadkiy-utenok",
+  "title": "Гадкий утёнок",
+  "author": "Ханс Кристиан Андерсен",
+  "authorYears": "1805–1875",
+  "shelves": [
+   "school",
+   "foreign"
+  ],
+  "words": 2744,
+  "chapters": 1,
+  "file": "andersen-gadkiy-utenok.json",
+  "bytes": 29987,
+  "source": "https://ru.wikisource.org/wiki/Гадкий_утёнок_(Андерсен;_Ганзен)",
+  "translator": "Анна и Пётр Ганзен",
+  "translatorYears": "1869–1942, 1846–1930"
+ },
+ {
+  "id": "andersen-dikie-lebedi",
+  "title": "Дикие лебеди",
+  "author": "Ханс Кристиан Андерсен",
+  "authorYears": "1805–1875",
+  "shelves": [
+   "school",
+   "foreign"
+  ],
+  "words": 5050,
+  "chapters": 1,
+  "file": "andersen-dikie-lebedi.json",
+  "bytes": 56990,
+  "source": "https://ru.wikisource.org/wiki/Дикие_лебеди_(Андерсен;_Ганзен)",
+  "translator": "Анна и Пётр Ганзен",
+  "translatorYears": "1869–1942, 1846–1930"
+ },
+ {
+  "id": "andersen-novoe-plate-korolya",
+  "title": "Новое платье короля",
+  "author": "Ханс Кристиан Андерсен",
+  "authorYears": "1805–1875",
+  "shelves": [
+   "school",
+   "foreign"
+  ],
+  "words": 1249,
+  "chapters": 1,
+  "file": "andersen-novoe-plate-korolya.json",
+  "bytes": 14515,
+  "source": "https://ru.wikisource.org/wiki/Новое_платье_короля_(Андерсен;_Ганзен)",
+  "translator": "Анна и Пётр Ганзен",
+  "translatorYears": "1869–1942, 1846–1930"
+ },
+ {
+  "id": "andersen-ognivo",
+  "title": "Огниво",
+  "author": "Ханс Кристиан Андерсен",
+  "authorYears": "1805–1875",
+  "shelves": [
+   "school",
+   "foreign"
+  ],
+  "words": 2078,
+  "chapters": 1,
+  "file": "andersen-ognivo.json",
+  "bytes": 22936,
+  "source": "https://ru.wikisource.org/wiki/Огниво_(Андерсен;_Ганзен)",
+  "translator": "Анна и Пётр Ганзен",
+  "translatorYears": "1869–1942, 1846–1930"
+ },
+ {
+  "id": "andersen-rusalochka",
+  "title": "Русалочка",
+  "author": "Ханс Кристиан Андерсен",
+  "authorYears": "1805–1875",
+  "shelves": [
+   "school",
+   "foreign"
+  ],
+  "words": 7005,
+  "chapters": 1,
+  "file": "andersen-rusalochka.json",
+  "bytes": 77889,
+  "source": "https://ru.wikisource.org/wiki/Русалочка_(Андерсен;_Ганзен)",
+  "translator": "Анна и Пётр Ганзен",
+  "translatorYears": "1869–1942, 1846–1930"
+ },
+ {
+  "id": "andersen-snezhnaya-koroleva",
+  "title": "Снежная королева",
+  "author": "Ханс Кристиан Андерсен",
+  "authorYears": "1805–1875",
+  "shelves": [
+   "school",
+   "foreign"
+  ],
+  "words": 9456,
+  "chapters": 1,
+  "file": "andersen-snezhnaya-koroleva.json",
+  "bytes": 102787,
+  "source": "https://ru.wikisource.org/wiki/Снежная_королева_(Андерсен;_Ганзен)",
+  "translator": "Анна и Пётр Ганзен",
+  "translatorYears": "1869–1942, 1846–1930"
+ },
+ {
+  "id": "andersen-stoykiy-olovyannyy-soldatik",
+  "title": "Стойкий оловянный солдатик",
+  "author": "Ханс Кристиан Андерсен",
+  "authorYears": "1805–1875",
+  "shelves": [
+   "school",
+   "foreign"
+  ],
+  "words": 1204,
+  "chapters": 1,
+  "file": "andersen-stoykiy-olovyannyy-soldatik.json",
+  "bytes": 14055,
+  "source": "https://ru.wikisource.org/wiki/Стойкий_оловянный_солдатик_(Андерсен;_Ганзен)",
+  "translator": "Анна и Пётр Ганзен",
+  "translatorYears": "1869–1942, 1846–1930"
+ },
+ {
+  "id": "gomer-iliada",
+  "title": "Илиада",
+  "author": "Гомер",
+  "authorYears": "VIII в. до н. э.",
+  "shelves": [
+   "school",
+   "foreign"
+  ],
+  "words": 122028,
+  "chapters": 24,
+  "file": "gomer-iliada.json",
+  "bytes": 1477682,
+  "source": "https://ru.wikisource.org/wiki/Илиада_(Гомер;_Гнедич)",
+  "translator": "Николай Гнедич",
+  "translatorYears": "1784–1833"
+ },
+ {
+  "id": "gomer-odisseya",
+  "title": "Одиссея",
+  "author": "Гомер",
+  "authorYears": "VIII в. до н. э.",
+  "shelves": [
+   "school",
+   "foreign"
+  ],
+  "words": 98854,
+  "chapters": 24,
+  "file": "gomer-odisseya.json",
+  "bytes": 1164154,
+  "source": "https://ru.wikisource.org/wiki/Одиссея_(Гомер;_Жуковский)",
+  "translator": "Василий Жуковский",
+  "translatorYears": "1783–1852"
+ },
+ {
+  "id": "doyl-pestraya-lenta",
+  "title": "Пёстрая лента",
+  "author": "Артур Конан Дойл",
+  "authorYears": "1859–1930",
+  "shelves": [
+   "school",
+   "foreign"
+  ],
+  "words": 8114,
+  "chapters": 1,
+  "file": "doyl-pestraya-lenta.json",
+  "bytes": 90938,
+  "source": "https://ru.wikisource.org/wiki/Пёстрая_лента_(Дойль;_1896)",
+  "translator": "переводчик неизвестен, перевод 1896 года"
+ },
+ {
+  "id": "svift-puteshestviya-gullivera",
+  "title": "Путешествия Гулливера",
+  "author": "Джонатан Свифт",
+  "authorYears": "1667–1745",
+  "shelves": [
+   "school",
+   "foreign"
+  ],
+  "words": 86945,
+  "chapters": 41,
+  "file": "svift-puteshestviya-gullivera.json",
+  "bytes": 1055723,
+  "source": "https://ru.wikisource.org/wiki/Путешествия_Лемюэля_Гулливера_(Свифт;_Франковский)",
+  "translator": "Адриан Франковский",
+  "translatorYears": "1888–1942"
+ },
+ {
+  "id": "skott-ayvengo",
+  "title": "Айвенго",
+  "author": "Вальтер Скотт",
+  "authorYears": "1771–1832",
+  "shelves": [
+   "school",
+   "foreign"
+  ],
+  "words": 154009,
+  "chapters": 46,
+  "file": "skott-ayvengo.json",
+  "bytes": 1812702,
+  "source": "https://ru.wikisource.org/wiki/Айвенго_(Скотт;_Бекетова)",
+  "translator": "Екатерина Бекетова",
+  "translatorYears": "1855–1892"
+ },
+ {
+  "id": "stivenson-ostrov-sokrovishch",
+  "title": "Остров сокровищ",
+  "author": "Роберт Льюис Стивенсон",
+  "authorYears": "1850–1894",
+  "shelves": [
+   "school",
+   "foreign"
+  ],
+  "words": 51041,
+  "chapters": 16,
+  "file": "stivenson-ostrov-sokrovishch.json",
+  "bytes": 564584,
+  "source": "https://ru.wikisource.org/wiki/Остров_сокровищ_(Стивенсон;_Е._К.)",
+  "translator": "Е. К., перевод 1886 года"
+ },
+ {
+  "id": "tven-pokhozhdeniya-toma-soyera",
+  "title": "Похождения Тома Сойера",
+  "author": "Марк Твен",
+  "authorYears": "1835–1910",
+  "shelves": [
+   "school",
+   "foreign"
+  ],
+  "words": 57656,
+  "chapters": 37,
+  "file": "tven-pokhozhdeniya-toma-soyera.json",
+  "bytes": 657159,
+  "source": "https://ru.wikisource.org/wiki/Похождения_Тома_Сойера_(Твен;_Энгельгардт)",
+  "translator": "Михаил Энгельгардт",
+  "translatorYears": "1861–1915"
+ },
+ {
+  "id": "shekspir-gamlet",
+  "title": "Гамлет",
+  "author": "Уильям Шекспир",
+  "authorYears": "1564–1616",
+  "shelves": [
+   "school",
+   "foreign"
+  ],
+  "words": 25461,
+  "chapters": 5,
+  "file": "shekspir-gamlet.json",
+  "bytes": 292650,
+  "source": "https://ru.wikisource.org/wiki/Гамлет_(Шекспир;_Кронеберг)",
+  "translator": "Андрей Кронеберг",
+  "translatorYears": "1814–1855"
+ },
+ {
+  "id": "shekspir-romeo-i-dzhuletta",
+  "title": "Ромео и Джульетта",
+  "author": "Уильям Шекспир",
+  "authorYears": "1564–1616",
+  "shelves": [
+   "school",
+   "foreign"
+  ],
+  "words": 16108,
+  "chapters": 9,
+  "file": "shekspir-romeo-i-dzhuletta.json",
+  "bytes": 181361,
+  "source": "https://ru.wikisource.org/wiki/Ромео_и_Джульетта_(Шекспир;_Михаловский)",
+  "translator": "Дмитрий Михаловский",
+  "translatorYears": "1828–1905"
+ }
+]

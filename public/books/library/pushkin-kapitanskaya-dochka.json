@@ -1,7 +1,14 @@
 {
+ "id": "pushkin-kapitanskaya-dochka",
  "title": "Капитанская дочка",
  "author": "Александр Пушкин",
- "year": 1836,
+ "authorYears": "1799–1837",
+ "translator": null,
+ "translatorYears": null,
+ "shelves": [
+  "school",
+  "russian"
+ ],
  "source": "https://all-the-books.ru/books/pushkin-aleksandr-kapitanskaya-dochka/",
  "license": "Общественное достояние: автор умер более 70 лет назад, текст на языке оригинала. Файл скачан пользователем с all-the-books.ru 2026-10-20; сноски и примечания издателя удалены, номера строф и служебные строки убраны для скорочтения.",
  "words": 33710,

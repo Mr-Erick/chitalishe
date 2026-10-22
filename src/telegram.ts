@@ -64,6 +64,13 @@ const inTelegram = () => {
   return !!platform && platform !== "unknown";
 };
 
+/** Внешняя страница: внутри Telegram открываем через Telegram, чтобы не уйти со страницы мини-приложения. */
+export function openExternal(url: string) {
+  const app = tg();
+  if (inTelegram() && app?.openLink) app.openLink(url);
+  else window.open(url, "_blank", "noopener");
+}
+
 /**
  * Письмо на почту. Внутри Telegram переход на mailto: роняет мини-приложение (ERR_UNKNOWN_URL_SCHEME),
  * а openLink принимает только http(s). Поэтому открываем во внешнем браузере свою страницу mail.html,

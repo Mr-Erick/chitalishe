@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { type CatalogEntry, localCopy, SUPPORT_EMAIL } from "../books/catalog";
 import { type BookMeta, bookWpm, getProgress } from "../books/store";
-import { openMail } from "../telegram";
+import { openExternal, openMail } from "../telegram";
 import { formatDuration, formatNumber, percent, titleSize } from "./format";
 import { IconArrowLeft, IconArrowRight, IconBook, IconCheck, IconPlay, IconShare } from "./icons";
 import { ShareSheet } from "./ShareSheet";
@@ -108,6 +108,14 @@ export function CatalogBook({ entry, books, wpm, shared, onBack, onOpen }: Props
         <div className="row">
           Текст <b className="plain">подготовлен SPEEDTEXT: без сносок и примечаний</b>
         </div>
+        {entry.source && (
+          <div className="row">
+            Источник{" "}
+            <a className="link" href={entry.source} onClick={(e) => { e.preventDefault(); openExternal(entry.source); }}>
+              {entry.source.includes("wikisource.org") ? "Викитека" : new URL(entry.source).hostname}
+            </a>
+          </div>
+        )}
       </section>
       <p className="muted small">
         Нашли ошибку или считаете, что книга охраняется?{" "}
