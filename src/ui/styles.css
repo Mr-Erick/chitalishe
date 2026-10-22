@@ -13,6 +13,8 @@
   --serif: "PT Serif", Georgia, "Times New Roman", serif;
   /* Точка, где стоит опорная буква: левее центра, чтобы длинные слова помещались. */
   --anchor: 30%;
+  /* Отступ снизу под полоску Home на iPhone: берём больший из системного и того, что сообщает Telegram. */
+  --safe-bottom: max(12px, env(safe-area-inset-bottom, 0px), var(--tg-safe-area-inset-bottom, 0px));
 }
 
 * { box-sizing: border-box; }
@@ -31,7 +33,7 @@ button:disabled { opacity: 0.5; cursor: default; }
 .app-screen {
   max-width: 560px;
   margin: 0 auto;
-  padding: 16px 16px 120px;
+  padding: 16px 16px calc(96px + var(--safe-bottom));
   display: flex;
   flex-direction: column;
   gap: 14px;
@@ -114,7 +116,7 @@ button:disabled { opacity: 0.5; cursor: default; }
 .tabbar {
   position: fixed; left: 0; right: 0; bottom: 0;
   display: grid; grid-template-columns: 1fr 1fr; gap: 8px;
-  padding: 8px 8px calc(8px + env(safe-area-inset-bottom));
+  padding: 8px 16px calc(4px + var(--safe-bottom));
   background: linear-gradient(transparent, var(--app-bg) 30%);
   max-width: 576px; margin: 0 auto;
 }
@@ -208,7 +210,7 @@ button:disabled { opacity: 0.5; cursor: default; }
 .sheet {
   width: 100%; max-width: 560px; margin: 0 auto; max-height: 88vh; overflow-y: auto;
   background: #fff; color: #1d1d1b; border-radius: 22px 22px 0 0;
-  padding: 10px 16px calc(18px + env(safe-area-inset-bottom));
+  padding: 10px 16px calc(10px + var(--safe-bottom));
   display: flex; flex-direction: column; gap: 12px;
 }
 .app-sheet { background: var(--app-bg); }
@@ -277,7 +279,7 @@ button:disabled { opacity: 0.5; cursor: default; }
 .speed { text-align: center; margin: 0; color: var(--r-muted); font-size: 19px; }
 .hint { color: var(--r-muted); font-size: 13px; margin: 0; text-align: center; }
 
-.controls { padding: 8px 16px calc(16px + env(safe-area-inset-bottom)); display: flex; flex-direction: column; gap: 12px; transition: opacity 0.2s; }
+.controls { padding: 8px 16px calc(8px + var(--safe-bottom)); display: flex; flex-direction: column; gap: 12px; transition: opacity 0.2s; }
 .is-playing .controls, .is-playing .topbar, .is-playing .gesture-hint { opacity: 0; pointer-events: none; }
 .progress { width: 100%; accent-color: var(--r-text); }
 .buttons { display: flex; justify-content: space-between; align-items: center; gap: 8px; }
