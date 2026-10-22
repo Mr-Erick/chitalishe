@@ -3,6 +3,7 @@ import { chapterAt, tokenizeBook } from "../engine/chapters";
 import { splitAtOrp } from "../engine/orp";
 import { shownText } from "../engine/tokenize";
 import { type BookRecord, type Bookmark, bookWpm, getBookmarks, getProgress, saveBookmarks, saveProgress } from "../books/store";
+import { trackSession } from "../analytics";
 import { haptic } from "../telegram";
 import { percent } from "./format";
 import { IconArrowLeft, IconBook, IconBookmark, IconNext, IconPause, IconPlay, IconPrev, IconSliders } from "./icons";
@@ -50,6 +51,15 @@ export function Reader({ book, startIndex, settings, onExit, onOpenSettings, onA
   });
 
   useKeepAwake(r.playing);
+
+  // ---- обезличенная статистика: сколько читали и на какой скорости ----
+  const wpmRef = useRef(r.wpm);
+  wpmRef.current = r.wpm;
+  useEffect(() => {
+    if (!r.playing) return;
+    const started = performance.now();
+    return () => trackSession(performance.now() - started, wpmRef.current);
+  }, [r.playing]);
 
   const chapter = chapterAt(chapters, r.index);
   const pct = percent(r.index, tokens.length);
