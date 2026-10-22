@@ -2,7 +2,7 @@ import { useState } from "react";
 import { type BookRecord, type Bookmark, bookWpm, getBookmarks, getProgress, saveBookmarks } from "../books/store";
 import { tokenizeBook } from "../engine/chapters";
 import { formatDuration, formatNumber, percent } from "./format";
-import { IconArrowLeft, IconArrowRight, IconMore, IconPlay, IconSliders } from "./icons";
+import { IconArrowLeft, IconArrowRight, IconBook, IconMore, IconPlay, IconSliders } from "./icons";
 
 interface Props {
   book: BookRecord;
@@ -12,9 +12,10 @@ interface Props {
   onRead: (index?: number) => void;
   onDelete: () => void;
   onSettings: () => void;
+  onPreview: () => void;
 }
 
-export function BookScreen({ book, wpm, initialTab, onBack, onRead, onDelete, onSettings }: Props) {
+export function BookScreen({ book, wpm, initialTab, onBack, onRead, onDelete, onSettings, onPreview }: Props) {
   const [tab, setTab] = useState<"toc" | "bookmarks">(initialTab ?? "toc");
   const [bookmarks, setBookmarks] = useState<Bookmark[]>(() => getBookmarks(book.id));
   const [menu, setMenu] = useState(false);
@@ -87,6 +88,11 @@ export function BookScreen({ book, wpm, initialTab, onBack, onRead, onDelete, on
         <span className="round-btn">
           <IconArrowRight />
         </span>
+      </button>
+
+      <button className="text-btn" onClick={onPreview}>
+        <IconBook />
+        Читать текстом <small>· предпросмотр</small>
       </button>
 
       <div className="tabs2">

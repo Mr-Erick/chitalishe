@@ -5,6 +5,7 @@ import { tg } from "../telegram";
 import { AddSheet } from "./AddSheet";
 import { BookScreen } from "./BookScreen";
 import { Library } from "./Library";
+import { Preview } from "./Preview";
 import { Reader } from "./Reader";
 import { SettingsScreen } from "./SettingsScreen";
 import { useSettings } from "./settings";
@@ -14,7 +15,8 @@ type View =
   | { name: "books" }
   | { name: "settings"; from?: View }
   | { name: "book"; id: string; tab?: "bookmarks" }
-  | { name: "reader"; id: string; start?: number };
+  | { name: "reader"; id: string; start?: number }
+  | { name: "preview"; id: string; start?: number };
 
 export function App() {
   const [settings, update] = useSettings();
@@ -31,7 +33,7 @@ export function App() {
   }, [refresh]);
 
   // Текст книги нужен карточке и чтению; грузим из IndexedDB при переходе.
-  const bookId = view.name === "book" || view.name === "reader" ? view.id : null;
+  const bookId = view.name === "book" || view.name === "reader" || view.name === "preview" ? view.id : null;
   useEffect(() => {
     if (!bookId) return;
     if (record?.id === bookId) return;
@@ -42,7 +44,7 @@ export function App() {
 
   const back = useCallback(() => {
     setView((v) => {
-      if (v.name === "reader") return { name: "book", id: v.id };
+      if (v.name === "reader" || v.name === "preview") return { name: "book", id: v.id };
       if (v.name === "settings") return v.from ?? { name: "books" };
       return { name: "books" };
     });
@@ -96,12 +98,25 @@ export function App() {
         onBack={back}
         onRead={(start) => setView({ name: "reader", id: record.id, start })}
         onSettings={() => setView({ name: "settings", from: { name: "book", id: record.id, tab: view.tab } })}
+        onPreview={() => setView({ name: "preview", id: record.id })}
         onDelete={async () => {
           await removeBook(record.id);
           setRecord(null);
           refresh();
           setView({ name: "books" });
         }}
+      />
+    );
+  } else if (view.name === "preview") {
+    screen = (
+      <Preview
+        key={`${record.id}:${view.start ?? ""}`}
+        book={record}
+        settings={settings}
+        update={update}
+        startIndex={view.start}
+        onBack={back}
+        onRead={(start) => setView({ name: "reader", id: record.id, start })}
       />
     );
   } else {
@@ -114,6 +129,7 @@ export function App() {
         onExit={back}
         onOpenSettings={() => setView({ name: "settings", from: { name: "reader", id: record.id } })}
         onAllBookmarks={() => setView({ name: "book", id: record.id, tab: "bookmarks" })}
+        onText={(index) => setView({ name: "preview", id: record.id, start: index })}
       />
     );
   }
@@ -129,7 +145,8 @@ export function App() {
           onAdded={(b) => {
             setAdding(false);
             refresh();
-            setView({ name: "book", id: b.id });
+            // Новая книга сразу открывается текстом: видно, что файл прочитался, и можно выбрать, откуда начать.
+            setView({ name: "preview", id: b.id });
           }}
         />
       )}

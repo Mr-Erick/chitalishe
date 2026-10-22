@@ -288,3 +288,65 @@ button:disabled { opacity: 0.5; cursor: default; }
   background: color-mix(in srgb, var(--r-text) 8%, transparent); color: var(--r-text); font-family: var(--mono); font-size: 14px;
 }
 .buttons .round { width: 60px; height: 60px; border-radius: 50%; background: var(--r-text); color: var(--r-bg); }
+
+/* ---------- Предпросмотр: книга обычным текстом, оформление как у экрана чтения ---------- */
+.preview-screen {
+  position: fixed; inset: 0; display: flex; flex-direction: column;
+  background: var(--r-bg); color: var(--r-text); font-family: var(--text);
+}
+.preview-screen .ghost { padding: 8px; color: var(--r-text); display: grid; place-items: center; min-width: 40px; }
+.pv-top { display: flex; align-items: center; gap: 8px; padding: 8px 8px 0; }
+.pv-aa { font-family: var(--serif); font-size: 22px; }
+.pv-chapter {
+  position: relative; flex: 1; min-width: 0; margin: 0 auto; max-width: 260px;
+  display: flex; align-items: center; justify-content: center; gap: 6px;
+  height: 38px; padding: 0 14px; border-radius: 12px; border: 1px solid var(--r-line);
+  background: color-mix(in srgb, var(--r-bg) 70%, #fff); font-size: 15px;
+}
+.pv-chapter span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.pv-chapter.static { border: 0; background: none; color: var(--r-muted); }
+.pv-chapter select { position: absolute; inset: 0; opacity: 0; font-size: 16px; }
+.pv-meta { margin: 6px 0 0; text-align: center; font-family: var(--mono); font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--r-muted); }
+.pv-font {
+  position: absolute; top: 52px; right: 8px; z-index: 2; display: flex; flex-direction: column; gap: 8px; padding: 10px;
+  border-radius: 14px; background: var(--r-bg); border: 1px solid var(--r-line); box-shadow: 0 8px 24px rgb(0 0 0 / 0.15);
+}
+.pv-font-row { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+.pv-font-row button {
+  height: 38px; min-width: 44px; padding: 0 12px; border-radius: 10px; border: 1px solid var(--r-line); color: var(--r-text);
+}
+.pv-font-row button.on { background: var(--r-text); color: var(--r-bg); border-color: var(--r-text); }
+.pv-font-row span { font-family: var(--mono); font-size: 14px; }
+.pv-text {
+  flex: 1; overflow-y: auto; -webkit-overflow-scrolling: touch; padding: 8px 24px 24px;
+  line-height: 1.6; overscroll-behavior: contain;
+}
+.pv-text p { margin: 0 0 0.8em; }
+.pv-text span { cursor: pointer; border-radius: 4px; }
+.pv-text .past { color: var(--r-muted); }
+.pv-text .sel { background: var(--r-text); color: var(--r-bg); padding: 0 3px; }
+.pv-title { text-align: center; font-size: 1.25em; font-weight: 700; margin: 0.6em 0 1em; }
+.pv-next { display: block; width: 100%; margin-top: 1em; padding: 14px; border-radius: 12px; border: 1px dashed var(--r-line); color: var(--r-muted); font-size: 15px; text-align: center; }
+.pv-bottom { padding: 8px 16px calc(8px + var(--safe-bottom)); display: flex; flex-direction: column; gap: 10px; }
+.pv-actions { display: flex; gap: 10px; }
+.pv-go {
+  flex: 1; min-width: 0; height: 56px; border-radius: 16px; display: flex; align-items: center; justify-content: center; gap: 10px;
+  background: var(--r-text); color: var(--r-bg); font-weight: 600; font-size: 17px; padding: 0 14px;
+}
+.pv-go span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.pv-go svg { flex: none; fill: currentColor; }
+.pv-wpm {
+  width: 76px; height: 56px; border-radius: 16px; border: 1px solid var(--r-line); display: flex; flex-direction: column;
+  align-items: center; justify-content: center; line-height: 1.1;
+}
+.pv-wpm b { font-family: var(--mono); font-size: 17px; }
+.pv-wpm small { color: var(--r-muted); font-size: 12px; }
+.pv-progress { height: 3px; border-radius: 2px; background: var(--r-line); overflow: hidden; }
+.pv-progress span { display: block; height: 100%; background: var(--r-text); }
+
+.text-btn {
+  display: flex; align-items: center; justify-content: center; gap: 10px; height: 48px; border-radius: 14px;
+  border: 1px solid var(--line); background: var(--card);
+  font-family: var(--mono); font-weight: 700; font-size: 13px; text-transform: uppercase;
+}
+.text-btn small { color: var(--muted); font-weight: 400; font-size: 12px; }
