@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import type { Token } from "../engine/tokenize";
 import { nextSentenceStart, prevSentenceStart } from "../engine/tokenize";
 import type { Chapter } from "../engine/chapters";
@@ -22,11 +22,15 @@ interface Options {
 }
 
 export function useReader({ tokens, chapters, settings, initialIndex, initialWpm, onChapterPause }: Options) {
-  const [index, setIndex] = useState(initialIndex);
+  const [index, setIndex] = useState(() => {
+    let j = initialIndex;
+    while (j < tokens.length - 1 && tokens[j]?.skip) j++;
+    return j;
+  });
   const [playing, setPlaying] = useState(false);
   const [wpm, setWpmState] = useState(clampWpm(initialWpm));
 
-  const indexRef = useRef(initialIndex);
+  const indexRef = useRef(index);
   const wpmRef = useRef(clampWpm(initialWpm));
   const nextAt = useRef(0);
   const sincePlay = useRef(0);
@@ -37,16 +41,28 @@ export function useReader({ tokens, chapters, settings, initialIndex, initialWpm
   const onChapterPauseRef = useRef(onChapterPause);
   onChapterPauseRef.current = onChapterPause;
 
+  // Мусор, помеченный очисткой, SPEEDTEXT не показывает: встаём на ближайшее слово после него (или перед, если дальше пусто).
+  const visible = useCallback(
+    (i: number) => {
+      let j = Math.max(0, Math.min(tokens.length - 1, i));
+      while (j < tokens.length - 1 && tokens[j].skip) j++;
+      while (j > 0 && tokens[j].skip) j--;
+      return j;
+    },
+    [tokens],
+  );
+  const last = useMemo(() => visible(tokens.length - 1), [visible, tokens.length]);
+
   const chapterStarts = useRef(new Map<number, number>());
-  chapterStarts.current = new Map(chapters.map((c, i) => [c.start, i]));
+  chapterStarts.current = new Map(chapters.map((c, i) => [visible(c.start), i]));
 
   const goTo = useCallback(
     (i: number) => {
-      const clamped = Math.max(0, Math.min(tokens.length - 1, i));
-      indexRef.current = clamped;
-      setIndex(clamped);
+      const target = visible(i);
+      indexRef.current = target;
+      setIndex(target);
     },
-    [tokens.length],
+    [visible],
   );
 
   const setWpm = useCallback((value: number) => {
@@ -64,7 +80,7 @@ export function useReader({ tokens, chapters, settings, initialIndex, initialWpm
 
   const play = useCallback(() => {
     if (!tokens.length) return;
-    if (indexRef.current >= tokens.length - 1) goTo(0);
+    if (indexRef.current >= last) goTo(0);
     else if (indexRef.current > 0 && !chapterStarts.current.has(indexRef.current))
       goTo(indexRef.current - settingsRef.current.rewindWords);
     sincePlay.current = 0;
@@ -72,7 +88,7 @@ export function useReader({ tokens, chapters, settings, initialIndex, initialWpm
     lastFrame.current = now;
     nextAt.current = now + delayFor(indexRef.current);
     setPlaying(true);
-  }, [tokens.length, goTo, delayFor]);
+  }, [tokens.length, last, goTo, delayFor]);
 
   const pause = useCallback(() => setPlaying(false), []);
   const toggle = useCallback(() => (playing ? pause() : play()), [playing, pause, play]);
@@ -86,11 +102,11 @@ export function useReader({ tokens, chapters, settings, initialIndex, initialWpm
       lastFrame.current = now;
 
       if (now >= nextAt.current) {
-        if (indexRef.current >= tokens.length - 1) {
+        if (indexRef.current >= last) {
           setPlaying(false);
           return;
         }
-        const next = indexRef.current + 1;
+        const next = visible(indexRef.current + 1);
         goTo(next);
         const chapter = chapterStarts.current.get(next);
         if (chapter !== undefined && s.chapterEnd === "pause") {
@@ -111,7 +127,7 @@ export function useReader({ tokens, chapters, settings, initialIndex, initialWpm
     };
     frame = requestAnimationFrame(loop);
     return () => cancelAnimationFrame(frame);
-  }, [playing, tokens.length, goTo, delayFor, setWpm]);
+  }, [playing, last, visible, goTo, delayFor, setWpm]);
 
   // Свернули приложение — пауза.
   useEffect(() => {

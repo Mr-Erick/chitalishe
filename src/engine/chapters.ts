@@ -1,4 +1,5 @@
 import { type Token, tokenize } from "./tokenize";
+import { makeCleaner } from "./cleanup";
 
 export interface ChapterText {
   title: string;
@@ -196,13 +197,14 @@ export function splitIntoParts(text: string): ChapterText[] {
   return parts;
 }
 
-/** Слова всей книги одним списком плюс границы глав. */
-export function tokenizeBook(chapters: ChapterText[]): { tokens: Token[]; chapters: Chapter[] } {
+/** Слова всей книги одним списком плюс границы глав. clean — пометить мусор, который SPEEDTEXT пропустит. */
+export function tokenizeBook(chapters: ChapterText[], { clean = false } = {}): { tokens: Token[]; chapters: Chapter[] } {
   const tokens: Token[] = [];
   const result: Chapter[] = [];
+  const cleaner = clean ? makeCleaner(chapters.map((c) => c.text)) : undefined;
   for (const ch of chapters) {
     const offset = tokens.length;
-    const part = tokenize(ch.text);
+    const part = tokenize(ch.text, cleaner);
     if (!part.length) continue;
     for (const t of part) tokens.push({ ...t, sentenceStart: t.sentenceStart + offset });
     result.push({ title: ch.title, start: offset, end: tokens.length - 1 });

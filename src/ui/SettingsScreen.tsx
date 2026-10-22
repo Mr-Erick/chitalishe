@@ -169,6 +169,13 @@ export function SettingsScreen({ settings: s, update, onBack, onRights }: Props)
           Конец главы <b>{s.chapterEnd === "continue" ? "читать дальше" : "пауза"} ›</b>
         </button>
         <label className="row toggle">
+          <span>
+            Пропускать мусор
+            <small className="row-hint">номера страниц, колонтитулы, сноски; в «Открыть текст» видно всё</small>
+          </span>
+          <input type="checkbox" checked={s.cleanText} onChange={(e) => update({ cleanText: e.target.checked })} />
+        </label>
+        <label className="row toggle">
           Вибрация
           <input type="checkbox" checked={s.haptics} onChange={(e) => update({ haptics: e.target.checked })} />
         </label>

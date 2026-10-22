@@ -1,3 +1,5 @@
+import type { Cleaner } from "./cleanup";
+
 export interface Token {
   /** Слово вместе с прилипшей пунктуацией: «минуту.», «(например,». */
   text: string;
@@ -5,11 +7,18 @@ export interface Token {
   paragraphEnd: boolean;
   /** Индекс первого слова предложения, к которому относится токен. */
   sentenceStart: number;
+  /** Мусор (номер страницы, колонтитул, сноска): SPEEDTEXT его пропускает, в предпросмотре слово остаётся. */
+  skip?: boolean;
+  /** Что показывать в SPEEDTEXT, если отличается от text: слово без метки сноски. */
+  shown?: string;
 }
 
 const SENTENCE_END = /[.!?…]["»”')\]]*$/;
 
-export function tokenize(text: string): Token[] {
+/** Слово для показа в SPEEDTEXT. */
+export const shownText = (t: Token) => t.shown ?? t.text;
+
+export function tokenize(text: string, cleaner?: Cleaner): Token[] {
   const tokens: Token[] = [];
   const paragraphs = text
     .replace(/\r\n?/g, "\n")
@@ -19,10 +28,23 @@ export function tokenize(text: string): Token[] {
 
   let sentenceStart = 0;
   for (const paragraph of paragraphs) {
-    const words = paragraph.split(/\s+/).filter(Boolean);
-    words.forEach((word, i) => {
+    // Слова те же, что при простом делении абзаца по пробелам: очистка только помечает их, индексы не сдвигаются.
+    const note = cleaner?.noteParagraph(paragraph) ?? false;
+    const words: { text: string; junk: boolean }[] = [];
+    for (const line of paragraph.split("\n")) {
+      const junk = note || (cleaner?.junkLine(line.trim()) ?? false);
+      for (const w of line.split(/\s+/)) if (w) words.push({ text: w, junk });
+    }
+    words.forEach(({ text: word, junk }, i) => {
       const index = tokens.length;
-      tokens.push({ text: word, paragraphEnd: i === words.length - 1, sentenceStart });
+      const token: Token = { text: word, paragraphEnd: i === words.length - 1, sentenceStart };
+      if (cleaner) {
+        const clean = cleaner.word(word);
+        // Слово, от которого после снятия метки ничего не осталось («[12]»), тоже пропускаем; одинокое тире — нет.
+        if (junk || (clean !== word && !/[\p{L}\p{N}]/u.test(clean))) token.skip = true;
+        else if (clean !== word) token.shown = clean;
+      }
+      tokens.push(token);
       if (SENTENCE_END.test(word) || i === words.length - 1) sentenceStart = index + 1;
     });
   }

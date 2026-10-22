@@ -186,6 +186,7 @@ button:disabled { opacity: 0.5; cursor: default; }
 .card > .row:first-child, .card > .preview + .row { border-top: 0; }
 .row b { font-family: var(--mono); font-size: 13px; text-transform: uppercase; white-space: nowrap; }
 .row.column { flex-direction: column; align-items: stretch; }
+.row-hint { display: block; color: var(--muted); font-size: 13px; margin-top: 2px; }
 .choice { display: flex; align-items: center; gap: 8px; }
 .choice button { min-width: 44px; height: 40px; padding: 0 12px; border-radius: 12px; background: #ecebe6; border: 1px solid var(--line); text-align: center; }
 .choice button.on { background: var(--ink); color: #fff; border-color: var(--ink); }
