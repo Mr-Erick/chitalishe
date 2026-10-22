@@ -26,12 +26,12 @@ export function AddSheet({ onClose, onAdded }: { onClose: () => void; onAdded: (
         <div className="grip" />
         <h2>Добавить книгу или текст</h2>
         <button className="btn dark wide" disabled={busy} onClick={() => input.current?.click()}>
-          Выбрать файл · TXT, DOCX
+          Выбрать файл · TXT, DOCX, FB2
         </button>
         <input
           ref={input}
           type="file"
-          accept=".txt,.docx,.doc,text/plain,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+          accept=".txt,.docx,.doc,.fb2,.zip,text/plain,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
           hidden
           onChange={(e) => {
             const file = e.target.files?.[0];

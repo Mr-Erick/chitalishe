@@ -14,7 +14,7 @@ interface Props {
   onAdd: () => void;
 }
 
-const FORMAT_LABEL: Record<string, string> = { TXT: "TXT", DOCX: "DOCX", DOC: "DOC", TEXT: "Вставленный текст" };
+const FORMAT_LABEL: Record<string, string> = { TXT: "TXT", DOCX: "DOCX", DOC: "DOC", FB2: "FB2", TEXT: "Вставленный текст" };
 
 export function Library({ books, wpm, onOpen, onContinue, onAdd }: Props) {
   const [sort, setSort] = useState<Sort>("recent");
@@ -56,7 +56,7 @@ export function Library({ books, wpm, onOpen, onContinue, onAdd }: Props) {
         <input className="search" autoFocus placeholder="Название или автор" value={query} onChange={(e) => setQuery(e.target.value)} />
       ) : (
         <div className="strip">
-          <b>Скорочтение</b> // одно слово · TXT · DOCX
+          <b>Скорочтение</b> // одно слово · TXT · DOCX · FB2
         </div>
       )}
 
