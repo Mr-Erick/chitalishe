@@ -8,6 +8,8 @@ export interface ParsedBook {
   author: string;
   format: BookFormat;
   chapters: ChapterText[];
+  /** Книга из бесплатной библиотеки: её id в каталоге. */
+  catalogId?: string;
 }
 
 export class UnsupportedFormatError extends Error {}

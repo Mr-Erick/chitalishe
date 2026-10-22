@@ -115,15 +115,15 @@ button:disabled { opacity: 0.5; cursor: default; }
 
 .tabbar {
   position: fixed; left: 0; right: 0; bottom: 0;
-  display: grid; grid-template-columns: 1fr 1fr; gap: 8px;
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px;
   padding: 8px 16px calc(4px + var(--safe-bottom));
   background: linear-gradient(transparent, var(--app-bg) 30%);
   max-width: 576px; margin: 0 auto;
 }
 .tabbar button {
-  display: flex; align-items: center; justify-content: center; gap: 10px;
-  height: 56px; border-radius: 18px; background: var(--card); border: 1px solid var(--line);
-  font-family: var(--display); font-weight: 800; font-size: 14px; text-transform: uppercase;
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px;
+  height: 60px; border-radius: 18px; background: var(--card); border: 1px solid var(--line);
+  font-family: var(--display); font-weight: 800; font-size: 11px; text-transform: uppercase; white-space: nowrap;
 }
 .tabbar button.on { background: var(--ink); color: #fff; border-color: var(--ink); }
 .tabbar button.on svg { color: var(--lime); }
@@ -350,3 +350,60 @@ button:disabled { opacity: 0.5; cursor: default; }
   font-family: var(--mono); font-weight: 700; font-size: 13px; text-transform: uppercase;
 }
 .text-btn small { color: var(--muted); font-weight: 400; font-size: 12px; }
+
+/* ---------- Бесплатная библиотека и обмен ---------- */
+.screen-title { font-family: var(--display); font-weight: 800; font-size: 30px; line-height: 1.05; text-transform: uppercase; margin: 4px 0 0; }
+.mono-label.lime { color: var(--lime); }
+.hello-card { background: var(--ink); color: #fff; border-radius: 22px; padding: 18px; display: flex; flex-direction: column; gap: 8px; }
+.hello-card h2 { font-family: var(--display); font-weight: 800; font-size: 20px; line-height: 1.1; text-transform: uppercase; margin: 0; }
+.hello-card em { font-style: normal; color: var(--lime); }
+.hello-card p:last-child { margin: 0; color: #cfcec9; line-height: 1.4; }
+.search-box { display: flex; align-items: center; gap: 10px; padding: 0 14px; border-radius: 14px; border: 1px solid var(--line); background: var(--card); color: var(--muted); }
+.search-box input { flex: 1; min-width: 0; font: inherit; font-size: 16px; padding: 12px 0; border: 0; background: none; color: var(--ink); outline: none; }
+.chips { display: flex; gap: 8px; overflow-x: auto; margin: 0 -16px; padding: 0 16px; scrollbar-width: none; }
+.chips::-webkit-scrollbar { display: none; }
+.chips button {
+  flex: none; height: 38px; padding: 0 14px; border-radius: 12px; border: 1px solid var(--line); background: var(--card);
+  font-family: var(--mono); font-weight: 700; font-size: 12px; text-transform: uppercase;
+}
+.chips button small { color: var(--muted); font-weight: 400; margin-left: 4px; }
+.chips button.on { background: var(--ink); color: #fff; border-color: var(--ink); }
+.chips button.on small { color: var(--lime); }
+.catalog-row { display: flex; align-items: center; }
+.catalog-row > button:first-child { flex: 1; min-width: 0; }
+.card-list li > button.add-mark {
+  flex: none; width: 40px; height: 40px; padding: 0; margin-right: 14px; border-radius: 12px; display: grid; place-items: center;
+  background: var(--lime); color: var(--ink);
+}
+.card-list li > button.add-mark.done { background: #e4e3de; color: var(--muted); }
+.shared-banner { display: flex; align-items: center; gap: 12px; background: var(--ink); color: #fff; border-radius: 18px; padding: 12px 14px; }
+.shared-banner > span:last-child { display: flex; flex-direction: column; gap: 2px; }
+.logo.small { width: 36px; height: 36px; border-radius: 50%; font-size: 16px; }
+.tabs2 .icon-label { display: flex; align-items: center; justify-content: center; gap: 8px; }
+.tabs2 .icon-label svg { width: 18px; height: 18px; }
+.pd-card { gap: 0; }
+.pd-badge {
+  align-self: flex-start; display: inline-flex; align-items: center; gap: 6px; padding: 5px 10px; border-radius: 8px;
+  background: var(--ink); color: var(--lime); font-family: var(--mono); font-size: 11px; font-weight: 700; text-transform: uppercase; margin-bottom: 6px;
+}
+.pd-badge svg { width: 14px; height: 14px; }
+.row b.plain { font-family: var(--text); font-size: 15px; text-transform: none; white-space: normal; text-align: right; font-weight: 600; }
+.muted.small { font-size: 14px; }
+.link { color: var(--ink); text-decoration: underline; font: inherit; }
+.menu-item { display: flex; align-items: center; gap: 10px; padding: 12px 8px; border-radius: 10px; font-size: 16px; text-align: left; }
+.menu-item svg { width: 20px; height: 20px; }
+.menu-item.accent { background: var(--lime); }
+.menu-item.danger { color: var(--danger); }
+.file-row { display: flex; align-items: center; gap: 12px; padding: 12px; border-radius: 16px; background: var(--card); border: 1px solid var(--line); }
+.file-row .plaque { font-family: var(--mono); font-size: 11px; }
+.consent { display: flex; gap: 12px; align-items: flex-start; padding: 14px; border-radius: 16px; background: var(--card); border: 1px solid var(--line); line-height: 1.4; }
+.consent input { width: 22px; height: 22px; flex: none; accent-color: var(--ink); margin: 0; }
+.consent small { display: block; color: var(--muted); font-size: 13px; margin-top: 4px; }
+.note-box { margin: 0; padding: 12px 14px; border-radius: 14px; background: #e4e3de; color: var(--muted); font-size: 14px; line-height: 1.4; }
+.share-preview { border: 1px solid var(--line); border-radius: 16px; background: #fff; padding: 12px; display: flex; flex-direction: column; gap: 10px; }
+.share-preview p { margin: 0; }
+.share-book { display: flex; align-items: center; gap: 10px; border-left: 3px solid #3d8bd9; padding-left: 10px; }
+.share-open { text-align: center; color: #2f7bd1; background: #eaf2fb; border-radius: 10px; padding: 8px; font-weight: 500; font-size: 15px; }
+.prose p { margin: 0 0 8px; line-height: 1.45; }
+.btn.mono { font-family: var(--mono); color: var(--lime); text-decoration: none; display: block; }
+a.btn { text-decoration: none; }

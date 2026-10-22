@@ -37,3 +37,21 @@ export const IconPrev = () => (
 export const IconNext = () => (
   <svg {...base}><path d="M18 5v14M5 6l9 6-9 6z" /></svg>
 );
+export const IconLibrary = () => (
+  <svg {...base}><path d="M5 4v16M9 4v16M13.5 4.5l4.5 15M3 20h18" /></svg>
+);
+export const IconShare = () => (
+  <svg {...base}><path d="M12 15V3M7 8l5-5 5 5M5 13v6a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-6" /></svg>
+);
+export const IconSend = () => (
+  <svg {...base}><path d="M21 3L10 14M21 3l-7 18-4-7-7-4z" /></svg>
+);
+export const IconCheck = () => (
+  <svg {...base}><path d="M5 12.5l4.5 4.5L19 7" /></svg>
+);
+export const IconPencil = () => (
+  <svg {...base}><path d="M4 20h4L19 9l-4-4L4 16zM13.5 6.5l4 4" /></svg>
+);
+export const IconTrash = () => (
+  <svg {...base}><path d="M4 7h16M10 11v6M14 11v6M6 7l1 13h10l1-13M9 7V4h6v3" /></svg>
+);

@@ -4,6 +4,8 @@ interface TelegramWebApp {
   expand(): void;
   disableVerticalSwipes?(): void;
   platform?: string;
+  initDataUnsafe?: { start_param?: string };
+  openTelegramLink?(url: string): void;
   safeAreaInset?: { bottom: number };
   onEvent?(event: "safeAreaChanged", cb: () => void): void;
   HapticFeedback?: { impactOccurred(style: "light" | "medium"): void; selectionChanged(): void };
@@ -32,6 +34,21 @@ export function initTelegram() {
   };
   applyInset();
   app.onEvent?.("safeAreaChanged", applyInset);
+}
+
+/** Параметр из ссылки t.me/<бот>?startapp=…; вне Telegram — из адреса страницы, чтобы проверять в браузере. */
+export function startParam(): string {
+  const fromTg = tg()?.initDataUnsafe?.start_param;
+  if (fromTg) return fromTg;
+  const q = new URLSearchParams(location.search);
+  return q.get("tgWebAppStartParam") ?? q.get("startapp") ?? "";
+}
+
+/** Ссылка на t.me: внутри Telegram открываем средствами Telegram, иначе в новой вкладке. */
+export function openTelegramLink(url: string) {
+  const app = tg();
+  if (app?.openTelegramLink) app.openTelegramLink(url);
+  else window.open(url, "_blank");
 }
 
 export const haptic = {
