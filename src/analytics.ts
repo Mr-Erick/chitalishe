@@ -1,5 +1,6 @@
 // Обезличенная статистика в GoatCounter: без имён, Telegram ID и текста книг.
 // Если счётчик недоступен или заблокирован, событие просто теряется, приложение этого не замечает.
+import { local } from "./books/store";
 import { tg } from "./telegram";
 
 const ENDPOINT = "https://mrerick.goatcounter.com/count";
@@ -42,28 +43,12 @@ export const speedBucket = (wpm: number) => {
   return lo >= 1500 ? "1500" : `${lo}-${lo + 99}`;
 };
 
-function readCarry(): number {
-  try {
-    return Number(localStorage.getItem(CARRY_KEY)) || 0;
-  } catch {
-    return 0;
-  }
-}
-
-function writeCarry(ms: number) {
-  try {
-    localStorage.setItem(CARRY_KEY, String(Math.round(ms)));
-  } catch {
-    // нет хранилища: остаток потеряется, не страшно
-  }
-}
-
 /**
  * Время чтения. Остаток меньше 5 минут копится между сессиями и книгами, поэтому короткие сессии тоже доходят.
  * Возвращает, сколько событий «чтение» отправлено.
  */
 export function addReadingTime(ms: number): number {
-  let total = readCarry() + Math.max(0, ms);
+  let total = local.read<number>(CARRY_KEY, 0) + Math.max(0, ms);
   const chunk = READ_CHUNK_MIN * 60_000;
   let sent = 0;
   while (total >= chunk) {
@@ -71,7 +56,7 @@ export function addReadingTime(ms: number): number {
     sent++;
     event(`read/${READ_CHUNK_MIN}min`, `Чтение: ${READ_CHUNK_MIN} минут`);
   }
-  writeCarry(total);
+  local.write(CARRY_KEY, Math.round(total));
   return sent;
 }
 
