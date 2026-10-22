@@ -1005,6 +1005,524 @@
   "source": "https://ru.wikisource.org/wiki/Человек_в_футляре_(Чехов)"
  },
  {
+  "id": "bunin-derevnya",
+  "title": "Деревня",
+  "author": "Иван Бунин",
+  "authorYears": "1870–1953",
+  "shelves": [
+   "russian"
+  ],
+  "words": 36931,
+  "chapters": 3,
+  "file": "bunin-derevnya.json",
+  "bytes": 424294,
+  "source": "https://ru.wikisource.org/wiki/Деревня_(Бунин)"
+ },
+ {
+  "id": "bunin-legkoe-dykhanie",
+  "title": "Лёгкое дыхание",
+  "author": "Иван Бунин",
+  "authorYears": "1870–1953",
+  "shelves": [
+   "russian"
+  ],
+  "words": 1716,
+  "chapters": 1,
+  "file": "bunin-legkoe-dykhanie.json",
+  "bytes": 20057,
+  "source": "https://ru.wikisource.org/wiki/Лёгкое_дыхание_(Бунин)"
+ },
+ {
+  "id": "garshin-krasnyy-tsvetok",
+  "title": "Красный цветок",
+  "author": "Всеволод Гаршин",
+  "authorYears": "1855–1888",
+  "shelves": [
+   "russian"
+  ],
+  "words": 4755,
+  "chapters": 6,
+  "file": "garshin-krasnyy-tsvetok.json",
+  "bytes": 55354,
+  "source": "https://ru.wikisource.org/wiki/Красный_цветок_(Гаршин)"
+ },
+ {
+  "id": "garshin-lyagushka-puteshestvennitsa",
+  "title": "Лягушка-путешественница",
+  "author": "Всеволод Гаршин",
+  "authorYears": "1855–1888",
+  "shelves": [
+   "russian"
+  ],
+  "words": 1348,
+  "chapters": 1,
+  "file": "garshin-lyagushka-puteshestvennitsa.json",
+  "bytes": 15193,
+  "source": "https://ru.wikisource.org/wiki/Лягушка-путешественница_(Гаршин)"
+ },
+ {
+  "id": "gogol-zapiski-sumasshedshego",
+  "title": "Записки сумасшедшего",
+  "author": "Николай Гоголь",
+  "authorYears": "1809–1852",
+  "shelves": [
+   "russian"
+  ],
+  "words": 6641,
+  "chapters": 20,
+  "file": "gogol-zapiski-sumasshedshego.json",
+  "bytes": 74383,
+  "source": "https://ru.wikisource.org/wiki/Записки_сумасшедшего_(Гоголь)"
+ },
+ {
+  "id": "gogol-portret",
+  "title": "Портрет",
+  "author": "Николай Гоголь",
+  "authorYears": "1809–1852",
+  "shelves": [
+   "russian"
+  ],
+  "words": 17328,
+  "chapters": 2,
+  "file": "gogol-portret.json",
+  "bytes": 206633,
+  "source": "https://ru.wikisource.org/wiki/Портрет_(Гоголь)"
+ },
+ {
+  "id": "gogol-starosvetskie-pomeshchiki",
+  "title": "Старосветские помещики",
+  "author": "Николай Гоголь",
+  "authorYears": "1809–1852",
+  "shelves": [
+   "russian"
+  ],
+  "words": 7183,
+  "chapters": 1,
+  "file": "gogol-starosvetskie-pomeshchiki.json",
+  "bytes": 85009,
+  "source": "https://ru.wikisource.org/wiki/Старосветские_помещики_(Гоголь)"
+ },
+ {
+  "id": "goncharov-obyknovennaya-istoriya",
+  "title": "Обыкновенная история",
+  "author": "Иван Гончаров",
+  "authorYears": "1812–1891",
+  "shelves": [
+   "russian"
+  ],
+  "words": 96688,
+  "chapters": 13,
+  "file": "goncharov-obyknovennaya-istoriya.json",
+  "bytes": 1037751,
+  "source": "https://ru.wikisource.org/wiki/Обыкновенная_история_(Гончаров)"
+ },
+ {
+  "id": "gorkiy-mat",
+  "title": "Мать",
+  "author": "Максим Горький",
+  "authorYears": "1868–1936",
+  "shelves": [
+   "russian"
+  ],
+  "words": 92655,
+  "chapters": 58,
+  "file": "gorkiy-mat.json",
+  "bytes": 1023717,
+  "source": "https://ru.wikisource.org/wiki/Мать_(Горький)"
+ },
+ {
+  "id": "grin-begushchaya-po-volnam",
+  "title": "Бегущая по волнам",
+  "author": "Александр Грин",
+  "authorYears": "1880–1932",
+  "shelves": [
+   "russian"
+  ],
+  "words": 57918,
+  "chapters": 36,
+  "file": "grin-begushchaya-po-volnam.json",
+  "bytes": 665090,
+  "source": "https://ru.wikisource.org/wiki/Бегущая_по_волнам_(Грин)"
+ },
+ {
+  "id": "dostoevskiy-besy",
+  "title": "Бесы",
+  "author": "Фёдор Достоевский",
+  "authorYears": "1821–1881",
+  "shelves": [
+   "russian"
+  ],
+  "words": 224647,
+  "chapters": 180,
+  "file": "dostoevskiy-besy.json",
+  "bytes": 2505016,
+  "source": "https://ru.wikisource.org/wiki/Бесы_(Достоевский)"
+ },
+ {
+  "id": "dostoevskiy-bratya-karamazovy",
+  "title": "Братья Карамазовы",
+  "author": "Фёдор Достоевский",
+  "authorYears": "1821–1881",
+  "shelves": [
+   "russian"
+  ],
+  "words": 307103,
+  "chapters": 132,
+  "file": "dostoevskiy-bratya-karamazovy.json",
+  "bytes": 3334104,
+  "source": "https://ru.wikisource.org/wiki/Братья_Карамазовы_(Достоевский)"
+ },
+ {
+  "id": "dostoevskiy-zapiski-iz-podpolya",
+  "title": "Записки из подполья",
+  "author": "Фёдор Достоевский",
+  "authorYears": "1821–1881",
+  "shelves": [
+   "russian"
+  ],
+  "words": 35544,
+  "chapters": 22,
+  "file": "dostoevskiy-zapiski-iz-podpolya.json",
+  "bytes": 386397,
+  "source": "https://ru.wikisource.org/wiki/Записки_из_подполья_(Достоевский)"
+ },
+ {
+  "id": "dostoevskiy-igrok",
+  "title": "Игрок",
+  "author": "Фёдор Достоевский",
+  "authorYears": "1821–1881",
+  "shelves": [
+   "russian"
+  ],
+  "words": 46120,
+  "chapters": 17,
+  "file": "dostoevskiy-igrok.json",
+  "bytes": 496511,
+  "source": "https://ru.wikisource.org/wiki/Игрок_(Достоевский)"
+ },
+ {
+  "id": "dostoevskiy-idiot",
+  "title": "Идиот",
+  "author": "Фёдор Достоевский",
+  "authorYears": "1821–1881",
+  "shelves": [
+   "russian"
+  ],
+  "words": 213987,
+  "chapters": 50,
+  "file": "dostoevskiy-idiot.json",
+  "bytes": 2369329,
+  "source": "https://ru.wikisource.org/wiki/Идиот_(Достоевский)"
+ },
+ {
+  "id": "kuprin-belyy-pudel",
+  "title": "Белый пудель",
+  "author": "Александр Куприн",
+  "authorYears": "1870–1938",
+  "shelves": [
+   "russian"
+  ],
+  "words": 9480,
+  "chapters": 1,
+  "file": "kuprin-belyy-pudel.json",
+  "bytes": 111395,
+  "source": "https://ru.wikisource.org/wiki/Белый_пудель_(Куприн)"
+ },
+ {
+  "id": "kuprin-gambrinus",
+  "title": "Гамбринус",
+  "author": "Александр Куприн",
+  "authorYears": "1870–1938",
+  "shelves": [
+   "russian"
+  ],
+  "words": 7151,
+  "chapters": 9,
+  "file": "kuprin-gambrinus.json",
+  "bytes": 88064,
+  "source": "https://ru.wikisource.org/wiki/Гамбринус_(Куприн)"
+ },
+ {
+  "id": "kuprin-poedinok",
+  "title": "Поединок",
+  "author": "Александр Куприн",
+  "authorYears": "1870–1938",
+  "shelves": [
+   "russian"
+  ],
+  "words": 68330,
+  "chapters": 23,
+  "file": "kuprin-poedinok.json",
+  "bytes": 799107,
+  "source": "https://ru.wikisource.org/wiki/Поединок_(Куприн)"
+ },
+ {
+  "id": "leskov-ledi-makbet-mtsenskogo-uezda",
+  "title": "Леди Макбет Мценского уезда",
+  "author": "Николай Лесков",
+  "authorYears": "1831–1895",
+  "shelves": [
+   "russian"
+  ],
+  "words": 13596,
+  "chapters": 15,
+  "file": "leskov-ledi-makbet-mtsenskogo-uezda.json",
+  "bytes": 156224,
+  "source": "https://ru.wikisource.org/wiki/Леди_Макбет_Мценского_уезда_(Лесков)"
+ },
+ {
+  "id": "saltykov-shchedrin-gospoda-golovlevy",
+  "title": "Господа Головлёвы",
+  "author": "Михаил Салтыков-Щедрин",
+  "authorYears": "1826–1889",
+  "shelves": [
+   "russian"
+  ],
+  "words": 92632,
+  "chapters": 41,
+  "file": "saltykov-shchedrin-gospoda-golovlevy.json",
+  "bytes": 1065038,
+  "source": "https://ru.wikisource.org/wiki/Господа_Головлёвы_(Салтыков-Щедрин)"
+ },
+ {
+  "id": "tolstoy-anna-karenina",
+  "title": "Анна Каренина",
+  "author": "Лев Толстой",
+  "authorYears": "1828–1910",
+  "shelves": [
+   "russian"
+  ],
+  "words": 280542,
+  "chapters": 239,
+  "file": "tolstoy-anna-karenina.json",
+  "bytes": 3094329,
+  "source": "https://ru.wikisource.org/wiki/Анна_Каренина_(Толстой)"
+ },
+ {
+  "id": "tolstoy-voskresenie",
+  "title": "Воскресение",
+  "author": "Лев Толстой",
+  "authorYears": "1828–1910",
+  "shelves": [
+   "russian"
+  ],
+  "words": 141411,
+  "chapters": 130,
+  "file": "tolstoy-voskresenie.json",
+  "bytes": 1622121,
+  "source": "https://ru.wikisource.org/wiki/Воскресение_(Толстой)"
+ },
+ {
+  "id": "tolstoy-kreytserova-sonata",
+  "title": "Крейцерова соната",
+  "author": "Лев Толстой",
+  "authorYears": "1828–1910",
+  "shelves": [
+   "russian"
+  ],
+  "words": 25921,
+  "chapters": 29,
+  "file": "tolstoy-kreytserova-sonata.json",
+  "bytes": 277721,
+  "source": "https://ru.wikisource.org/wiki/Крейцерова_соната_(Толстой)"
+ },
+ {
+  "id": "tolstoy-otrochestvo",
+  "title": "Отрочество",
+  "author": "Лев Толстой",
+  "authorYears": "1828–1910",
+  "shelves": [
+   "russian"
+  ],
+  "words": 23576,
+  "chapters": 27,
+  "file": "tolstoy-otrochestvo.json",
+  "bytes": 263263,
+  "source": "https://ru.wikisource.org/wiki/Отрочество_(Толстой)"
+ },
+ {
+  "id": "tolstoy-smert-ivana-ilicha",
+  "title": "Смерть Ивана Ильича",
+  "author": "Лев Толстой",
+  "authorYears": "1828–1910",
+  "shelves": [
+   "russian"
+  ],
+  "words": 17758,
+  "chapters": 12,
+  "file": "tolstoy-smert-ivana-ilicha.json",
+  "bytes": 199550,
+  "source": "https://ru.wikisource.org/wiki/Смерть_Ивана_Ильича_(Толстой)"
+ },
+ {
+  "id": "tolstoy-khadzhi-murat",
+  "title": "Хаджи-Мурат",
+  "author": "Лев Толстой",
+  "authorYears": "1828–1910",
+  "shelves": [
+   "russian"
+  ],
+  "words": 35945,
+  "chapters": 26,
+  "file": "tolstoy-khadzhi-murat.json",
+  "bytes": 410495,
+  "source": "https://ru.wikisource.org/wiki/Хаджи-Мурат_(Толстой)"
+ },
+ {
+  "id": "tolstoy-yunost",
+  "title": "Юность",
+  "author": "Лев Толстой",
+  "authorYears": "1828–1910",
+  "shelves": [
+   "russian"
+  ],
+  "words": 50461,
+  "chapters": 45,
+  "file": "tolstoy-yunost.json",
+  "bytes": 565000,
+  "source": "https://ru.wikisource.org/wiki/Юность_(Толстой)"
+ },
+ {
+  "id": "turgenev-veshnie-vody",
+  "title": "Вешние воды",
+  "author": "Иван Тургенев",
+  "authorYears": "1818–1883",
+  "shelves": [
+   "russian"
+  ],
+  "words": 40911,
+  "chapters": 45,
+  "file": "turgenev-veshnie-vody.json",
+  "bytes": 461095,
+  "source": "https://ru.wikisource.org/wiki/Вешние_воды_(Тургенев)"
+ },
+ {
+  "id": "turgenev-dvoryanskoe-gnezdo",
+  "title": "Дворянское гнездо",
+  "author": "Иван Тургенев",
+  "authorYears": "1818–1883",
+  "shelves": [
+   "russian"
+  ],
+  "words": 48949,
+  "chapters": 46,
+  "file": "turgenev-dvoryanskoe-gnezdo.json",
+  "bytes": 551023,
+  "source": "https://ru.wikisource.org/wiki/Дворянское_гнездо_(Тургенев)"
+ },
+ {
+  "id": "turgenev-nakanune",
+  "title": "Накануне",
+  "author": "Иван Тургенев",
+  "authorYears": "1818–1883",
+  "shelves": [
+   "russian"
+  ],
+  "words": 45678,
+  "chapters": 35,
+  "file": "turgenev-nakanune.json",
+  "bytes": 507459,
+  "source": "https://ru.wikisource.org/wiki/Накануне_(Тургенев)"
+ },
+ {
+  "id": "turgenev-rudin",
+  "title": "Рудин",
+  "author": "Иван Тургенев",
+  "authorYears": "1818–1883",
+  "shelves": [
+   "russian"
+  ],
+  "words": 37456,
+  "chapters": 13,
+  "file": "turgenev-rudin.json",
+  "bytes": 415565,
+  "source": "https://ru.wikisource.org/wiki/Рудин_(Тургенев)"
+ },
+ {
+  "id": "chekhov-dama-s-sobachkoy",
+  "title": "Дама с собачкой",
+  "author": "Антон Чехов",
+  "authorYears": "1860–1904",
+  "shelves": [
+   "russian"
+  ],
+  "words": 5227,
+  "chapters": 4,
+  "file": "chekhov-dama-s-sobachkoy.json",
+  "bytes": 56623,
+  "source": "https://ru.wikisource.org/wiki/Дама_с_собачкой_(Чехов)"
+ },
+ {
+  "id": "chekhov-dom-s-mezoninom",
+  "title": "Дом с мезонином",
+  "author": "Антон Чехов",
+  "authorYears": "1860–1904",
+  "shelves": [
+   "russian"
+  ],
+  "words": 5776,
+  "chapters": 4,
+  "file": "chekhov-dom-s-mezoninom.json",
+  "bytes": 63138,
+  "source": "https://ru.wikisource.org/wiki/Дом_с_мезонином_(Чехов)"
+ },
+ {
+  "id": "chekhov-palata-6",
+  "title": "Палата № 6",
+  "author": "Антон Чехов",
+  "authorYears": "1860–1904",
+  "shelves": [
+   "russian"
+  ],
+  "words": 16562,
+  "chapters": 19,
+  "file": "chekhov-palata-6.json",
+  "bytes": 187864,
+  "source": "https://ru.wikisource.org/wiki/Палата_№_6_(Чехов)"
+ },
+ {
+  "id": "chekhov-step",
+  "title": "Степь",
+  "author": "Антон Чехов",
+  "authorYears": "1860–1904",
+  "shelves": [
+   "russian"
+  ],
+  "words": 28913,
+  "chapters": 8,
+  "file": "chekhov-step.json",
+  "bytes": 323113,
+  "source": "https://ru.wikisource.org/wiki/Степь_(Чехов)"
+ },
+ {
+  "id": "chekhov-tri-sestry",
+  "title": "Три сестры",
+  "author": "Антон Чехов",
+  "authorYears": "1860–1904",
+  "shelves": [
+   "russian"
+  ],
+  "words": 15262,
+  "chapters": 4,
+  "file": "chekhov-tri-sestry.json",
+  "bytes": 172391,
+  "source": "https://ru.wikisource.org/wiki/Три_сестры_(Чехов)"
+ },
+ {
+  "id": "chekhov-chayka",
+  "title": "Чайка",
+  "author": "Антон Чехов",
+  "authorYears": "1860–1904",
+  "shelves": [
+   "russian"
+  ],
+  "words": 12948,
+  "chapters": 4,
+  "file": "chekhov-chayka.json",
+  "bytes": 146960,
+  "source": "https://ru.wikisource.org/wiki/Чайка_(Чехов)"
+ },
+ {
   "id": "andersen-gadkiy-utenok",
   "title": "Гадкий утёнок",
   "author": "Ханс Кристиан Андерсен",
@@ -1169,7 +1687,7 @@
   "words": 8114,
   "chapters": 1,
   "file": "doyl-pestraya-lenta.json",
-  "bytes": 90938,
+  "bytes": 90961,
   "source": "https://ru.wikisource.org/wiki/Пёстрая_лента_(Дойль;_1896)",
   "translator": "переводчик неизвестен, перевод 1896 года"
  },
@@ -1202,7 +1720,7 @@
   "words": 154009,
   "chapters": 46,
   "file": "skott-ayvengo.json",
-  "bytes": 1812702,
+  "bytes": 1812720,
   "source": "https://ru.wikisource.org/wiki/Айвенго_(Скотт;_Бекетова)",
   "translator": "Екатерина Бекетова",
   "translatorYears": "1855–1892"
@@ -1219,7 +1737,7 @@
   "words": 51041,
   "chapters": 16,
   "file": "stivenson-ostrov-sokrovishch.json",
-  "bytes": 564584,
+  "bytes": 564582,
   "source": "https://ru.wikisource.org/wiki/Остров_сокровищ_(Стивенсон;_Е._К.)",
   "translator": "Е. К., перевод 1886 года"
  },
@@ -1273,5 +1791,333 @@
   "source": "https://ru.wikisource.org/wiki/Ромео_и_Джульетта_(Шекспир;_Михаловский)",
   "translator": "Дмитрий Михаловский",
   "translatorYears": "1828–1905"
+ },
+ {
+  "id": "andersen-dyuymovochka",
+  "title": "Дюймовочка",
+  "author": "Ханс Кристиан Андерсен",
+  "authorYears": "1805–1875",
+  "shelves": [
+   "foreign"
+  ],
+  "words": 3269,
+  "chapters": 1,
+  "file": "andersen-dyuymovochka.json",
+  "bytes": 36277,
+  "source": "https://ru.wikisource.org/wiki/Дюймовочка_(Андерсен;_Ганзен)",
+  "translator": "Анна и Пётр Ганзен",
+  "translatorYears": "1869–1942, 1846–1930"
+ },
+ {
+  "id": "andersen-printsessa-na-goroshine",
+  "title": "Принцесса на горошине",
+  "author": "Ханс Кристиан Андерсен",
+  "authorYears": "1805–1875",
+  "shelves": [
+   "foreign"
+  ],
+  "words": 272,
+  "chapters": 1,
+  "file": "andersen-printsessa-na-goroshine.json",
+  "bytes": 3631,
+  "source": "https://ru.wikisource.org/wiki/Принцесса_на_горошине_(Андерсен;_Ганзен)",
+  "translator": "Анна и Пётр Ганзен",
+  "translatorYears": "1869–1942, 1846–1930"
+ },
+ {
+  "id": "andersen-svinopas",
+  "title": "Свинопас",
+  "author": "Ханс Кристиан Андерсен",
+  "authorYears": "1805–1875",
+  "shelves": [
+   "foreign"
+  ],
+  "words": 1275,
+  "chapters": 1,
+  "file": "andersen-svinopas.json",
+  "bytes": 14682,
+  "source": "https://ru.wikisource.org/wiki/Свинопас_(Андерсен;_Ганзен)",
+  "translator": "Анна и Пётр Ганзен",
+  "translatorYears": "1869–1942, 1846–1930"
+ },
+ {
+  "id": "andersen-solovey",
+  "title": "Соловей",
+  "author": "Ханс Кристиан Андерсен",
+  "authorYears": "1805–1875",
+  "shelves": [
+   "foreign"
+  ],
+  "words": 2851,
+  "chapters": 1,
+  "file": "andersen-solovey.json",
+  "bytes": 32823,
+  "source": "https://ru.wikisource.org/wiki/Соловей_(Андерсен;_Ганзен)",
+  "translator": "Анна и Пётр Ганзен",
+  "translatorYears": "1869–1942, 1846–1930"
+ },
+ {
+  "id": "bicher-stou-khizhina-dyadi-toma",
+  "title": "Хижина дяди Тома",
+  "author": "Гарриет Бичер-Стоу",
+  "authorYears": "1811–1896",
+  "shelves": [
+   "foreign"
+  ],
+  "words": 150529,
+  "chapters": 44,
+  "file": "bicher-stou-khizhina-dyadi-toma.json",
+  "bytes": 1681130,
+  "source": "https://ru.wikisource.org/wiki/Хижина_дяди_Тома_(Бичер-Стоу;_Анненская)",
+  "translator": "Александра Анненская",
+  "translatorYears": "1840–1915"
+ },
+ {
+  "id": "vern-dvadtsat-tysyach-le-pod-vodoy",
+  "title": "Двадцать тысяч лье под водой",
+  "author": "Жюль Верн",
+  "authorYears": "1828–1905",
+  "shelves": [
+   "foreign"
+  ],
+  "words": 108009,
+  "chapters": 47,
+  "file": "vern-dvadtsat-tysyach-le-pod-vodoy.json",
+  "bytes": 1307561,
+  "source": "https://ru.wikisource.org/wiki/Двадцать_тысяч_лье_под_водой_(Верн;_Вовчок)",
+  "translator": "Марко Вовчок",
+  "translatorYears": "1833–1907"
+ },
+ {
+  "id": "vern-deti-kapitana-granta",
+  "title": "Дети капитана Гранта",
+  "author": "Жюль Верн",
+  "authorYears": "1828–1905",
+  "shelves": [
+   "foreign"
+  ],
+  "words": 165567,
+  "chapters": 70,
+  "file": "vern-deti-kapitana-granta.json",
+  "bytes": 2020116,
+  "source": "https://ru.wikisource.org/wiki/Дети_капитана_Гранта_(Верн;_Бекетова)",
+  "translator": "А. Бекетова"
+ },
+ {
+  "id": "vern-pyatnadtsatiletniy-kapitan",
+  "title": "Пятнадцатилетний капитан",
+  "author": "Жюль Верн",
+  "authorYears": "1828–1905",
+  "shelves": [
+   "foreign"
+  ],
+  "words": 98679,
+  "chapters": 38,
+  "file": "vern-pyatnadtsatiletniy-kapitan.json",
+  "bytes": 1192148,
+  "source": "https://ru.wikisource.org/wiki/Пятнадцатилетний_капитан_(Верн;_Петров)",
+  "translator": "Игнатий Петров"
+ },
+ {
+  "id": "vern-tainstvennyy-ostrov",
+  "title": "Таинственный остров",
+  "author": "Жюль Верн",
+  "authorYears": "1828–1905",
+  "shelves": [
+   "foreign"
+  ],
+  "words": 132403,
+  "chapters": 62,
+  "file": "vern-tainstvennyy-ostrov.json",
+  "bytes": 1622037,
+  "source": "https://ru.wikisource.org/wiki/Таинственный_остров_(Верн;_Петров)",
+  "translator": "Игнатий Петров"
+ },
+ {
+  "id": "gofman-shchelkunchik-i-myshinyy-korol",
+  "title": "Щелкунчик и Мышиный король",
+  "author": "Эрнст Теодор Амадей Гофман",
+  "authorYears": "1776–1822",
+  "shelves": [
+   "foreign"
+  ],
+  "words": 17167,
+  "chapters": 14,
+  "file": "gofman-shchelkunchik-i-myshinyy-korol.json",
+  "bytes": 201337,
+  "source": "https://ru.wikisource.org/wiki/Щелкунчик_и_Мышиный_король_(Гофман;_Соколовский)",
+  "translator": "Александр Соколовский",
+  "translatorYears": "1837–1915"
+ },
+ {
+  "id": "grimm-belosnezhka",
+  "title": "Белоснежка",
+  "author": "Братья Гримм",
+  "authorYears": "1785–1863, 1786–1859",
+  "shelves": [
+   "foreign"
+  ],
+  "words": 3102,
+  "chapters": 1,
+  "file": "grimm-belosnezhka.json",
+  "bytes": 34213,
+  "source": "https://ru.wikisource.org/wiki/Белоснежка_(Гримм;_Снессорева)",
+  "translator": "Софья Снессорева"
+ },
+ {
+  "id": "grimm-bremenskie-muzykanty",
+  "title": "Бременские музыканты",
+  "author": "Братья Гримм",
+  "authorYears": "1785–1863, 1786–1859",
+  "shelves": [
+   "foreign"
+  ],
+  "words": 1128,
+  "chapters": 1,
+  "file": "grimm-bremenskie-muzykanty.json",
+  "bytes": 12621,
+  "source": "https://ru.wikisource.org/wiki/Бременские_музыканты_(Гримм;_Снессорева)",
+  "translator": "Софья Снессорева"
+ },
+ {
+  "id": "grinvud-malenkiy-oborvysh",
+  "title": "Маленький оборвыш",
+  "author": "Джеймс Гринвуд",
+  "authorYears": "1832–1929",
+  "shelves": [
+   "foreign"
+  ],
+  "words": 62580,
+  "chapters": 30,
+  "file": "grinvud-malenkiy-oborvysh.json",
+  "bytes": 676256,
+  "source": "https://ru.wikisource.org/wiki/Маленький_оборвыш_(Гринвуд)",
+  "translator": "Александра Анненская",
+  "translatorYears": "1840–1915"
+ },
+ {
+  "id": "kipling-kniga-dzhungley",
+  "title": "Книга джунглей",
+  "author": "Редьярд Киплинг",
+  "authorYears": "1865–1936",
+  "shelves": [
+   "foreign"
+  ],
+  "words": 31133,
+  "chapters": 7,
+  "file": "kipling-kniga-dzhungley.json",
+  "bytes": 347988,
+  "source": "https://ru.wikisource.org/wiki/Книга_джунглей",
+  "translator": "Е. М. Чистякова-Вэр"
+ },
+ {
+  "id": "london-belyy-klyk",
+  "title": "Белый Клык",
+  "author": "Джек Лондон",
+  "authorYears": "1876–1916",
+  "shelves": [
+   "foreign"
+  ],
+  "words": 57800,
+  "chapters": 25,
+  "file": "london-belyy-klyk.json",
+  "bytes": 670499,
+  "source": "https://ru.wikisource.org/wiki/Белый_клык_(Лондон;_Кауфман)",
+  "translator": "Н. С. Кауфман"
+ },
+ {
+  "id": "london-zov-predkov",
+  "title": "Зов предков",
+  "author": "Джек Лондон",
+  "authorYears": "1876–1916",
+  "shelves": [
+   "foreign"
+  ],
+  "words": 29180,
+  "chapters": 7,
+  "file": "london-zov-predkov.json",
+  "bytes": 332995,
+  "source": "https://ru.wikisource.org/wiki/Зов_предков_(Лондон;_Вершинина)",
+  "translator": "З. А. Вершинина"
+ },
+ {
+  "id": "perro-zolushka-zamarashka",
+  "title": "Золушка (Замарашка)",
+  "author": "Шарль Перро",
+  "authorYears": "1628–1703",
+  "shelves": [
+   "foreign"
+  ],
+  "words": 1803,
+  "chapters": 1,
+  "file": "perro-zolushka-zamarashka.json",
+  "bytes": 21152,
+  "source": "https://ru.wikisource.org/wiki/Замарашка_(Перро;_Тургенев)/_(СО)",
+  "translator": "Иван Тургенев",
+  "translatorYears": "1818–1883"
+ },
+ {
+  "id": "perro-kot-v-sapogakh",
+  "title": "Кот в сапогах",
+  "author": "Шарль Перро",
+  "authorYears": "1628–1703",
+  "shelves": [
+   "foreign"
+  ],
+  "words": 1196,
+  "chapters": 1,
+  "file": "perro-kot-v-sapogakh.json",
+  "bytes": 14324,
+  "source": "https://ru.wikisource.org/wiki/Кот_в_сапогах_(Перро;_Тургенев)",
+  "translator": "Иван Тургенев",
+  "translatorYears": "1818–1883"
+ },
+ {
+  "id": "perro-krasnaya-shapochka",
+  "title": "Красная Шапочка",
+  "author": "Шарль Перро",
+  "authorYears": "1628–1703",
+  "shelves": [
+   "foreign"
+  ],
+  "words": 510,
+  "chapters": 1,
+  "file": "perro-krasnaya-shapochka.json",
+  "bytes": 6258,
+  "source": "https://ru.wikisource.org/wiki/Красная_Шапочка_(Перро;_Тургенев)",
+  "translator": "Иван Тургенев",
+  "translatorYears": "1818–1883"
+ },
+ {
+  "id": "po-zolotoy-zhuk",
+  "title": "Золотой жук",
+  "author": "Эдгар Аллан По",
+  "authorYears": "1809–1849",
+  "shelves": [
+   "foreign"
+  ],
+  "words": 3275,
+  "chapters": 1,
+  "file": "po-zolotoy-zhuk.json",
+  "bytes": 35941,
+  "source": "https://ru.wikisource.org/wiki/Золотой_жук_(По;_Шелгунов)",
+  "translator": "Николай Шелгунов",
+  "translatorYears": "1824–1891"
+ },
+ {
+  "id": "tven-pokhozhdeniya-geklberri-finna",
+  "title": "Похождения Гекльберри Финна",
+  "author": "Марк Твен",
+  "authorYears": "1835–1910",
+  "shelves": [
+   "foreign"
+  ],
+  "words": 116648,
+  "chapters": 46,
+  "file": "tven-pokhozhdeniya-geklberri-finna.json",
+  "bytes": 1329692,
+  "source": "https://ru.wikisource.org/wiki/Похождения_Гекльберри_Финна_(Твен;_Энгельгардт)",
+  "translator": "Михаил Энгельгардт",
+  "translatorYears": "1861–1915"
  }
 ]
