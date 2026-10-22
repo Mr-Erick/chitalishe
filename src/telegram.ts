@@ -6,8 +6,9 @@ interface TelegramWebApp {
   platform?: string;
   initDataUnsafe?: { start_param?: string };
   openTelegramLink?(url: string): void;
-  safeAreaInset?: { bottom: number };
-  onEvent?(event: "safeAreaChanged", cb: () => void): void;
+  safeAreaInset?: { top?: number; bottom: number };
+  contentSafeAreaInset?: { top?: number };
+  onEvent?(event: "safeAreaChanged" | "contentSafeAreaChanged" | "fullscreenChanged", cb: () => void): void;
   HapticFeedback?: { impactOccurred(style: "light" | "medium"): void; selectionChanged(): void };
   BackButton?: { show(): void; hide(): void; onClick(cb: () => void): void; offClick(cb: () => void): void };
 }
@@ -30,10 +31,16 @@ export function initTelegram() {
   const applyInset = () => {
     const reported = app.safeAreaInset?.bottom ?? 0;
     const bottom = Math.max(reported, app.platform === "ios" ? 24 : 0);
-    document.documentElement.style.setProperty("--tg-safe-area-inset-bottom", `${bottom}px`);
+    const css = document.documentElement.style;
+    css.setProperty("--tg-safe-area-inset-bottom", `${bottom}px`);
+    // Сверху: вырез камеры плюс полоса с кнопками Telegram в полноэкранном режиме.
+    css.setProperty("--tg-safe-area-inset-top", `${app.safeAreaInset?.top ?? 0}px`);
+    css.setProperty("--tg-content-safe-area-inset-top", `${app.contentSafeAreaInset?.top ?? 0}px`);
   };
   applyInset();
   app.onEvent?.("safeAreaChanged", applyInset);
+  app.onEvent?.("contentSafeAreaChanged", applyInset);
+  app.onEvent?.("fullscreenChanged", applyInset);
 }
 
 /** Параметр из ссылки t.me/<бот>?startapp=…; вне Telegram — из адреса страницы, чтобы проверять в браузере. */
