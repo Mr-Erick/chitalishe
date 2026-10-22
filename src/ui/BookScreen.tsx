@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { type BookRecord, type Bookmark, bookWpm, getBookmarks, getProgress, saveBookmarks } from "../books/store";
 import { tokenizeBook } from "../engine/chapters";
-import { formatDuration, formatNumber, percent } from "./format";
+import { formatDuration, formatNumber, percent, titleSize } from "./format";
 import { IconArrowLeft, IconArrowRight, IconBook, IconMore, IconPencil, IconPlay, IconSend, IconShare, IconSliders, IconTrash } from "./icons";
 import { SendFileSheet } from "./SendFileSheet";
 
@@ -110,7 +110,7 @@ export function BookScreen({ book, wpm, initialTab, onBack, onRead, onDelete, on
         </div>
       )}
 
-      <h1 className="book-title">{book.title}</h1>
+      <h1 className="book-title" style={{ fontSize: titleSize(book.title) }}>{book.title}</h1>
       {book.author && <p className="book-author">{book.author}</p>}
 
       <button className="continue-card" onClick={() => onRead()}>
@@ -130,7 +130,7 @@ export function BookScreen({ book, wpm, initialTab, onBack, onRead, onDelete, on
 
       <button className="text-btn" onClick={onPreview}>
         <IconBook />
-        Читать текстом <small>· предпросмотр</small>
+        Открыть текст
       </button>
 
       <div className="tabs2">

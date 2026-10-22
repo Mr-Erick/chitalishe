@@ -110,7 +110,7 @@ export function Preview({ book, settings, update, startIndex, onBack, onRead }: 
         </button>
       </header>
       <p className="pv-meta">
-        [предпросмотр · {FORMAT[book.format] ?? book.format} · {wordsLabel(tokens.length)} · {formatDuration(tokens.length, speed)}]
+        [текст · {FORMAT[book.format] ?? book.format} · {wordsLabel(tokens.length)} · {formatDuration(tokens.length, speed)}]
       </p>
 
       {fontMenu && (

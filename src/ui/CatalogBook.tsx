@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { type CatalogEntry, localCopy, SUPPORT_EMAIL } from "../books/catalog";
 import { type BookMeta, bookWpm, getProgress } from "../books/store";
-import { formatDuration, formatNumber, percent } from "./format";
+import { formatDuration, formatNumber, percent, titleSize } from "./format";
 import { IconArrowLeft, IconArrowRight, IconBook, IconCheck, IconPlay, IconShare } from "./icons";
 import { ShareSheet } from "./ShareSheet";
 
@@ -57,7 +57,7 @@ export function CatalogBook({ entry, books, wpm, shared, onBack, onOpen }: Props
         </section>
       )}
 
-      <h1 className="book-title">{entry.title}</h1>
+      <h1 className="book-title" style={{ fontSize: titleSize(entry.title) }}>{entry.title}</h1>
       <p className="book-author">{entry.author}</p>
       <p className="mono-label">
         [библиотека · {entry.chapters} гл. · {formatNumber(entry.words)} слов]
@@ -82,7 +82,7 @@ export function CatalogBook({ entry, books, wpm, shared, onBack, onOpen }: Props
 
       <div className="tabs2">
         <button className="icon-label" disabled={busy} onClick={() => open("text")}>
-          <IconBook /> Текстом
+          <IconBook /> Текст
         </button>
         <button className="icon-label" onClick={() => setSharing(true)}>
           <IconShare /> Поделиться
