@@ -1,7 +1,7 @@
 import { unzipSync } from "fflate";
 import { type ChapterText, prettifyTitle, splitChapters, splitIntoParts } from "../engine/chapters";
 
-export type BookFormat = "TXT" | "DOCX" | "DOC" | "TEXT";
+export type BookFormat = "TXT" | "DOCX" | "DOC" | "FB2" | "TEXT";
 
 export interface ParsedBook {
   title: string;
@@ -19,9 +19,11 @@ export async function parseFile(file: File): Promise<ParsedBook> {
   const bytes = new Uint8Array(await file.arrayBuffer());
   if (ext === "txt") return { title: stripExt(file.name), author: "", format: "TXT", chapters: splitChapters(decodeText(bytes)) };
   if (ext === "docx") return parseDocx(bytes, file.name);
+  if (ext === "fb2") return parseFb2(bytes, file.name);
+  if (ext === "zip" && /\.fb2\.zip$/i.test(file.name)) return parseFb2Zip(bytes, file.name);
   if (ext === "doc")
     throw new UnsupportedFormatError("DOC пока не открывается. Пересохраните файл в DOCX в Word или Google Документах.");
-  throw new UnsupportedFormatError("Поддерживаются файлы TXT и DOCX.");
+  throw new UnsupportedFormatError("Поддерживаются файлы TXT, DOCX и FB2.");
 }
 
 export function parsePasted(text: string): ParsedBook {
@@ -112,4 +114,154 @@ export function parseDocx(bytes: Uint8Array, fileName: string): ParsedBook {
     format: "DOCX",
     chapters: result.length ? result : splitIntoParts(all),
   };
+}
+
+// ---- FB2 ----
+
+/** Кодировку берём из заголовка XML: многие FB2 в windows-1251. */
+function decodeXml(bytes: Uint8Array): string {
+  const head = new TextDecoder("latin1").decode(bytes.subarray(0, 200));
+  const enc = head.match(/encoding=["']([\w-]+)["']/i)?.[1] ?? "utf-8";
+  try {
+    return new TextDecoder(enc).decode(bytes);
+  } catch {
+    return decodeText(bytes);
+  }
+}
+
+const childrenNamed = (el: Element, name: string) => Array.from(el.children).filter((c) => c.localName === name);
+const firstNamed = (el: Element | Document, name: string) =>
+  Array.from((el as Element).getElementsByTagName?.("*") ?? []).find((c) => c.localName === name);
+const clean = (s: string) => s.replace(/\s+/g, " ").trim();
+
+/** Текст абзаца без ссылок на сноски. */
+function inlineText(el: Element): string {
+  const copy = el.cloneNode(true) as Element;
+  for (const a of Array.from(copy.getElementsByTagName("*")))
+    if (a.localName === "a" && /note/i.test(a.getAttribute("type") ?? "")) a.remove();
+  return clean(copy.textContent ?? "");
+}
+
+/** Абзацы блока: обычные, стихи (строки через \n), цитаты, эпиграфы. */
+function blockParagraphs(el: Element): string[] {
+  const out: string[] = [];
+  for (const c of Array.from(el.children)) {
+    switch (c.localName) {
+      case "p":
+      case "subtitle":
+      case "text-author": {
+        const t = inlineText(c);
+        if (t) out.push(t);
+        break;
+      }
+      case "poem":
+      case "stanza": {
+        const lines = Array.from(c.getElementsByTagName("*")).filter((v) => v.localName === "v").map(inlineText).filter(Boolean);
+        const title = childrenNamed(c, "title").map((t) => blockParagraphs(t).join(" "));
+        if (c.localName === "poem") {
+          // У poem строфы — отдельные абзацы.
+          out.push(...title);
+          for (const st of childrenNamed(c, "stanza")) out.push(...blockParagraphs(st));
+          out.push(...childrenNamed(c, "text-author").map(inlineText));
+        } else if (lines.length) out.push(lines.join("\n"));
+        break;
+      }
+      case "cite":
+      case "epigraph":
+        out.push(...blockParagraphs(c));
+        break;
+    }
+  }
+  return out.filter(Boolean);
+}
+
+const titleOf = (el: Element) => {
+  const t = childrenNamed(el, "title")[0];
+  return t ? clean(blockParagraphs(t).join(". ").replace(/\.\s*\./g, ".")) : "";
+};
+
+/** Разворачивает вложенные section в плоский список глав; заголовок части идёт в название первой главы. */
+function collectSections(el: Element, prefix: string, out: ChapterText[]) {
+  const subs = childrenNamed(el, "section");
+  const title = titleOf(el);
+  const full = [prefix, title && prettifyTitle(title)].filter(Boolean).join(" · ");
+  const own = blockParagraphs(el);
+  if (!subs.length) {
+    if (own.length) out.push({ title: full, text: own.join("\n\n") });
+    return;
+  }
+  let pending = full;
+  if (own.length) {
+    out.push({ title: full, text: own.join("\n\n") });
+    pending = "";
+  }
+  for (const s of subs) {
+    collectSections(s, pending, out);
+    pending = "";
+  }
+}
+
+const HTML_ENTITIES: Record<string, string> = {
+  nbsp: "\u00a0", laquo: "«", raquo: "»", mdash: "—", ndash: "–", hellip: "…", bdquo: "„", ldquo: "“", rdquo: "”",
+  lsquo: "‘", rsquo: "’", shy: "", copy: "©", deg: "°", middot: "·", times: "×", minus: "−", sect: "§", numero: "№",
+};
+const XML_ENTITIES = new Set(["amp", "lt", "gt", "quot", "apos"]);
+const fixEntities = (xml: string) =>
+  xml.replace(/&([a-z]+);/gi, (m, name: string) => (XML_ENTITIES.has(name) ? m : (HTML_ENTITIES[name.toLowerCase()] ?? "")));
+
+export function parseFb2(bytes: Uint8Array, fileName: string): ParsedBook {
+  const xml = decodeXml(bytes);
+  let doc = new DOMParser().parseFromString(xml, "application/xml");
+  // Частая поломка — HTML-сущности вроде &nbsp;, которых нет в XML: заменяем их и пробуем ещё раз.
+  if (doc.getElementsByTagName("parsererror").length)
+    doc = new DOMParser().parseFromString(fixEntities(xml), "application/xml");
+  if (doc.getElementsByTagName("parsererror").length)
+    throw new UnsupportedFormatError("Не удалось открыть FB2: файл повреждён.");
+
+  const info = firstNamed(doc, "title-info");
+  const title = info ? clean(firstNamed(info, "book-title")?.textContent ?? "") : "";
+  const authorEl = info ? firstNamed(info, "author") : undefined;
+  const author = authorEl
+    ? clean(["first-name", "middle-name", "last-name"].map((n) => firstNamed(authorEl, n)?.textContent ?? "").join(" ")) ||
+      clean(firstNamed(authorEl, "nickname")?.textContent ?? "")
+    : "";
+
+  const bodies = Array.from(doc.getElementsByTagName("*")).filter((e) => e.localName === "body");
+  const body = bodies.find((b) => !/notes|comments/i.test(b.getAttribute("name") ?? "")) ?? bodies[0];
+  if (!body) throw new UnsupportedFormatError("Не удалось открыть FB2: внутри нет текста.");
+
+  const chapters: ChapterText[] = [];
+  // Эпиграф и прочее до первой главы.
+  const intro = blockParagraphs(body);
+  for (const s of childrenNamed(body, "section")) collectSections(s, "", chapters);
+  if (intro.length) {
+    if (chapters.length) chapters[0] = { ...chapters[0], text: `${intro.join("\n\n")}\n\n${chapters[0].text}` };
+    else chapters.push({ title: "", text: intro.join("\n\n") });
+  }
+
+  const all = chapters.map((c) => c.text).join("\n\n");
+  // Разметки нет (всё в одной section без заголовков) — ищем главы по тексту, как в TXT.
+  const titled = chapters.filter((c) => c.title).length;
+  const result =
+    chapters.length > 1 && titled > 0
+      ? chapters.map((c, i) => ({ ...c, title: c.title || (i === 0 ? "Начало" : `Часть ${i + 1}`) }))
+      : splitChapters(all);
+  return {
+    title: title || stripExt(fileName.replace(/\.fb2(\.zip)?$/i, "")),
+    author,
+    format: "FB2",
+    chapters: result.length ? result : splitIntoParts(all),
+  };
+}
+
+function parseFb2Zip(bytes: Uint8Array, fileName: string): ParsedBook {
+  let files: Record<string, Uint8Array>;
+  try {
+    files = unzipSync(bytes, { filter: (f) => /\.fb2$/i.test(f.name) });
+  } catch {
+    throw new UnsupportedFormatError("Не удалось открыть архив: файл повреждён.");
+  }
+  const name = Object.keys(files)[0];
+  if (!name) throw new UnsupportedFormatError("В архиве нет файла FB2.");
+  return parseFb2(files[name], fileName);
 }
