@@ -1,5 +1,6 @@
 import { useState } from "react";
 import type { BookRecord } from "../books/store";
+import { tg } from "../telegram";
 
 /** Своя книга одним TXT: название, автор и главы с заголовками, чтобы у друга главы нашлись снова. */
 export function bookToTxt(book: BookRecord): string {
@@ -12,6 +13,10 @@ const safeName = (title: string) => (title.replace(/[\\/:*?"<>|]+/g, " ").trim()
 
 type Status = "idle" | "sent" | "saved" | "failed";
 
+/** Telegram на Android не даёт мини-приложению ни системное «Поделиться», ни сохранение файла: ссылка на скачивание там молча ничего не делает. */
+const blockedHere = (file: File) =>
+  !navigator.canShare?.({ files: [file] }) && (tg()?.platform ?? "").startsWith("android");
+
 /** «Отправить файл другу»: только свой текст или свободная книга; файл уходит через системное меню «Поделиться». */
 export function SendFileSheet({ book, onClose }: { book: BookRecord; onClose: () => void }) {
   const [agreed, setAgreed] = useState(false);
@@ -19,6 +24,7 @@ export function SendFileSheet({ book, onClose }: { book: BookRecord; onClose: ()
   const text = bookToTxt(book);
   const name = `${safeName(book.title)}.txt`;
   const kb = Math.max(1, Math.round(new Blob([text]).size / 1024));
+  const blocked = blockedHere(new File([text], name, { type: "text/plain" }));
 
   const send = async () => {
     const file = new File([text], name, { type: "text/plain" });
@@ -50,7 +56,12 @@ export function SendFileSheet({ book, onClose }: { book: BookRecord; onClose: ()
 
   return (
     <div className="backdrop" onClick={onClose}>
-      <div className="sheet app-sheet" onClick={(e) => e.stopPropagation()} role="dialog" aria-label="Отправить файл другу">
+      <div
+        className="sheet app-sheet"
+        onClick={(e) => e.stopPropagation()}
+        role="dialog"
+        aria-label="Отправить файл другу"
+      >
         <div className="grip" />
         <h2>Отправить файл другу</h2>
         <div className="file-row">
@@ -60,20 +71,33 @@ export function SendFileSheet({ book, onClose }: { book: BookRecord; onClose: ()
             <span className="row-sub">{kb} КБ · без закладок и прогресса</span>
           </span>
         </div>
-        <label className="consent">
-          <input type="checkbox" checked={agreed} onChange={(e) => setAgreed(e.target.checked)} />
-          <span>
-            Это мой собственный текст или книга, свободная от авторских прав
-            <small>Чужие книги, купленные или скачанные, отправлять нельзя.</small>
-          </span>
-        </label>
-        <button className="btn dark wide" disabled={!agreed} onClick={send}>
-          Выбрать чат в Telegram
-        </button>
-        {status === "saved" && <p className="muted">Файл сохранён в «Загрузки». Перетащите или прикрепите его в чат с другом.</p>}
+        {!blocked && (
+          <label className="consent">
+            <input type="checkbox" checked={agreed} onChange={(e) => setAgreed(e.target.checked)} />
+            <span>
+              Это мой собственный текст или книга, свободная от авторских прав
+              <small>Чужие книги, купленные или скачанные, отправлять нельзя.</small>
+            </span>
+          </label>
+        )}
+        {blocked ? (
+          <p className="error">
+            В Telegram на Android мини-приложение пока не может передать файл в чат: Telegram не открывает для него ни
+            «Поделиться», ни сохранение. Ссылкой на книги из библиотеки делиться можно.
+          </p>
+        ) : (
+          <button className="btn dark wide" disabled={!agreed} onClick={send}>
+            Выбрать чат в Telegram
+          </button>
+        )}
+        {status === "saved" && (
+          <p className="muted">Файл сохранён в «Загрузки». Перетащите или прикрепите его в чат с другом.</p>
+        )}
         {status === "sent" && <p className="muted">Готово.</p>}
         {status === "failed" && <p className="error">Не получилось отправить. Попробуйте ещё раз.</p>}
-        <p className="note-box">Файл уходит через Telegram напрямую в выбранный чат. SPEEDTEXT его не хранит и не видит.</p>
+        <p className="note-box">
+          Файл уходит через Telegram напрямую в выбранный чат. SPEEDTEXT его не хранит и не видит.
+        </p>
       </div>
     </div>
   );
