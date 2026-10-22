@@ -17,8 +17,13 @@ function send(params: Record<string, string>) {
   try {
     const q = new URLSearchParams({ ...params, rnd: Math.random().toString(36).slice(2) });
     const url = `${ENDPOINT}?${q}`;
-    if (navigator.sendBeacon?.(url)) return;
-    new Image().src = url;
+    // Обычный GET, как у прямой ссылки. с sendBeacon (POST) из WebView Telegram на Android счёт не шёл.
+    // keepalive: запрос не обрывается, если приложение свернули сразу после паузы.
+    if (typeof fetch === "function") {
+      fetch(url, { mode: "no-cors", credentials: "omit", keepalive: true, cache: "no-store" }).catch(() => {
+        new Image().src = url;
+      });
+    } else new Image().src = url;
   } catch {
     // Нет сети, блокировщик, старый WebView: статистика не важнее чтения.
   }
