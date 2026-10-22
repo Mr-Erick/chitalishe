@@ -27,6 +27,8 @@ export interface Settings {
   previewFontSize: number;
   chapterEnd: ChapterEnd;
   haptics: boolean;
+  /** SPEEDTEXT пропускает номера страниц, колонтитулы и сноски. Предпросмотр всегда показывает весь текст. */
+  cleanText: boolean;
 }
 
 export const defaultSettings: Settings = {
@@ -45,6 +47,7 @@ export const defaultSettings: Settings = {
   previewFontSize: 19,
   chapterEnd: "continue",
   haptics: true,
+  cleanText: true,
 };
 
 export const PIVOT_COLORS: Record<PivotColor, string> = { red: "#b23a32", blue: "#4a6fa5", ink: "#222222" };

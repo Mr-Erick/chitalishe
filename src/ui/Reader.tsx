@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import { chapterAt, tokenizeBook } from "../engine/chapters";
 import { splitAtOrp } from "../engine/orp";
+import { shownText } from "../engine/tokenize";
 import { type BookRecord, type Bookmark, bookWpm, getBookmarks, getProgress, saveBookmarks, saveProgress } from "../books/store";
 import { haptic } from "../telegram";
 import { percent } from "./format";
@@ -29,7 +30,10 @@ interface Props {
 type SheetState = { mode: "added"; bookmark: Bookmark } | { mode: "list" } | null;
 
 export function Reader({ book, startIndex, settings, onExit, onOpenSettings, onAllBookmarks, onText }: Props) {
-  const { tokens, chapters } = useMemo(() => tokenizeBook(book.chapters), [book]);
+  const { tokens, chapters } = useMemo(
+    () => tokenizeBook(book.chapters, { clean: settings.cleanText }),
+    [book, settings.cleanText],
+  );
   const saved = useMemo(() => getProgress(book.id), [book.id]);
   const [bookmarks, setBookmarks] = useState<Bookmark[]>(() => getBookmarks(book.id));
   const [sheet, setSheet] = useState<SheetState>(null);
@@ -76,7 +80,7 @@ export function Reader({ book, startIndex, settings, onExit, onOpenSettings, onA
   };
 
   // ---- длинные слова ----
-  const word = tokens[r.index]?.text ?? "";
+  const word = tokens[r.index] ? shownText(tokens[r.index]) : "";
   const [before, pivot, after] = splitAtOrp(word);
   const wordRef = useRef<HTMLDivElement>(null);
   useLayoutEffect(() => {
@@ -124,7 +128,8 @@ export function Reader({ book, startIndex, settings, onExit, onOpenSettings, onA
       (start > from ? "…" : "") +
       tokens
         .slice(start, end + 1)
-        .map((t) => t.text)
+        .filter((t) => !t.skip)
+        .map(shownText)
         .join(" ") +
       (end < to ? "…" : "");
     const bookmark: Bookmark = {
@@ -262,7 +267,7 @@ export function Reader({ book, startIndex, settings, onExit, onOpenSettings, onA
             <span className="chapter-banner">{chapters[chapter].title}</span>
           ) : (
             !r.playing &&
-            tokens.slice(from, to + 1).map((t, i) => (
+            tokens.slice(from, to + 1).map((t, i) => !t.skip && (
               <span
                 key={from + i}
                 className={from + i === r.index ? "current" : undefined}
@@ -271,7 +276,7 @@ export function Reader({ book, startIndex, settings, onExit, onOpenSettings, onA
                   r.goTo(from + i);
                 }}
               >
-                {t.text}{" "}
+                {shownText(t)}{" "}
               </span>
             ))
           )}
