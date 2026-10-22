@@ -1,5 +1,6 @@
 // Бесплатная библиотека: только общественное достояние (автор и переводчик умерли в 1955 году или раньше).
 import type { ChapterText } from "../engine/chapters";
+import { trackDownload } from "../analytics";
 import { addBook, type BookMeta, getBookmarks, getProgress, local, removeBook } from "./store";
 import library from "./library.json";
 
@@ -115,5 +116,7 @@ export async function addFromCatalog(entry: CatalogEntry): Promise<BookMeta> {
   const res = await fetch(`${import.meta.env.BASE_URL}${entry.file}`);
   if (!res.ok) throw new Error(`HTTP ${res.status}`);
   const { chapters } = (await res.json()) as { chapters: ChapterText[] };
-  return addBook({ title: entry.title, author: entry.author, format: "TXT", chapters, catalogId: entry.id });
+  const meta = await addBook({ title: entry.title, author: entry.author, format: "TXT", chapters, catalogId: entry.id });
+  trackDownload(entry.id, entry.title);
+  return meta;
 }
