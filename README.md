@@ -39,6 +39,6 @@ npm run build   # статика в dist/
 - `src/books/` — разбор файлов, хранение (IndexedDB + localStorage), каталог бесплатной библиотеки (`catalog.ts`, `library.json`).
 - `src/ui/` — экраны и управление.
 - `public/books/library/` — тексты книг бесплатной библиотеки.
+- `src/telegram.ts` — обёртка над Telegram WebApp, вне Telegram ничего не делает.
 
 Памятка для разработки с Claude: `CLAUDE.md`.
-- `src/telegram.ts` — обёртка над Telegram WebApp, вне Telegram ничего не делает.
