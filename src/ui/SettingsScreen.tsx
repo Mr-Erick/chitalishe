@@ -1,6 +1,8 @@
+import { useState } from "react";
 import { splitAtOrp } from "../engine/orp";
 import { IconArrowLeft } from "./icons";
 import { PIVOT_COLORS, type PivotColor, type ReaderBg, type Settings } from "./settings";
+import { ReportSheet } from "./ReportSheet";
 import { SectionTitle } from "./TabBar";
 
 interface Props {
@@ -32,6 +34,7 @@ function rampSummary(from: number, to: number, step: number, every: number): str
 const wordsLabel = (n: number) => (n === 0 ? "нет" : `${n} ${n === 1 ? "слово" : n < 5 ? "слова" : "слов"}`);
 
 export function SettingsScreen({ settings: s, update, onBack, onRights }: Props) {
+  const [reporting, setReporting] = useState(false);
   const [before, pivot, after] = splitAtOrp("скорость");
   return (
     <main className="app-screen">
@@ -186,7 +189,11 @@ export function SettingsScreen({ settings: s, update, onBack, onRights }: Props)
         <button className="row" onClick={onRights}>
           Книги и права <b>›</b>
         </button>
+        <button className="row" onClick={() => setReporting(true)}>
+          Сообщить об ошибке <b>›</b>
+        </button>
       </section>
+      {reporting && <ReportSheet onClose={() => setReporting(false)} />}
     </main>
   );
 }

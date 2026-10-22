@@ -52,6 +52,9 @@ export const IconCheck = () => (
 export const IconPencil = () => (
   <svg {...base}><path d="M4 20h4L19 9l-4-4L4 16zM13.5 6.5l4 4" /></svg>
 );
+export const IconFlag = () => (
+  <svg {...base}><path d="M5 21V4M5 4h11l-2 4 2 4H5" /></svg>
+);
 export const IconTrash = () => (
   <svg {...base}><path d="M4 7h16M10 11v6M14 11v6M6 7l1 13h10l1-13M9 7V4h6v3" /></svg>
 );

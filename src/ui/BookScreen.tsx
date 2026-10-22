@@ -2,8 +2,9 @@ import { useState } from "react";
 import { type BookRecord, type Bookmark, bookWpm, getBookmarks, getProgress, saveBookmarks } from "../books/store";
 import { tokenizeBook } from "../engine/chapters";
 import { formatDuration, formatNumber, percent, titleSize } from "./format";
-import { IconArrowLeft, IconArrowRight, IconBook, IconMore, IconPencil, IconPlay, IconSend, IconShare, IconSliders, IconTrash } from "./icons";
+import { IconArrowLeft, IconArrowRight, IconBook, IconFlag, IconMore, IconPencil, IconPlay, IconSend, IconShare, IconSliders, IconTrash } from "./icons";
 import { SendFileSheet } from "./SendFileSheet";
+import { fragmentAround, ReportSheet } from "./ReportSheet";
 
 interface Props {
   book: BookRecord;
@@ -27,6 +28,7 @@ export function BookScreen({ book, wpm, initialTab, onBack, onRead, onDelete, on
   const [editing, setEditing] = useState<string | null>(null);
   const [renaming, setRenaming] = useState<string | null>(null);
   const [sending, setSending] = useState(false);
+  const [reporting, setReporting] = useState(false);
 
   const { tokens, chapters } = tokenizeBook(book.chapters);
   const progress = getProgress(book.id);
@@ -101,6 +103,9 @@ export function BookScreen({ book, wpm, initialTab, onBack, onRead, onDelete, on
               )}
               <button className="menu-item" onClick={() => setRenaming(book.title)}>
                 <IconPencil /> Переименовать
+              </button>
+              <button className="menu-item" onClick={() => { setMenu(false); setReporting(true); }}>
+                <IconFlag /> Сообщить об ошибке
               </button>
               <button className="menu-item danger" onClick={() => setConfirmDelete(true)}>
                 <IconTrash /> Удалить с устройства
@@ -207,6 +212,17 @@ export function BookScreen({ book, wpm, initialTab, onBack, onRead, onDelete, on
         <p className="muted">Закладок пока нет. Поставьте её кнопкой 🔖 на паузе во время чтения.</p>
       )}
       {sending && <SendFileSheet book={book} onClose={() => setSending(false)} />}
+      {reporting && (
+        <ReportSheet
+          context={{
+            title: book.title,
+            format: book.format,
+            place: `гл. ${current + 1} «${chapters[current]?.title ?? ""}» · ${pct}% · слово ${index + 1}`,
+            fragment: fragmentAround(tokens.map((t) => t.text), index),
+          }}
+          onClose={() => setReporting(false)}
+        />
+      )}
     </main>
   );
 }
