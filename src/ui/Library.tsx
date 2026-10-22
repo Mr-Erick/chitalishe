@@ -102,7 +102,7 @@ export function Library({ books, wpm, onOpen, onContinue, onAdd }: Props) {
                 <span className="row-text">
                   <span className="row-title">{book.title}</span>
                   <span className="row-sub">
-                    {[book.author, FORMAT_LABEL[book.format], pct >= 100 ? "прочитано" : formatDuration(book.words - index, speed)]
+                    {[book.author, book.catalogId ? "библиотека" : FORMAT_LABEL[book.format], pct >= 100 ? "прочитано" : formatDuration(book.words - index, speed)]
                       .filter(Boolean)
                       .join(" · ")}
                   </span>
@@ -116,7 +116,7 @@ export function Library({ books, wpm, onOpen, onContinue, onAdd }: Props) {
       {query && !rows.length && <p className="muted">Ничего не нашлось.</p>}
 
       <button className="add-btn" onClick={onAdd}>
-        <IconPlus /> Добавить книгу или текст
+        <IconPlus /> Добавить свою книгу
       </button>
     </main>
   );

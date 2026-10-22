@@ -2,7 +2,8 @@ import { useState } from "react";
 import { type BookRecord, type Bookmark, bookWpm, getBookmarks, getProgress, saveBookmarks } from "../books/store";
 import { tokenizeBook } from "../engine/chapters";
 import { formatDuration, formatNumber, percent } from "./format";
-import { IconArrowLeft, IconArrowRight, IconBook, IconMore, IconPlay, IconSliders } from "./icons";
+import { IconArrowLeft, IconArrowRight, IconBook, IconMore, IconPencil, IconPlay, IconSend, IconShare, IconSliders, IconTrash } from "./icons";
+import { SendFileSheet } from "./SendFileSheet";
 
 interface Props {
   book: BookRecord;
@@ -13,14 +14,19 @@ interface Props {
   onDelete: () => void;
   onSettings: () => void;
   onPreview: () => void;
+  onRename: (title: string) => void;
+  /** Книга из библиотеки: делимся ссылкой, а не файлом. */
+  onShare?: () => void;
 }
 
-export function BookScreen({ book, wpm, initialTab, onBack, onRead, onDelete, onSettings, onPreview }: Props) {
+export function BookScreen({ book, wpm, initialTab, onBack, onRead, onDelete, onSettings, onPreview, onRename, onShare }: Props) {
   const [tab, setTab] = useState<"toc" | "bookmarks">(initialTab ?? "toc");
   const [bookmarks, setBookmarks] = useState<Bookmark[]>(() => getBookmarks(book.id));
   const [menu, setMenu] = useState(false);
   const [confirmDelete, setConfirmDelete] = useState(false);
   const [editing, setEditing] = useState<string | null>(null);
+  const [renaming, setRenaming] = useState<string | null>(null);
+  const [sending, setSending] = useState(false);
 
   const { tokens, chapters } = tokenizeBook(book.chapters);
   const progress = getProgress(book.id);
@@ -54,7 +60,25 @@ export function BookScreen({ book, wpm, initialTab, onBack, onRead, onDelete, on
       </header>
       {menu && (
         <div className="menu">
-          {confirmDelete ? (
+          {renaming !== null ? (
+            <>
+              <input className="search" autoFocus value={renaming} onChange={(e) => setRenaming(e.target.value)} aria-label="Название" />
+              <button
+                className="btn dark"
+                disabled={!renaming.trim()}
+                onClick={() => {
+                  onRename(renaming.trim());
+                  setRenaming(null);
+                  setMenu(false);
+                }}
+              >
+                Сохранить
+              </button>
+              <button className="btn" onClick={() => setRenaming(null)}>
+                Отмена
+              </button>
+            </>
+          ) : confirmDelete ? (
             <>
               <p>Удалить книгу с устройства? Закладки сохранятся, если добавить её снова.</p>
               <button className="btn danger" onClick={onDelete}>
@@ -65,9 +89,23 @@ export function BookScreen({ book, wpm, initialTab, onBack, onRead, onDelete, on
               </button>
             </>
           ) : (
-            <button className="btn" onClick={() => setConfirmDelete(true)}>
-              Удалить книгу
-            </button>
+            <>
+              {onShare ? (
+                <button className="menu-item accent" onClick={() => { setMenu(false); onShare(); }}>
+                  <IconShare /> Поделиться книгой
+                </button>
+              ) : (
+                <button className="menu-item accent" onClick={() => { setMenu(false); setSending(true); }}>
+                  <IconSend /> Отправить файл другу
+                </button>
+              )}
+              <button className="menu-item" onClick={() => setRenaming(book.title)}>
+                <IconPencil /> Переименовать
+              </button>
+              <button className="menu-item danger" onClick={() => setConfirmDelete(true)}>
+                <IconTrash /> Удалить с устройства
+              </button>
+            </>
           )}
         </div>
       )}
@@ -168,6 +206,7 @@ export function BookScreen({ book, wpm, initialTab, onBack, onRead, onDelete, on
       ) : (
         <p className="muted">Закладок пока нет. Поставьте её кнопкой 🔖 на паузе во время чтения.</p>
       )}
+      {sending && <SendFileSheet book={book} onClose={() => setSending(false)} />}
     </main>
   );
 }

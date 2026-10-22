@@ -7,6 +7,7 @@ interface Props {
   settings: Settings;
   update: (patch: Partial<Settings>) => void;
   onBack?: () => void;
+  onRights: () => void;
 }
 
 const BGS: [ReaderBg, string][] = [
@@ -30,7 +31,7 @@ function rampSummary(from: number, to: number, step: number, every: number): str
 }
 const wordsLabel = (n: number) => (n === 0 ? "нет" : `${n} ${n === 1 ? "слово" : n < 5 ? "слова" : "слов"}`);
 
-export function SettingsScreen({ settings: s, update, onBack }: Props) {
+export function SettingsScreen({ settings: s, update, onBack, onRights }: Props) {
   const [before, pivot, after] = splitAtOrp("скорость");
   return (
     <main className="app-screen">
@@ -171,6 +172,13 @@ export function SettingsScreen({ settings: s, update, onBack }: Props) {
           Вибрация
           <input type="checkbox" checked={s.haptics} onChange={(e) => update({ haptics: e.target.checked })} />
         </label>
+      </section>
+
+      <SectionTitle n="04">О приложении</SectionTitle>
+      <section className="card">
+        <button className="row" onClick={onRights}>
+          Книги и права <b>›</b>
+        </button>
       </section>
     </main>
   );

@@ -10,6 +10,8 @@ export interface BookRecord {
   chapters: ChapterText[];
   words: number;
   addedAt: number;
+  /** Книга из бесплатной библиотеки: её id в каталоге. */
+  catalogId?: string;
 }
 
 export type BookMeta = Omit<BookRecord, "chapters"> & { chapterCount: number };
@@ -116,6 +118,15 @@ export async function addBook(parsed: ParsedBook): Promise<BookMeta> {
 
 export function getBook(id: string): Promise<BookRecord | undefined> {
   return tx("readonly", (s) => s.get(id));
+}
+
+export async function renameBook(id: string, title: string) {
+  const record = await getBook(id);
+  if (record) await tx("readwrite", (s) => s.put({ ...record, title }));
+  writeJson(
+    META_KEY,
+    listBooks().map((b) => (b.id === id ? { ...b, title } : b)),
+  );
 }
 
 /** Прогресс и закладки не трогаем: если добавить книгу снова, они вернутся. */

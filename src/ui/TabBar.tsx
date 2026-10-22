@@ -1,16 +1,22 @@
-import { IconBook, IconSliders } from "./icons";
+import { IconBook, IconLibrary, IconSliders } from "./icons";
 
-export type Tab = "books" | "settings";
+export type Tab = "books" | "catalog" | "settings";
+
+const TABS: { id: Tab; label: string; icon: () => JSX.Element }[] = [
+  { id: "books", label: "Мои книги", icon: IconBook },
+  { id: "catalog", label: "Библиотека", icon: IconLibrary },
+  { id: "settings", label: "Настройки", icon: IconSliders },
+];
 
 export function TabBar({ tab, onTab }: { tab: Tab; onTab: (t: Tab) => void }) {
   return (
     <nav className="tabbar">
-      <button className={tab === "books" ? "on" : ""} onClick={() => onTab("books")}>
-        <IconBook /> Книги
-      </button>
-      <button className={tab === "settings" ? "on" : ""} onClick={() => onTab("settings")}>
-        <IconSliders /> Настройки
-      </button>
+      {TABS.map(({ id, label, icon: Icon }) => (
+        <button key={id} className={tab === id ? "on" : ""} onClick={() => onTab(id)}>
+          <Icon />
+          <span>{label}</span>
+        </button>
+      ))}
     </nav>
   );
 }
