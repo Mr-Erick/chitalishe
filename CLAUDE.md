@@ -88,7 +88,8 @@ public/
   - отправка файла на Android честно говорит, что здесь не работает (`blockedHere` в `SendFileSheet.tsx`);
   - письма идут через `openMail`: открываем `public/mail.html` во внешнем браузере через `openLink`, а он уже передаёт `mailto:` почте;
   - внешние ссылки только через `openExternal` / `openTelegramLink`, не через `window.open` и не через обычный `<a href>`.
-- **Safe-area**: сверху у Telegram свои кнопки, снизу полоска Home на iPhone. Отступы берём из `--safe-top` и `--safe-bottom` в `styles.css` (там уже учтены `env(safe-area-inset-*)` и `--tg-safe-area-inset-*` / `--tg-content-safe-area-inset-top`). Новые экраны и нижние панели должны их использовать.
+- **iPhone, safe-area**: снизу полоска Home, нижние кнопки уезжали под неё (чинили в #8); сверху у Telegram свои кнопки «Закрыть» и меню, под них уходил заголовок (#12). Отступы берём из `--safe-top` и `--safe-bottom` в `styles.css` (там уже учтены `env(safe-area-inset-*)` и `--tg-safe-area-inset-*` / `--tg-content-safe-area-inset-top`). Новые экраны и нижние панели должны их использовать.
+- **Что не проверено**: всё тестировали только на Android (Samsung S23). На iOS и в Telegram для ПК «Поделиться» файлом, скачивание и письмо через `mail.html` пока не проверены. Меняя эти места, не считай их рабочими там, пока не проверили на устройстве.
 - **Кнопка «Назад»** — это `BackButton` Telegram, она управляется в `App.tsx`. На корневых вкладках скрыта.
 - **Хранилище может пропасть**: Telegram или iOS иногда чистят IndexedDB. Код должен переживать отсутствие книги (в `App.tsx` для этого есть `missing`).
 - Вне Telegram (`npm run dev` в браузере) `tg()` возвращает `undefined`, все обёртки молча ничего не делают. Параметр ссылки можно проверить через `?startapp=book-<id>` в адресе.
