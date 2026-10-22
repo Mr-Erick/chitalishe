@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
 import { addFromCatalog, type CatalogEntry, catalogEntry, entryFromStartParam, localCopy, removeUntouchedSeeds } from "../books/catalog";
+import { addGuideOnce } from "../books/guide";
 import { type BookMeta, type BookRecord, getBook, listBooks, removeBook, renameBook } from "../books/store";
 import { startParam, tg } from "../telegram";
 import { AddSheet } from "./AddSheet";
@@ -42,7 +43,10 @@ export function App() {
   const refresh = useCallback(() => setBooks(listBooks()), []);
 
   useEffect(() => {
-    removeUntouchedSeeds(listBooks()).then((removed) => removed && refresh());
+    removeUntouchedSeeds(listBooks())
+      .then(() => addGuideOnce(listBooks()))
+      .catch(() => false)
+      .then(refresh);
   }, [refresh]);
 
   // Текст книги нужен карточке и чтению; грузим из IndexedDB при переходе.
