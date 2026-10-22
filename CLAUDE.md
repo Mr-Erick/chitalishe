@@ -37,7 +37,6 @@ npm run build   # tsc -b && vite build → dist/ (base "./")
 src/
   main.tsx            точка входа
   telegram.ts         обёртка над Telegram WebApp: tg(), initTelegram, startParam, openTelegramLink, openExternal, openMail, haptic
-  analytics.ts        обезличенная статистика в GoatCounter (mrerick.goatcounter.com): открытие, скачивание книги каталога, минуты чтения, скорость
   engine/             чистая логика без React, покрыта тестами
     tokenize.ts       текст → Token[]; переходы по предложениям
     orp.ts            индекс опорной буквы (ORP)
@@ -66,7 +65,7 @@ public/
   mail.html                 открывает письмо в почте (см. ловушки)
 ```
 
-Ключи localStorage: `speedtext:library` (метаданные книг), `speedtext:progress:<id>`, `speedtext:bookmarks:<id>`, `speedtext:settings`, `speedtext:stats-carry` (остаток минут чтения для статистики). Доступ только через `local` из `store.ts`: он переживает приватный режим.
+Ключи localStorage: `speedtext:library` (метаданные книг), `speedtext:progress:<id>`, `speedtext:bookmarks:<id>`, `speedtext:settings`. Доступ только через `local` из `store.ts`: он переживает приватный режим.
 
 ## Данные библиотеки
 

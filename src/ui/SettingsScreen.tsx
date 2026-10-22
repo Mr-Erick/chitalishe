@@ -192,9 +192,6 @@ export function SettingsScreen({ settings: s, update, onBack, onRights }: Props)
         <button className="row" onClick={() => setReporting(true)}>
           Сообщить об ошибке <b>›</b>
         </button>
-        <p className="row-note">
-          Собираем обезличенную статистику: открытия, скачанные книги, минуты чтения и скорость. Без имён, Telegram ID и текста книг.
-        </p>
       </section>
       {reporting && <ReportSheet onClose={() => setReporting(false)} />}
     </main>
