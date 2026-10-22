@@ -6,6 +6,7 @@ interface TelegramWebApp {
   platform?: string;
   initDataUnsafe?: { start_param?: string };
   openTelegramLink?(url: string): void;
+  openLink?(url: string): void;
   safeAreaInset?: { top?: number; bottom: number };
   contentSafeAreaInset?: { top?: number };
   onEvent?(event: "safeAreaChanged" | "contentSafeAreaChanged" | "fullscreenChanged", cb: () => void): void;
@@ -56,6 +57,22 @@ export function openTelegramLink(url: string) {
   const app = tg();
   if (app?.openTelegramLink) app.openTelegramLink(url);
   else window.open(url, "_blank");
+}
+
+const inTelegram = () => {
+  const platform = tg()?.platform;
+  return !!platform && platform !== "unknown";
+};
+
+/**
+ * Письмо на почту. Внутри Telegram переход на mailto: роняет мини-приложение (ERR_UNKNOWN_URL_SCHEME),
+ * а openLink принимает только http(s). Поэтому открываем во внешнем браузере свою страницу mail.html,
+ * она уже передаёт письмо почтовому приложению. Письмо идёт после #, на сервер оно не отправляется.
+ */
+export function openMail(mailto: string) {
+  const app = tg();
+  if (inTelegram() && app?.openLink) app.openLink(`${new URL("mail.html", document.baseURI)}#${encodeURIComponent(mailto)}`);
+  else window.location.href = mailto;
 }
 
 export const haptic = {

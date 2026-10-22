@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { type CatalogEntry, localCopy, SUPPORT_EMAIL } from "../books/catalog";
 import { type BookMeta, bookWpm, getProgress } from "../books/store";
+import { openMail } from "../telegram";
 import { formatDuration, formatNumber, percent, titleSize } from "./format";
 import { IconArrowLeft, IconArrowRight, IconBook, IconCheck, IconPlay, IconShare } from "./icons";
 import { ShareSheet } from "./ShareSheet";
@@ -110,7 +111,7 @@ export function CatalogBook({ entry, books, wpm, shared, onBack, onOpen }: Props
       </section>
       <p className="muted small">
         Нашли ошибку или считаете, что книга охраняется?{" "}
-        <a className="link" href={`mailto:${SUPPORT_EMAIL}?subject=${encodeURIComponent(`SPEEDTEXT: ${entry.title}`)}`}>
+        <a className="link" href={`mailto:${SUPPORT_EMAIL}`} onClick={(e) => { e.preventDefault(); openMail(`mailto:${SUPPORT_EMAIL}?subject=${encodeURIComponent(`SPEEDTEXT: ${entry.title}`)}`); }}>
           Напишите нам
         </a>
         , разберёмся за 24 часа.
